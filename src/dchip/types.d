@@ -21,6 +21,8 @@
  */
 module dchip.types;
 
+import core.stdc.stdint : uintptr_t, uint32_t;
+
 import std.math : sqrt, sin, cos, acos, atan2, fmod, exp, pow, floor, ceil, PI, E;
 
 version (StdDdoc)
@@ -127,4 +129,49 @@ cpFloat cpflerp(cpFloat f1, cpFloat f2, cpFloat t)
 cpFloat cpflerpconst(cpFloat f1, cpFloat f2, cpFloat d)
 {
     return f1 + cpfclamp(f2 - f1, -d, d);
+}
+
+/// Hash value type.
+alias cpHashValue = uintptr_t;
+
+/// Type used internally to cache colliding object info for cpCollideShapes().
+/// Should be at least 32 bits.
+alias cpCollisionID = uint32_t;
+
+alias cpBool = bool;  /// Bools
+enum cpTrue  = true;  /// ditto
+enum cpFalse = false; /// ditto
+
+/// Type used for user data pointers.
+alias cpDataPointer = void*;
+
+/// Type used for cpSpace.collision_type.
+alias cpCollisionType = uintptr_t;
+
+/// Type used for cpShape.group.
+alias cpGroup = uintptr_t;
+
+/// Type used for cpShape.layers.
+alias cpLayers = uint;
+
+/// Type used for various timestamps in Chipmunk.
+alias cpTimestamp = uint;
+
+/// Value for cpShape.group signifying that a shape is in no group.
+enum CP_NO_GROUP = 0;
+
+/// Value for cpShape.layers signifying that a shape is in every layer.
+enum CP_ALL_LAYERS = ~cast(cpLayers)0;
+
+/// Chipmunk's 2D vector type.
+struct cpVect
+{
+    cpFloat x, y;
+}
+
+/// Chipmunk's 2D matrix type.
+typedef struct cpMat2x2
+{
+    /// Row major [[a, b][c d]]
+    cpFloat a, b, c, d;
 }

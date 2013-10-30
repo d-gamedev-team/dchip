@@ -241,7 +241,7 @@ void cpSweep1DReindexQuery(cpSweep1D* sweep, cpSpatialIndexQueryFunc func, void*
     cpSpatialIndexCollideStatic(cast(cpSpatialIndex*)sweep, sweep.spatialIndex.staticIndex, func, data);
 }
 
-static cpSpatialIndexClass klass;
+cpSpatialIndexClass klass;
 
 shared static this()
 {

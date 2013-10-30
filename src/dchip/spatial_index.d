@@ -23,6 +23,7 @@ module dchip.spatial_index;
 
 import dchip.bb;
 import dchip.chipmunk;
+import dchip.space_hash;
 import dchip.sweep1D;
 import dchip.types;
 
@@ -64,13 +65,11 @@ package struct cpSpatialIndex
     cpSpatialIndex* dynamicIndex;
 }
 
-// drey todo
 /// Allocate a spatial hash.
-//~ cpSpaceHash* cpSpaceHashAlloc();
+cpSpaceHash* cpSpaceHashAlloc();
 
-// drey todo
 /// Initialize a spatial hash.
-//~ cpSpatialIndex* cpSpaceHashInit(cpSpaceHash* hash, cpFloat celldim, int numcells, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex* staticIndex);
+cpSpatialIndex* cpSpaceHashInit(cpSpaceHash* hash, cpFloat celldim, int numcells, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex* staticIndex);
 
 /// Allocate and initialize a spatial hash.
 cpSpatialIndex* cpSpaceHashNew(cpFloat celldim, int cells, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex* staticIndex);

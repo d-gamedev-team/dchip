@@ -22,6 +22,7 @@
 module dchip.spatial_index;
 
 import dchip.bb;
+import dchip.bb_tree;
 import dchip.chipmunk;
 import dchip.space_hash;
 import dchip.sweep1D;
@@ -74,20 +75,17 @@ cpSpatialIndex* cpSpaceHashInit(cpSpaceHash* hash, cpFloat celldim, int numcells
 /// Allocate and initialize a spatial hash.
 cpSpatialIndex* cpSpaceHashNew(cpFloat celldim, int cells, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex* staticIndex);
 
-// drey todo
 /// Change the cell dimensions and table size of the spatial hash to tune it.
 /// The cell dimensions should roughly match the average size of your objects
 /// and the table size should be ~10 larger than the number of objects inserted.
 /// Some trial and error is required to find the optimum numbers for efficiency.
-//~ void cpSpaceHashResize(cpSpaceHash* hash, cpFloat celldim, int numcells);
+void cpSpaceHashResize(cpSpaceHash* hash, cpFloat celldim, int numcells);
 
-// drey todo
 /// Allocate a bounding box tree.
-//~ cpBBTree* cpBBTreeAlloc();
+cpBBTree* cpBBTreeAlloc();
 
-// drey todo
 /// Initialize a bounding box tree.
-//~ cpSpatialIndex* cpBBTreeInit(cpBBTree* tree, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex* staticIndex);
+cpSpatialIndex* cpBBTreeInit(cpBBTree* tree, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex* staticIndex);
 
 /// Allocate and initialize a bounding box tree.
 cpSpatialIndex* cpBBTreeNew(cpSpatialIndexBBFunc bbfunc, cpSpatialIndex* staticIndex);

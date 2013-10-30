@@ -628,7 +628,7 @@ cpSpatialIndexClass* Klass()
     return &klass;
 }
 
-// drey todo
+// drey later todo
 // version = CHIP_BBTREE_DEBUG_DRAW;
 version (CHIP_BBTREE_DEBUG_DRAW)
 {

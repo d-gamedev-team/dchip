@@ -25,6 +25,7 @@ import core.stdc.stdlib : calloc, realloc, free;
 
 import dchip.bb;
 import dchip.vector;
+import dchip.spatial_index;
 import dchip.types;
 
 /**

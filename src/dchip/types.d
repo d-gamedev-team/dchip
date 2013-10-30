@@ -21,6 +21,8 @@
  */
 module dchip.types;
 
+import std.math : sqrt, sin, cos, acos, atan2, fmod, exp, pow, floor, ceil, PI, E;
+
 version (StdDdoc)
 {
     /**
@@ -46,3 +48,83 @@ else
     alias cpFloat = float;
 }
 
+version (CHIP_USE_DOUBLES)
+{
+    alias cpfsqrt = sqrt;
+    alias cpfsin = sin;
+    alias cpfcos = cos;
+    alias cpfacos = acos;
+    alias cpfatan2 = atan2;
+    alias cpfmod = fmod;
+    alias cpfexp = exp;
+    alias cpfpow = pow;
+    alias cpffloor = floor;
+    alias cpfceil = ceil;
+}
+else
+{
+    alias cpfsqrt = sqrtf;
+    alias cpfsin = sinf;
+    alias cpfcos = cosf;
+    alias cpfacos = acosf;
+    alias cpfatan2 = atan2f;
+    alias cpfmod = fmodf;
+    alias cpfexp = expf;
+    alias cpfpow = powf;
+    alias cpffloor = floorf;
+    alias cpfceil = ceilf;
+}
+
+///
+enum CPFLOAT_MIN = cpFloat.min_normal;
+
+///
+enum INFINITY = cpFloat.infinity;
+
+///
+alias M_PI = PI;
+
+///
+alias M_E = E;
+
+/// Return the max of two cpFloats.
+cpFloat cpfmax(cpFloat a, cpFloat b)
+{
+    return (a > b) ? a : b;
+}
+
+/// Return the min of two cpFloats.
+cpFloat cpfmin(cpFloat a, cpFloat b)
+{
+    return (a < b) ? a : b;
+}
+
+/// Return the absolute value of a cpFloat.
+cpFloat cpfabs(cpFloat f)
+{
+    return (f < 0) ? -f : f;
+}
+
+/// Clamp $(D f) to be between $(D min) and $(D max).
+cpFloat cpfclamp(cpFloat f, cpFloat min, cpFloat max)
+{
+    return cpfmin(cpfmax(f, min), max);
+}
+
+/// Clamp $(D f) to be between 0 and 1.
+cpFloat cpfclamp01(cpFloat f)
+{
+    return cpfmax(0.0f, cpfmin(f, 1.0f));
+}
+
+/// Linearly interpolate (or extrapolate) between $(D f1) and $(D f2) by $(D t) percent.
+cpFloat cpflerp(cpFloat f1, cpFloat f2, cpFloat t)
+{
+    return f1 * (1.0f - t) + f2 * t;
+}
+
+/// Linearly interpolate from $(D f1) to $(D f2) by no more than $(D d).
+cpFloat cpflerpconst(cpFloat f1, cpFloat f2, cpFloat d)
+{
+    return f1 + cpfclamp(f2 - f1, -d, d);
+}

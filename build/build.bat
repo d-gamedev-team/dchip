@@ -17,12 +17,33 @@ cd %this_path%\..\src
 set "files="
 for /r %%i in (*.d) do set files=!files! %%i
 
-set includes=-I%cd%
-set debug_versions=-debug=DCHIP_DEBUG
-set flags=%includes% %debug_versions% -g -w
+rem Version options
+rem ---------------
+rem
+rem CHIP_ENABLE_UNITTESTS
+rem     - Enable unittest blocks.
+rem       By default unittest blocks are not compiled-in,
+rem       leading to huge savings in compilation time.
+rem       Note: The -unittest flag still needs to be
+rem       passed to run the tests.
+rem
+rem CHIP_ALLOW_PRIVATE_ACCESS
+rem     - Make private fields public.
+rem
+rem CHIP_ENABLE_WARNINGS
+rem     - Enable internal warnings.
+rem
+rem CHIP_USE_DOUBLES
+rem     - Use double-precision floating point internally.
 
-rem set compiler=dmd.exe
-set compiler=dmd_msc.exe
+set includes=-I%cd%
+rem set version_flags=-version=CHIP_ALLOW_PRIVATE_ACCESS
+rem set version_flags=-version=CHIP_ENABLE_UNITTESTS -version=CHIP_ENABLE_WARNINGS -version=CHIP_USE_DOUBLES
+set version_flags=-version=CHIP_ENABLE_WARNINGS -version=CHIP_USE_DOUBLES
+set flags=%includes% %version_flags% -g -w
+
+set compiler=dmd.exe
+rem set compiler=dmd_msc.exe
 rem set compiler=ldmd2.exe
 
 set main_file=dchip\package.d
@@ -41,7 +62,7 @@ if [%do_build_tests%]==[] goto :BUILD
 
 :TEST
 
-%build_tests%
+timeit %build_tests%
 if errorlevel 1 GOTO :ERROR
 if [%do_run_tests%]==[] (
     echo Success: dchip tests built. >> %stdout_log%

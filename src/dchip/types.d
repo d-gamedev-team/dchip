@@ -19,9 +19,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip;
+module dchip.types;
 
-public
+version (StdDdoc)
 {
-    import dchip.chipmunk;
+    /**
+        The floating-point type used internally.
+        By default it is aliased to $(D float).
+
+        Use the $(D CHIP_USE_DOUBLES) version switch
+        to set it to $(D double) instead. Using doubles
+        will increase precision at the cost of performance.
+    */
+    alias cpFloat = float;
 }
+else
+version (CHIP_USE_DOUBLES)
+{
+    /// The floating-point type used internally.
+    /// Use the $(D CHIP_USE_DOUBLES) version switch to enable this.
+    alias cpFloat = double;
+}
+else
+{
+    ///
+    alias cpFloat = float;
+}
+

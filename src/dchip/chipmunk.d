@@ -21,6 +21,9 @@
  */
 module dchip.chipmunk;
 
+import core.stdc.stdlib : calloc, realloc, free;
+
+import dchip.vector;
 import dchip.types;
 
 /**
@@ -178,3 +181,17 @@ unittest
     assertNotThrown!DChipError(cpAssertHard(iteration == WARN_GJK_ITERATIONS,
                                            "iteration == WARN_GJK_ITERATIONS"));
 }
+
+/// Allocated size for various Chipmunk buffers.
+enum CP_BUFFER_BYTES = 32 * 1024;
+
+/// Chipmunk calloc() alias.
+alias cpcalloc = calloc;
+
+/// Chipmunk realloc() alias.
+alias cprealloc = realloc;
+
+/// Chipmunk free() alias.
+alias cpfree = free;
+
+

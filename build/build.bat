@@ -36,14 +36,17 @@ rem
 rem CHIP_USE_DOUBLES
 rem     - Use double-precision floating point internally.
 
+rem set CHIP_ENABLE_UNITTESTS=-version=CHIP_ENABLE_UNITTESTS
+rem set CHIP_ALLOW_PRIVATE_ACCESS=-version=CHIP_ALLOW_PRIVATE_ACCESS
+rem set CHIP_ENABLE_WARNINGS=-version=CHIP_ENABLE_WARNINGS
+set CHIP_USE_DOUBLES=-version=CHIP_USE_DOUBLES
+
 set includes=-I%cd%
-rem set version_flags=-version=CHIP_ALLOW_PRIVATE_ACCESS
-rem set version_flags=-version=CHIP_ENABLE_UNITTESTS -version=CHIP_ENABLE_WARNINGS -version=CHIP_USE_DOUBLES
-set version_flags=-version=CHIP_ENABLE_WARNINGS -version=CHIP_USE_DOUBLES
+set version_flags=%CHIP_ENABLE_UNITTESTS% %CHIP_ALLOW_PRIVATE_ACCESS% %CHIP_ENABLE_WARNINGS% %CHIP_USE_DOUBLES%
 set flags=%includes% %version_flags% -g -w
 
-set compiler=dmd.exe
-rem set compiler=dmd_msc.exe
+rem set compiler=dmd.exe
+set compiler=dmd_msc.exe
 rem set compiler=ldmd2.exe
 
 set main_file=dchip\package.d

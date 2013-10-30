@@ -23,6 +23,7 @@ module dchip.chipmunk;
 
 import core.stdc.stdlib : calloc, realloc, free;
 
+import dchip.bb;
 import dchip.vector;
 import dchip.types;
 

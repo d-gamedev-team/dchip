@@ -21,8 +21,10 @@
  */
 module dchip.chipmunk;
 
+import dchip.types;
+
 /**
-    RDMD local import linker bug workaround:
+    Workaround for a linker bug with RDMD local imports:
     http://d.puremagic.com/issues/show_bug.cgi?id=7016
 */
 version (CHIP_ENABLE_UNITTESTS)
@@ -176,5 +178,3 @@ unittest
     assertNotThrown!DChipError(cpAssertHard(iteration == WARN_GJK_ITERATIONS,
                                            "iteration == WARN_GJK_ITERATIONS"));
 }
-
-import dchip.types;

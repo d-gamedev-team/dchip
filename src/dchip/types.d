@@ -25,6 +25,8 @@ import core.stdc.stdint : uintptr_t, uint32_t;
 
 import std.math : sqrt, sin, cos, acos, atan2, fmod, exp, pow, floor, ceil, PI, E;
 
+import dchip.vector;
+
 version (StdDdoc)
 {
     /**
@@ -167,6 +169,31 @@ enum CP_ALL_LAYERS = ~cast(cpLayers)0;
 struct cpVect
 {
     cpFloat x, y;
+
+    cpVect opBinary(string op : "*")(const cpFloat s)
+    {
+        return cpvmult(this, s);
+    }
+
+    cpVect opBinary(string op : "+")(const cpVect v2)
+    {
+        return cpvadd(this, v2);
+    }
+
+    cpVect opBinary(string op : "-")(const cpVect v2)
+    {
+        return cpvsub(this, v2);
+    }
+
+    cpBool opEquals(const cpVect v2)
+    {
+        return cpveql(this, v2);
+    }
+
+    cpVect opUnary(string op : "-")()
+    {
+        return cpvneg(this);
+    }
 }
 
 /// Chipmunk's 2D matrix type.

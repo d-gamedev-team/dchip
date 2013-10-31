@@ -197,4 +197,64 @@ alias cprealloc = realloc;
 /// Chipmunk free() alias.
 alias cpfree = free;
 
+/// Chipmunk 6.2.1
+enum CP_VERSION_MAJOR = 6;
+enum CP_VERSION_MINOR = 2;
+enum CP_VERSION_RELEASE = 1;
 
+/// Version string.
+extern const char* cpVersionString;
+
+/// @deprecated
+void cpInitChipmunk();
+
+/// Enables segment to segment shape collisions.
+void cpEnableSegmentToSegmentCollisions();
+
+/// Calculate the moment of inertia for a circle.
+/// @c r1 and @c r2 are the inner and outer diameters. A solid circle has an inner diameter of 0.
+cpFloat cpMomentForCircle(cpFloat m, cpFloat r1, cpFloat r2, cpVect offset);
+
+/// Calculate area of a hollow circle.
+/// @c r1 and @c r2 are the inner and outer diameters. A solid circle has an inner diameter of 0.
+cpFloat cpAreaForCircle(cpFloat r1, cpFloat r2);
+
+/// Calculate the moment of inertia for a line segment.
+/// Beveling radius is not supported.
+cpFloat cpMomentForSegment(cpFloat m, cpVect a, cpVect b);
+
+/// Calculate the area of a fattened (capsule shaped) line segment.
+cpFloat cpAreaForSegment(cpVect a, cpVect b, cpFloat r);
+
+/// Calculate the moment of inertia for a solid polygon shape assuming it's center of gravity is at it's centroid. The offset is added to each vertex.
+cpFloat cpMomentForPoly(cpFloat m, int numVerts, const cpVect* verts, cpVect offset);
+
+/// Calculate the signed area of a polygon. A Clockwise winding gives positive area.
+/// This is probably backwards from what you expect, but matches Chipmunk's the winding for poly shapes.
+cpFloat cpAreaForPoly(const int numVerts, const cpVect* verts);
+
+/// Calculate the natural centroid of a polygon.
+cpVect cpCentroidForPoly(const int numVerts, const cpVect* verts);
+
+/// Center the polygon on the origin. (Subtracts the centroid of the polygon from each vertex)
+void cpRecenterPoly(const int numVerts, cpVect* verts);
+
+/// Calculate the moment of inertia for a solid box.
+cpFloat cpMomentForBox(cpFloat m, cpFloat width, cpFloat height);
+
+/// Calculate the moment of inertia for a solid box.
+cpFloat cpMomentForBox2(cpFloat m, cpBB box);
+
+/// Calculate the convex hull of a given set of points. Returns the count of points in the hull.
+/// @c result must be a pointer to a @c cpVect array with at least @c count elements. If @c result is @c NULL, then @c verts will be reduced instead.
+/// @c first is an optional pointer to an integer to store where the first vertex in the hull came from (i.e. verts[first] == result[0])
+/// @c tol is the allowed amount to shrink the hull when simplifying it. A tolerance of 0.0 creates an exact hull.
+int cpConvexHull(int count, cpVect* verts, cpVect* result, int* first, cpFloat tol);
+
+/// Convenience macro to work with cpConvexHull.
+/// @c count and @c verts is the input array passed to cpConvexHull().
+/// @c count_var and @c verts_var are the names of the variables the macro creates to store the result.
+/// The output vertex array is allocated on the stack using alloca() so it will be freed automatically, but cannot be returned from the current scope.
+//~ #define CP_CONVEX_HULL(__count__, __verts__, __count_var__, __verts_var__) \
+    //~ cpVect * __verts_var__ = (cpVect*)alloca(__count__ * sizeof(cpVect)); \
+    //~ int __count_var__ = cpConvexHull(__count__, __verts__, __verts_var__, NULL, 0.0); \

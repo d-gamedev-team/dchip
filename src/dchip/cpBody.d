@@ -106,15 +106,15 @@ struct cpBody
     /// Maximum rotational rate (in radians/second) allowed when updating the angular velocity.
     cpFloat w_limit;
 
-    //~ version (CHIP_ALLOW_PRIVATE_ACCESS)
-        //~ cpVect v_bias;
-    //~ else
-        //~ package cpVect v_bias;
+    version (CHIP_ALLOW_PRIVATE_ACCESS)
+        cpVect v_bias;
+    else
+        package cpVect v_bias;
 
-    //~ version (CHIP_ALLOW_PRIVATE_ACCESS)
-        //~ cpFloat w_bias;
-    //~ else
-        //~ package cpFloat w_bias;
+    version (CHIP_ALLOW_PRIVATE_ACCESS)
+        cpFloat w_bias;
+    else
+        package cpFloat w_bias;
 
     version (CHIP_ALLOW_PRIVATE_ACCESS)
         cpSpace * space;

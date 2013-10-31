@@ -19,40 +19,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip;
+module dchip.cpRotaryLimitJoint;
 
-public
+import std.string;
+
+import dchip.chipmunk;
+import dchip.cpBody;
+import dchip.cpConstraint;
+import dchip.chipmunk_types;
+
+const cpConstraintClass* cpRotaryLimitJointGetClass();
+
+/// @private
+struct cpRotaryLimitJoint
 {
-    import dchip.chipmunk;
-    import dchip.chipmunk_private;
-    import dchip.chipmunk_types;
-    import dchip.chipmunk_unsafe;
-    import dchip.constraints_util;
-    import dchip.cpArbiter;
-    import dchip.cpArray;
-    import dchip.cpBB;
-    import dchip.cpBBTree;
-    import dchip.cpBody;
-    import dchip.cpConstraint;
-    import dchip.cpDampedRotarySpring;
-    import dchip.cpDampedSpring;
-    import dchip.cpGearJoint;
-    import dchip.cpGrooveJoint;
-    import dchip.cpHashSet;
-    import dchip.cpPinJoint;
-    import dchip.cpPivotJoint;
-    import dchip.cpPolyShape;
-    import dchip.cpRatchetJoint;
-    import dchip.cpRotaryLimitJoint;
-    import dchip.cpShape;
-    import dchip.cpSimpleMotor;
-    import dchip.cpSlideJoint;
-    import dchip.cpSpace;
-    import dchip.cpSpaceHash;
-    import dchip.cpSpaceStep;
-    import dchip.cpSpatialIndex;
-    import dchip.cpSweep1D;
-    import dchip.cpVect;
-    import dchip.prime;
-    import dchip.util;
+    cpConstraint constraint;
+    cpFloat min, max;
+
+    cpFloat iSum;
+
+    cpFloat bias;
+    cpFloat jAcc;
 }
+
+/// Allocate a damped rotary limit joint.
+cpRotaryLimitJoint* cpRotaryLimitJointAlloc();
+
+/// Initialize a damped rotary limit joint.
+cpRotaryLimitJoint* cpRotaryLimitJointInit(cpRotaryLimitJoint* joint, cpBody* a, cpBody* b, cpFloat min, cpFloat max);
+
+/// Allocate and initialize a damped rotary limit joint.
+cpConstraint* cpRotaryLimitJointNew(cpBody* a, cpBody* b, cpFloat min, cpFloat max);
+
+mixin CP_DefineConstraintProperty!("cpRotaryLimitJoint", cpFloat, "min", "Min");
+mixin CP_DefineConstraintProperty!("cpRotaryLimitJoint", cpFloat, "max", "Max");

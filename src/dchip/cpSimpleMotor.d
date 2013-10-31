@@ -19,40 +19,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip;
+module dchip.cpSimpleMotor;
 
-public
+import std.string;
+
+import dchip.chipmunk;
+import dchip.cpBody;
+import dchip.cpConstraint;
+import dchip.chipmunk_types;
+
+const cpConstraintClass* cpSimpleMotorGetClass();
+
+/// @private
+struct cpSimpleMotor
 {
-    import dchip.chipmunk;
-    import dchip.chipmunk_private;
-    import dchip.chipmunk_types;
-    import dchip.chipmunk_unsafe;
-    import dchip.constraints_util;
-    import dchip.cpArbiter;
-    import dchip.cpArray;
-    import dchip.cpBB;
-    import dchip.cpBBTree;
-    import dchip.cpBody;
-    import dchip.cpConstraint;
-    import dchip.cpDampedRotarySpring;
-    import dchip.cpDampedSpring;
-    import dchip.cpGearJoint;
-    import dchip.cpGrooveJoint;
-    import dchip.cpHashSet;
-    import dchip.cpPinJoint;
-    import dchip.cpPivotJoint;
-    import dchip.cpPolyShape;
-    import dchip.cpRatchetJoint;
-    import dchip.cpRotaryLimitJoint;
-    import dchip.cpShape;
-    import dchip.cpSimpleMotor;
-    import dchip.cpSlideJoint;
-    import dchip.cpSpace;
-    import dchip.cpSpaceHash;
-    import dchip.cpSpaceStep;
-    import dchip.cpSpatialIndex;
-    import dchip.cpSweep1D;
-    import dchip.cpVect;
-    import dchip.prime;
-    import dchip.util;
+    cpConstraint constraint;
+    cpFloat rate;
+
+    cpFloat iSum;
+
+    cpFloat jAcc;
 }
+
+/// Allocate a simple motor.
+cpSimpleMotor* cpSimpleMotorAlloc();
+
+/// initialize a simple motor.
+cpSimpleMotor* cpSimpleMotorInit(cpSimpleMotor* joint, cpBody* a, cpBody* b, cpFloat rate);
+
+/// Allocate and initialize a simple motor.
+cpConstraint* cpSimpleMotorNew(cpBody* a, cpBody* b, cpFloat rate);
+
+mixin CP_DefineConstraintProperty!("cpSimpleMotor", cpFloat, "rate", "Rate");

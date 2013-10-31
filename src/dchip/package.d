@@ -33,6 +33,7 @@ public
     import dchip.cpBBTree;
     import dchip.cpBody;
     import dchip.cpConstraint;
+    import dchip.cpDampedRotarySpring;
     import dchip.cpHashSet;
     import dchip.cpPolyShape;
     import dchip.cpShape;

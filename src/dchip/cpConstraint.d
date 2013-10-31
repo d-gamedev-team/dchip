@@ -24,6 +24,7 @@ module dchip.cpConstraint;
 import std.string;
 
 import dchip.cpBody;
+import dchip.chipmunk;
 import dchip.chipmunk_types;
 import dchip.cpSpace;
 
@@ -166,30 +167,34 @@ cpFloat cpConstraintGetImpulse(cpConstraint* constraint)
 
 string cpConstraintCheckCast(string constraint, string struct_)
 {
-    return `cpAssertHard(%1$s.klass == %2$sGetClass(), "Constraint is not a %2$s");`;
+    return `cpAssertHard(%1$s.klass == %2$sGetClass(), "Constraint is not a %2$s");`.format(constraint, struct_);
 }
 
 mixin template CP_DefineConstraintGetter(string struct_, type, string member, string name)
 {
+    enum mixStr = `mixin(cpConstraintCheckCast("constraint", "%1$s"));`.format(struct_);
+
     mixin(q{
         type %1$sGet%2$s(const cpConstraint* constraint)
         {
-            mixin(cpConstraintCheckCast(constraint, %1$s));
+            %4$s
             return cast(typeof(return))((cast(%1$s*)constraint).%3$s);
         }
-    }.format(struct_, name, member));
+    }.format(struct_, name, member, mixStr));
 }
 
 mixin template CP_DefineConstraintSetter(string struct_, type, string member, string name)
 {
+    enum mixStr = `mixin(cpConstraintCheckCast("constraint", "%1$s"));`.format(struct_);
+
     mixin(q{
-        type %1$sSet%2$s(cpConstraint * constraint, type value)
+        void %1$sSet%2$s(cpConstraint * constraint, type value)
         {
-            mixin(cpConstraintCheckCast(constraint, %1$s));
+            %4$s
             cpConstraintActivateBodies(constraint);
             (cast(%1$s*)constraint).%3$s= value;
         }
-    }.format(struct_, name, member));
+    }.format(struct_, name, member, mixStr));
 }
 
 mixin template CP_DefineConstraintProperty(string struct_, type, string member, string name)

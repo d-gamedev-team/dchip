@@ -1,0 +1,63 @@
+/*
+ * Copyright (c) 2007-2013 Scott Lembcke and Howling Moon Software
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+module dchip.cpDampedRotarySpring;
+
+import std.string;
+
+import dchip.chipmunk;
+import dchip.cpBody;
+import dchip.cpConstraint;
+import dchip.chipmunk_types;
+
+alias cpDampedRotarySpringTorqueFunc = cpFloat function(cpConstraint* spring, cpFloat relativeAngle);
+
+const cpConstraintClass* cpDampedRotarySpringGetClass();
+
+/// @private
+struct cpDampedRotarySpring
+{
+    cpConstraint constraint;
+    cpFloat restAngle;
+    cpFloat stiffness;
+    cpFloat damping;
+    cpDampedRotarySpringTorqueFunc springTorqueFunc;
+
+    cpFloat target_wrn;
+    cpFloat w_coef;
+
+    cpFloat iSum;
+    cpFloat jAcc;
+}
+
+/// Allocate a damped rotary spring.
+cpDampedRotarySpring* cpDampedRotarySpringAlloc();
+
+/// Initialize a damped rotary spring.
+cpDampedRotarySpring* cpDampedRotarySpringInit(cpDampedRotarySpring* joint, cpBody* a, cpBody* b, cpFloat restAngle, cpFloat stiffness, cpFloat damping);
+
+/// Allocate and initialize a damped rotary spring.
+cpConstraint* cpDampedRotarySpringNew(cpBody* a, cpBody* b, cpFloat restAngle, cpFloat stiffness, cpFloat damping);
+
+mixin CP_DefineConstraintProperty!("cpDampedRotarySpring", cpFloat, "restAngle", "RestAngle");
+mixin CP_DefineConstraintProperty!("cpDampedRotarySpring", cpFloat, "stiffness", "Stiffness");
+mixin CP_DefineConstraintProperty!("cpDampedRotarySpring", cpFloat, "damping", "Damping");
+mixin CP_DefineConstraintProperty!("cpDampedRotarySpring", cpDampedRotarySpringTorqueFunc, "springTorqueFunc", "SpringTorqueFunc");

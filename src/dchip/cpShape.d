@@ -137,14 +137,14 @@ struct cpShape
         package cpSpace * space;
 
     version (CHIP_ALLOW_PRIVATE_ACCESS)
-        cpSpace * next;
+        cpShape * next;
     else
-        package cpSpace * next;
+        package cpShape * next;
 
     version (CHIP_ALLOW_PRIVATE_ACCESS)
-        cpSpace * prev;
+        cpShape * prev;
     else
-        package cpSpace * prev;
+        package cpShape * prev;
 
     version (CHIP_ALLOW_PRIVATE_ACCESS)
         cpHashValue hashid;

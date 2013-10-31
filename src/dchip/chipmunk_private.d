@@ -202,7 +202,6 @@ struct cpContact
 };
 
 //~ cpContact* cpContactInit(cpContact* con, cpVect p, cpVect n, cpFloat dist, cpHashValue hash);
-cpArbiter* cpArbiterInit(cpArbiter* arb, cpShape* a, cpShape* b);
 
 void cpArbiterCallSeparate(cpArbiter* arb, cpSpace* space)
 {
@@ -215,10 +214,3 @@ cpArbiterThread* cpArbiterThreadForBody(cpArbiter* arb, cpBody* bdy)
 {
     return (arb.body_a == bdy ? &arb.thread_a : &arb.thread_b);
 }
-
-void cpArbiterUnthread(cpArbiter* arb);
-
-void cpArbiterUpdate(cpArbiter* arb, cpContact* contacts, int numContacts, cpCollisionHandler* handler, cpShape* a, cpShape* b);
-void cpArbiterPreStep(cpArbiter* arb, cpFloat dt, cpFloat bias, cpFloat slop);
-void cpArbiterApplyCachedImpulse(cpArbiter* arb, cpFloat dt_coef);
-void cpArbiterApplyImpulse(cpArbiter* arb);

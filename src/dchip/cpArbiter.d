@@ -19,16 +19,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip.arbiter;
+module dchip.cpArbiter;
 
 import std.string;
 
-import dchip.body_;
+import dchip.cpBody;
 import dchip.chipmunk_private;
 import dchip.chipmunk_types;
-import dchip.space;
-import dchip.spatial_index;
-import dchip.shape;
+import dchip.cpSpace;
+import dchip.cpSpatialIndex;
+import dchip.cpShape;
 import dchip.util;
 
 /// The cpArbiter struct controls pairs of colliding shapes.

@@ -19,18 +19,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip.bb_tree;
+module dchip.cpBBTree;
 
 import core.stdc.stdlib : qsort;
 
-import dchip.array;
-import dchip.bb;
 import dchip.chipmunk;
 import dchip.chipmunk_private;
 import dchip.chipmunk_types;
-import dchip.hash_set;
-import dchip.spatial_index;
-import dchip.vector;
+import dchip.cpArray;
+import dchip.cpBB;
+import dchip.cpHashSet;
+import dchip.cpSpatialIndex;
+import dchip.cpVect;
 
 cpSpatialIndexClass* Klass();
 

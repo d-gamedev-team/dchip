@@ -23,11 +23,11 @@ module dchip.chipmunk;
 
 import core.stdc.stdlib : calloc, realloc, free;
 
-import dchip.bb;
-import dchip.body_;
+import dchip.cpBB;
+import dchip.cpBody;
 import dchip.chipmunk_types;
-import dchip.vector;
-import dchip.spatial_index;
+import dchip.cpVect;
+import dchip.cpSpatialIndex;
 
 /**
     Workaround for a linker bug with RDMD local imports:

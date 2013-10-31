@@ -19,21 +19,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip.space;
+module dchip.cpSpace;
 
 import std.string;
 
-import dchip.arbiter;
-import dchip.bb;
-import dchip.body_;
-import dchip.constraint;
+import dchip.cpBB;
+import dchip.cpBody;
 import dchip.chipmunk_private;
 import dchip.chipmunk_types;
-import dchip.hash_set;
-import dchip.shape;
-import dchip.space_step;
-import dchip.spatial_index;
-import dchip.vector;
+import dchip.cpArbiter;
+import dchip.cpConstraint;
+import dchip.cpHashSet;
+import dchip.cpShape;
+import dchip.cpSpaceStep;
+import dchip.cpSpatialIndex;
+import dchip.cpVect;
 
 alias cpSpaceArbiterApplyImpulseFunc = void function(cpArbiter* arb);
 

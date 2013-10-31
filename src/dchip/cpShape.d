@@ -19,16 +19,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip.shape;
+module dchip.cpShape;
 
 import std.string;
 
-import dchip.bb;
-import dchip.body_;
+import dchip.cpBB;
+import dchip.cpBody;
 import dchip.chipmunk_types;
-import dchip.space;
+import dchip.cpSpace;
 import dchip.util;
-import dchip.vector;
+import dchip.cpVect;
 
 /// The cpShape struct defines the shape of a rigid body.
 

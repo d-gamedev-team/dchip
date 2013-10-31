@@ -19,14 +19,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip.spatial_index;
+module dchip.cpSpatialIndex;
 
-import dchip.bb;
-import dchip.bb_tree;
+import dchip.cpBBTree;
 import dchip.chipmunk;
 import dchip.chipmunk_types;
-import dchip.space_hash;
-import dchip.sweep1D;
+import dchip.cpBB;
+import dchip.cpSpaceHash;
+import dchip.cpSweep1D;
 
 /**
     Spatial indexes are data structures that are used to accelerate collision detection

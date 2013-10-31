@@ -19,10 +19,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip.bb;
+module dchip.cpBB;
 
 import dchip.chipmunk_types;
-import dchip.vector;
+import dchip.cpVect;
 
 /// Chipmunk's axis-aligned 2D bounding box type along with a few handy routines.
 

@@ -19,12 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip.hash_set;
+module dchip.cpHashSet;
 
-import dchip.array;
 import dchip.chipmunk;
 import dchip.chipmunk_private;
 import dchip.chipmunk_types;
+import dchip.cpArray;
 import dchip.prime;
 
 struct cpHashSetBin

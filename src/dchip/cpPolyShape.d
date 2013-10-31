@@ -19,12 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip.poly_shape;
+module dchip.cpPolyShape;
 
-import dchip.bb;
-import dchip.body_;
+import dchip.cpBB;
+import dchip.cpBody;
 import dchip.chipmunk_types;
-import dchip.shape;
+import dchip.cpShape;
 
 /// @private
 struct cpSplittingPlane

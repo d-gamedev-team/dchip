@@ -21,17 +21,17 @@
  */
 module dchip.chipmunk_private;
 
-import dchip.arbiter;
-import dchip.body_;
-import dchip.constraint;
+import dchip.cpBody;
 import dchip.chipmunk;
 import dchip.chipmunk_types;
-import dchip.hash_set;
-import dchip.poly_shape;
-import dchip.shape;
-import dchip.space;
-import dchip.spatial_index;
-import dchip.vector;
+import dchip.cpArbiter;
+import dchip.cpConstraint;
+import dchip.cpHashSet;
+import dchip.cpPolyShape;
+import dchip.cpShape;
+import dchip.cpSpace;
+import dchip.cpSpatialIndex;
+import dchip.cpVect;
 
 enum CP_HASH_COEF = 3344921057uL;
 

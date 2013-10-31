@@ -19,13 +19,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip.constraint;
+module dchip.cpConstraint;
 
 import std.string;
 
-import dchip.body_;
+import dchip.cpBody;
 import dchip.chipmunk_types;
-import dchip.space;
+import dchip.cpSpace;
 
 alias cpConstraintPreStepImpl = void function(cpConstraint* constraint, cpFloat dt);
 alias cpConstraintApplyCachedImpulseImpl = void function(cpConstraint* constraint, cpFloat dt_coef);

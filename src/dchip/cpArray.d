@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip.array;
+module dchip.cpArray;
 
 import dchip.chipmunk;
 import dchip.chipmunk_private;

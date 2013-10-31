@@ -19,14 +19,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip.sweep1D;
+module dchip.cpSweep1D;
 
 import core.stdc.stdlib : qsort;
 
-import dchip.bb;
 import dchip.chipmunk;
 import dchip.chipmunk_types;
-import dchip.spatial_index;
+import dchip.cpBB;
+import dchip.cpSpatialIndex;
 
 cpSpatialIndexClass* Klass();
 

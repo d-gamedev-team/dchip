@@ -25,7 +25,7 @@ import core.stdc.stdint : uintptr_t, uint32_t;
 
 import std.math : sqrt, sin, cos, acos, atan2, fmod, exp, pow, floor, ceil, PI, E;
 
-import dchip.vector;
+import dchip.cpVect;
 
 version (StdDdoc)
 {

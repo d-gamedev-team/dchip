@@ -19,21 +19,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip.space_step;
+module dchip.cpSpaceStep;
 
-import dchip.array;
-import dchip.arbiter;
-import dchip.bb;
-import dchip.body_;
-import dchip.constraint;
-import dchip.contact;
+import dchip.cpBB;
+import dchip.cpBody;
 import dchip.chipmunk;
 import dchip.chipmunk_private;
 import dchip.chipmunk_types;
-import dchip.hash_set;
-import dchip.shape;
-import dchip.space;
-import dchip.spatial_index;
+import dchip.cpArbiter;
+import dchip.cpArray;
+import dchip.cpConstraint;
+import dchip.cpHashSet;
+import dchip.cpShape;
+import dchip.cpSpace;
+import dchip.cpSpatialIndex;
 
 cpPostStepCallback* cpSpaceGetPostStepCallback(cpSpace* space, void* key)
 {

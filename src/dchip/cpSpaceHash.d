@@ -19,18 +19,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip.space_hash;
+module dchip.cpSpaceHash;
 
-import dchip.array;
-import dchip.bb;
+import dchip.cpBB;
 import dchip.chipmunk;
 import dchip.chipmunk_private;
 import dchip.chipmunk_types;
-import dchip.hash_set;
+import dchip.cpArray;
+import dchip.cpHashSet;
 import dchip.prime;
-import dchip.spatial_index;
+import dchip.cpSpatialIndex;
 import dchip.chipmunk_types;
-import dchip.vector;
+import dchip.cpVect;
 
 struct cpSpaceHash
 {

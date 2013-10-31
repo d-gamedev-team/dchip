@@ -23,8 +23,10 @@ module dchip.cpSpace;
 
 import std.string;
 
+import dchip.cpArray;
 import dchip.cpBB;
 import dchip.cpBody;
+import dchip.chipmunk;
 import dchip.chipmunk_private;
 import dchip.chipmunk_types;
 import dchip.cpArbiter;
@@ -47,12 +49,12 @@ struct cpSpace
     cpVect gravity;
 
     /// Damping rate expressed as the fraction of velocity bodies retain each second.
-    /// A value of 0.9 would mean that each body's velocity will drop 10% per second.
+    /// A value of 0.9 would mean that each body_'s velocity will drop 10% per second.
     /// The default value is 1.0, meaning no damping is applied.
     /// @note This damping value is different than those of cpDampedSpring and cpDampedRotarySpring.
     cpFloat damping;
 
-    /// Speed threshold for a body to be considered idle.
+    /// Speed threshold for a body_ to be considered idle.
     /// The default value of 0 means to let the space guess a good threshold based on gravity.
     cpFloat idleSpeedThreshold;
 
@@ -85,8 +87,8 @@ struct cpSpace
     /// class so you can access it when given a cpSpace reference in a callback.
     cpDataPointer data;
 
-    /// The designated static body for this space.
-    /// You can modify this body, or replace it with your own static body.
+    /// The designated static body_ for this space.
+    /// You can modify this body_, or replace it with your own static body_.
     /// By default it points to a statically allocated cpBody in the cpSpace struct.
     cpBody* staticBody;
 
@@ -243,7 +245,7 @@ cpBool cpSpaceIsLocked(cpSpace* space)
 /// Set a default collision handler for this space.
 /// The default collision handler is invoked for each colliding pair of shapes
 /// that isn't explicitly handled by a specific collision handler.
-/// You can pass NULL for any function you don't want to implement.
+/// You can pass null for any function you don't want to implement.
 void cpSpaceSetDefaultCollisionHandler(
     cpSpace* space,
     cpCollisionBeginFunc begin,
@@ -254,7 +256,7 @@ void cpSpaceSetDefaultCollisionHandler(
     );
 
 /// Set a collision handler to be used whenever the two shapes with the given collision types collide.
-/// You can pass NULL for any function you don't want to implement.
+/// You can pass null for any function you don't want to implement.
 void cpSpaceAddCollisionHandler(
     cpSpace* space,
     cpCollisionType a, cpCollisionType b,
@@ -269,13 +271,13 @@ void cpSpaceAddCollisionHandler(
 void cpSpaceRemoveCollisionHandler(cpSpace* space, cpCollisionType a, cpCollisionType b);
 
 /// Add a collision shape to the simulation.
-/// If the shape is attached to a static body, it will be added as a static shape.
+/// If the shape is attached to a static body_, it will be added as a static shape.
 cpShape* cpSpaceAddShape(cpSpace* space, cpShape* shape);
 
 /// Explicity add a shape as a static shape to the simulation.
 cpShape* cpSpaceAddStaticShape(cpSpace* space, cpShape* shape);
 
-/// Add a rigid body to the simulation.
+/// Add a rigid body_ to the simulation.
 cpBody* cpSpaceAddBody(cpSpace* space, cpBody* bdy);
 
 /// Add a constraint to the simulation.
@@ -287,7 +289,7 @@ void cpSpaceRemoveShape(cpSpace* space, cpShape* shape);
 /// Remove a collision shape added using cpSpaceAddStaticShape() from the simulation.
 void cpSpaceRemoveStaticShape(cpSpace* space, cpShape* shape);
 
-/// Remove a rigid body from the simulation.
+/// Remove a rigid body_ from the simulation.
 void cpSpaceRemoveBody(cpSpace* space, cpBody* bdy);
 
 /// Remove a constraint from the simulation.
@@ -296,18 +298,18 @@ void cpSpaceRemoveConstraint(cpSpace* space, cpConstraint* constraint);
 /// Test if a collision shape has been added to the space.
 cpBool cpSpaceContainsShape(cpSpace* space, cpShape* shape);
 
-/// Test if a rigid body has been added to the space.
+/// Test if a rigid body_ has been added to the space.
 cpBool cpSpaceContainsBody(cpSpace* space, cpBody* bdy);
 
 /// Test if a constraint has been added to the space.
 cpBool cpSpaceContainsConstraint(cpSpace* space, cpConstraint* constraint);
 
-/// Convert a dynamic rogue body to a static one.
-/// If the body is active, you must remove it from the space first.
+/// Convert a dynamic rogue body_ to a static one.
+/// If the body_ is active, you must remove it from the space first.
 void cpSpaceConvertBodyToStatic(cpSpace* space, cpBody* bdy);
 
-/// Convert a body to a dynamic rogue body.
-/// If you want the body to be active after the transition, you must add it to the space also.
+/// Convert a body_ to a dynamic rogue body_.
+/// If you want the body_ to be active after the transition, you must add it to the space also.
 void cpSpaceConvertBodyToDynamic(cpSpace* space, cpBody* bdy, cpFloat mass, cpFloat moment);
 
 /// Post Step callback function type.
@@ -316,7 +318,7 @@ alias cpPostStepFunc = void function(cpSpace* space, void* key, void* data);
 /// Schedule a post-step callback to be called when cpSpaceStep() finishes.
 /// You can only register one callback per unique value for @c key.
 /// Returns true only if @c key has never been scheduled before.
-/// It's possible to pass @c NULL for @c func if you only want to mark @c key as being used.
+/// It's possible to pass @c null for @c func if you only want to mark @c key as being used.
 cpBool cpSpaceAddPostStepCallback(cpSpace* space, cpPostStepFunc func, void* key, void* data);
 
 /// Point query callback function type.
@@ -325,7 +327,7 @@ alias cpSpacePointQueryFunc = void function(cpShape* shape, void* data);
 /// Query the space at a point and call @c func for each shape found.
 void cpSpacePointQuery(cpSpace* space, cpVect point, cpLayers layers, cpGroup group, cpSpacePointQueryFunc func, void* data);
 
-/// Query the space at a point and return the first shape found. Returns NULL if no shapes were found.
+/// Query the space at a point and return the first shape found. Returns null if no shapes were found.
 cpShape* cpSpacePointQueryFirst(cpSpace* space, cpVect point, cpLayers layers, cpGroup group);
 
 /// Nearest point query callback function type.
@@ -334,7 +336,7 @@ alias cpSpaceNearestPointQueryFunc = void function(cpShape* shape, cpFloat dista
 /// Query the space at a point and call @c func for each shape found.
 void cpSpaceNearestPointQuery(cpSpace* space, cpVect point, cpFloat maxDistance, cpLayers layers, cpGroup group, cpSpaceNearestPointQueryFunc func, void* data);
 
-/// Query the space at a point and return the nearest shape found. Returns NULL if no shapes were found.
+/// Query the space at a point and return the nearest shape found. Returns null if no shapes were found.
 cpShape* cpSpaceNearestPointQueryNearest(cpSpace* space, cpVect point, cpFloat maxDistance, cpLayers layers, cpGroup group, cpNearestPointQueryInfo* out_);
 
 /// Segment query callback function type.
@@ -343,7 +345,7 @@ alias cpSpaceSegmentQueryFunc = void function(cpShape* shape, cpFloat t, cpVect 
 /// Perform a directed line segment query (like a raycast) against the space calling @c func for each shape intersected.
 void cpSpaceSegmentQuery(cpSpace* space, cpVect start, cpVect end, cpLayers layers, cpGroup group, cpSpaceSegmentQueryFunc func, void* data);
 
-/// Perform a directed line segment query (like a raycast) against the space and return the first shape hit. Returns NULL if no shapes were hit.
+/// Perform a directed line segment query (like a raycast) against the space and return the first shape hit. Returns null if no shapes were hit.
 cpShape* cpSpaceSegmentQueryFirst(cpSpace* space, cpVect start, cpVect end, cpLayers layers, cpGroup group, cpSegmentQueryInfo* out_);
 
 /// Rectangle Query callback function type.
@@ -362,13 +364,13 @@ cpBool cpSpaceShapeQuery(cpSpace* space, cpShape* shape, cpSpaceShapeQueryFunc f
 /// Call cpBodyActivate() for any shape that is overlaps the given shape.
 void cpSpaceActivateShapesTouchingShape(cpSpace* space, cpShape* shape);
 
-/// Space/body iterator callback function type.
+/// Space/body_ iterator callback function type.
 alias cpSpaceBodyIteratorFunc= void function(cpBody* bdy, void* data);
 
-/// Call @c func for each body in the space.
+/// Call @c func for each body_ in the space.
 void cpSpaceEachBody(cpSpace* space, cpSpaceBodyIteratorFunc func, void* data);
 
-/// Space/body iterator callback function type.
+/// Space/body_ iterator callback function type.
 alias cpSpaceShapeIteratorFunc = void function(cpShape* shape, void* data);
 
 /// Call @c func for each shape in the space.
@@ -386,7 +388,7 @@ void cpSpaceReindexStatic(cpSpace* space);
 /// Update the collision detection data for a specific shape in the space.
 void cpSpaceReindexShape(cpSpace* space, cpShape* shape);
 
-/// Update the collision detection data for all shapes attached to a body.
+/// Update the collision detection data for all shapes attached to a body_.
 void cpSpaceReindexShapesForBody(cpSpace* space, cpBody* bdy);
 
 /// Switch the space to use a spatial has as it's spatial index.
@@ -394,3 +396,598 @@ void cpSpaceUseSpatialHash(cpSpace* space, cpFloat dim, int count);
 
 /// Step the space forward in time by @c dt.
 void cpSpaceStep(cpSpace* space, cpFloat dt);
+
+// Equal function for arbiterSet.
+cpBool arbiterSetEql(cpShape** shapes, cpArbiter* arb)
+{
+    cpShape* a = shapes[0];
+    cpShape* b = shapes[1];
+
+    return ((a == arb.a && b == arb.b) || (b == arb.a && a == arb.b));
+}
+
+//MARK: Collision Handler Set HelperFunctions
+
+// Equals function for collisionHandlers.
+cpBool handlerSetEql(cpCollisionHandler* check, cpCollisionHandler* pair)
+{
+    return ((check.a == pair.a && check.b == pair.b) || (check.b == pair.a && check.a == pair.b));
+}
+
+// Transformation function for collisionHandlers.
+void* handlerSetTrans(cpCollisionHandler* handler, void* unused)
+{
+    cpCollisionHandler* copy = cast(cpCollisionHandler*)cpcalloc(1, cpCollisionHandler.sizeof);
+    (*copy) = (*handler);
+
+    return copy;
+}
+
+//MARK: Misc Helper Funcs
+
+// Default collision functions.
+cpBool alwaysCollide(cpArbiter* arb, cpSpace* space, void* data)
+{
+    return 1;
+}
+
+void nothing(cpArbiter* arb, cpSpace* space, void* data)
+{
+}
+
+// function to get the estimated velocity of a shape for the cpBBTree.
+cpVect shapeVelocityFunc(cpShape* shape)
+{
+    return shape.body_.v;
+}
+
+void freeWrap(void* ptr, void* unused)
+{
+    cpfree(ptr);
+}
+
+//MARK: Memory Management Functions
+
+cpSpace* cpSpaceAlloc()
+{
+    return cast(cpSpace*)cpcalloc(1, cpSpace.sizeof);
+}
+
+cpCollisionHandler cpDefaultCollisionHandler = { 0, 0, &alwaysCollide, &alwaysCollide, &nothing, &nothing, null };
+
+cpSpace* cpSpaceInit(cpSpace* space)
+{
+    version (CHIP_ENABLE_WARNINGS)
+    {
+        static cpBool done = cpFalse;
+
+        if (!done)
+        {
+            writefln("Initializing cpSpace - Chipmunk v%s (Debug Enabled)\n", cpVersionString);
+            writefln("Compile without the CHIP_ENABLE_WARNINGS to disable debug mode and runtime assertion checks\n");
+            done = cpTrue;
+        }
+    }
+
+    space.iterations = 10;
+
+    space.gravity = cpvzero;
+    space.damping = 1.0f;
+
+    space.collisionSlop        = 0.1f;
+    space.collisionBias        = cpfpow(1.0f - 0.1f, 60.0f);
+    space.collisionPersistence = 3;
+
+    space.locked = 0;
+    space.stamp  = 0;
+
+    space.staticShapes = cpBBTreeNew(cast(cpSpatialIndexBBFunc)&cpShapeGetBB, null);
+    space.activeShapes = cpBBTreeNew(cast(cpSpatialIndexBBFunc)&cpShapeGetBB, space.staticShapes);
+    cpBBTreeSetVelocityFunc(space.activeShapes, cast(cpBBTreeVelocityFunc)&shapeVelocityFunc);
+
+    space.allocatedBuffers = cpArrayNew(0);
+
+    space.bodies = cpArrayNew(0);
+    space.sleepingComponents = cpArrayNew(0);
+    space.rousedBodies       = cpArrayNew(0);
+
+    space.sleepTimeThreshold = INFINITY;
+    space.idleSpeedThreshold = 0.0f;
+    space.enableContactGraph = cpFalse;
+
+    space.arbiters       = cpArrayNew(0);
+    space.pooledArbiters = cpArrayNew(0);
+
+    space.contactBuffersHead = null;
+    space.cachedArbiters     = cpHashSetNew(0, cast(cpHashSetEqlFunc)&arbiterSetEql);
+
+    space.constraints = cpArrayNew(0);
+
+    space.defaultHandler    = cpDefaultCollisionHandler;
+    space.collisionHandlers = cpHashSetNew(0, cast(cpHashSetEqlFunc)&handlerSetEql);
+    cpHashSetSetDefaultValue(space.collisionHandlers, &cpDefaultCollisionHandler);
+
+    space.postStepCallbacks = cpArrayNew(0);
+    space.skipPostStep      = cpFalse;
+
+    cpBodyInitStatic(&space._staticBody);
+    space.staticBody = &space._staticBody;
+
+    return space;
+}
+
+cpSpace* cpSpaceNew()
+{
+    return cpSpaceInit(cpSpaceAlloc());
+}
+
+void cpSpaceDestroy(cpSpace* space)
+{
+    cpSpaceEachBody(space, cast(cpSpaceBodyIteratorFunc)&cpBodyActivate, null);
+
+    cpSpatialIndexFree(space.staticShapes);
+    cpSpatialIndexFree(space.activeShapes);
+
+    cpArrayFree(space.bodies);
+    cpArrayFree(space.sleepingComponents);
+    cpArrayFree(space.rousedBodies);
+
+    cpArrayFree(space.constraints);
+
+    cpHashSetFree(space.cachedArbiters);
+
+    cpArrayFree(space.arbiters);
+    cpArrayFree(space.pooledArbiters);
+
+    if (space.allocatedBuffers)
+    {
+        cpArrayFreeEach(space.allocatedBuffers, &cpfree);
+        cpArrayFree(space.allocatedBuffers);
+    }
+
+    if (space.postStepCallbacks)
+    {
+        cpArrayFreeEach(space.postStepCallbacks, &cpfree);
+        cpArrayFree(space.postStepCallbacks);
+    }
+
+    if (space.collisionHandlers)
+        cpHashSetEach(space.collisionHandlers, &freeWrap, null);
+    cpHashSetFree(space.collisionHandlers);
+}
+
+void cpSpaceFree(cpSpace* space)
+{
+    if (space)
+    {
+        cpSpaceDestroy(space);
+        cpfree(space);
+    }
+}
+
+void cpAssertSpaceUnlocked(S)(S space)
+{
+    cpAssertHard(!space.locked,
+                 "This operation cannot be done safely during a call to cpSpaceStep() or during a query. "
+                 "Put these calls into a post-step callback."
+                 );
+}
+
+//MARK: Collision Handler Function Management
+
+void cpSpaceAddCollisionHandler(
+    cpSpace* space,
+    cpCollisionType a, cpCollisionType b,
+    cpCollisionBeginFunc begin,
+    cpCollisionPreSolveFunc preSolve,
+    cpCollisionPostSolveFunc postSolve,
+    cpCollisionSeparateFunc separate,
+    void* data
+    )
+{
+    cpAssertSpaceUnlocked(space);
+
+    // Remove any old function so the new one will get added.
+    cpSpaceRemoveCollisionHandler(space, a, b);
+
+    cpCollisionHandler handler = {
+        a, b,
+        begin ? begin : &alwaysCollide,
+        preSolve ? preSolve : &alwaysCollide,
+        postSolve ? postSolve : &nothing,
+        separate ? separate : &nothing,
+        data
+    };
+
+    cpHashSetInsert(space.collisionHandlers, CP_HASH_PAIR(a, b), &handler, null, cast(cpHashSetTransFunc)&handlerSetTrans);
+}
+
+void cpSpaceRemoveCollisionHandler(cpSpace* space, cpCollisionType a, cpCollisionType b)
+{
+    cpAssertSpaceUnlocked(space);
+
+    struct IDS
+    {
+        cpCollisionType a, b;
+    }
+    IDS ids = { a, b };
+    cpCollisionHandler* old_handler = cast(cpCollisionHandler*)cpHashSetRemove(space.collisionHandlers, CP_HASH_PAIR(a, b), &ids);
+    cpfree(old_handler);
+}
+
+void cpSpaceSetDefaultCollisionHandler(
+    cpSpace* space,
+    cpCollisionBeginFunc begin,
+    cpCollisionPreSolveFunc preSolve,
+    cpCollisionPostSolveFunc postSolve,
+    cpCollisionSeparateFunc separate,
+    void* data
+    )
+{
+    cpAssertSpaceUnlocked(space);
+
+    cpCollisionHandler handler = {
+        0, 0,
+        begin ? begin : &alwaysCollide,
+        preSolve ? preSolve : &alwaysCollide,
+        postSolve ? postSolve : &nothing,
+        separate ? separate : &nothing,
+        data
+    };
+
+    space.defaultHandler = handler;
+    cpHashSetSetDefaultValue(space.collisionHandlers, &space.defaultHandler);
+}
+
+//MARK: Body, Shape, and Joint Management
+cpShape* cpSpaceAddShape(cpSpace* space, cpShape* shape)
+{
+    cpBody* body_ = shape.body_;
+
+    if (cpBodyIsStatic(body_))
+        return cpSpaceAddStaticShape(space, shape);
+
+    cpAssertHard(shape.space != space, "You have already added this shape to this space. You must not add it a second time.");
+    cpAssertHard(!shape.space, "You have already added this shape to another space. You cannot add it to a second.");
+    cpAssertSpaceUnlocked(space);
+
+    cpBodyActivate(body_);
+    cpBodyAddShape(body_, shape);
+
+    cpShapeUpdate(shape, body_.p, body_.rot);
+    cpSpatialIndexInsert(space.activeShapes, shape, shape.hashid);
+    shape.space = space;
+
+    return shape;
+}
+
+cpShape* cpSpaceAddStaticShape(cpSpace* space, cpShape* shape)
+{
+    cpAssertHard(shape.space != space, "You have already added this shape to this space. You must not add it a second time.");
+    cpAssertHard(!shape.space, "You have already added this shape to another space. You cannot add it to a second.");
+    cpAssertHard(cpBodyIsRogue(shape.body_), "You are adding a static shape to a dynamic body_. Did you mean to attach it to a static or rogue body_? See the documentation for more information.");
+    cpAssertSpaceUnlocked(space);
+
+    cpBody* body_ = shape.body_;
+    cpBodyAddShape(body_, shape);
+    cpShapeUpdate(shape, body_.p, body_.rot);
+    cpSpatialIndexInsert(space.staticShapes, shape, shape.hashid);
+    shape.space = space;
+
+    return shape;
+}
+
+cpBody* cpSpaceAddBody(cpSpace* space, cpBody* body_)
+{
+    cpAssertHard(!cpBodyIsStatic(body_), "Do not add static bodies to a space. Static bodies do not move and should not be simulated.");
+    cpAssertHard(body_.space != space, "You have already added this body_ to this space. You must not add it a second time.");
+    cpAssertHard(!body_.space, "You have already added this body_ to another space. You cannot add it to a second.");
+    cpAssertSpaceUnlocked(space);
+
+    cpArrayPush(space.bodies, body_);
+    body_.space = space;
+
+    return body_;
+}
+
+cpConstraint* cpSpaceAddConstraint(cpSpace* space, cpConstraint* constraint)
+{
+    cpAssertHard(constraint.space != space, "You have already added this constraint to this space. You must not add it a second time.");
+    cpAssertHard(!constraint.space, "You have already added this constraint to another space. You cannot add it to a second.");
+    cpAssertHard(constraint.a && constraint.b, "Constraint is attached to a null body_.");
+    cpAssertSpaceUnlocked(space);
+
+    cpBodyActivate(constraint.a);
+    cpBodyActivate(constraint.b);
+    cpArrayPush(space.constraints, constraint);
+
+    // Push onto the heads of the bodies' constraint lists
+    cpBody* a = constraint.a;
+    cpBody* b = constraint.b;
+    constraint.next_a = a.constraintList;
+    a.constraintList  = constraint;
+    constraint.next_b = b.constraintList;
+    b.constraintList  = constraint;
+    constraint.space  = space;
+
+    return constraint;
+}
+
+struct arbiterFilterContext
+{
+    cpSpace* space;
+    cpBody* body_;
+    cpShape* shape;
+};
+
+cpBool cachedArbitersFilter(cpArbiter* arb, arbiterFilterContext* context)
+{
+    cpShape* shape = context.shape;
+    cpBody * body_  = context.body_;
+
+    // Match on the filter shape, or if it's null the filter body_
+    if (
+        (body_ == arb.body_a && (shape == arb.a || shape == null)) ||
+        (body_ == arb.body_b && (shape == arb.b || shape == null))
+        )
+    {
+        // Call separate when removing shapes.
+        if (shape && arb.state != cpArbiterStateCached)
+            cpArbiterCallSeparate(arb, context.space);
+
+        cpArbiterUnthread(arb);
+        cpArrayDeleteObj(context.space.arbiters, arb);
+        cpArrayPush(context.space.pooledArbiters, arb);
+
+        return cpFalse;
+    }
+
+    return cpTrue;
+}
+
+void cpSpaceFilterArbiters(cpSpace* space, cpBody* body_, cpShape* filter)
+{
+    cpSpaceLock(space);
+    {
+        arbiterFilterContext context = { space, body_, filter };
+        cpHashSetFilter(space.cachedArbiters, cast(cpHashSetFilterFunc)&cachedArbitersFilter, &context);
+    }
+    cpSpaceUnlock(space, cpTrue);
+}
+
+void cpSpaceRemoveShape(cpSpace* space, cpShape* shape)
+{
+    cpBody* body_ = shape.body_;
+
+    if (cpBodyIsStatic(body_))
+    {
+        cpSpaceRemoveStaticShape(space, shape);
+    }
+    else
+    {
+        cpAssertHard(cpSpaceContainsShape(space, shape), "Cannot remove a shape that was not added to the space. (Removed twice maybe?)");
+        cpAssertSpaceUnlocked(space);
+
+        cpBodyActivate(body_);
+        cpBodyRemoveShape(body_, shape);
+        cpSpaceFilterArbiters(space, body_, shape);
+        cpSpatialIndexRemove(space.activeShapes, shape, shape.hashid);
+        shape.space = null;
+    }
+}
+
+void cpSpaceRemoveStaticShape(cpSpace* space, cpShape* shape)
+{
+    cpAssertHard(cpSpaceContainsShape(space, shape), "Cannot remove a static or sleeping shape that was not added to the space. (Removed twice maybe?)");
+    cpAssertSpaceUnlocked(space);
+
+    cpBody* body_ = shape.body_;
+
+    if (cpBodyIsStatic(body_))
+        cpBodyActivateStatic(body_, shape);
+    cpBodyRemoveShape(body_, shape);
+    cpSpaceFilterArbiters(space, body_, shape);
+    cpSpatialIndexRemove(space.staticShapes, shape, shape.hashid);
+    shape.space = null;
+}
+
+void cpSpaceRemoveBody(cpSpace* space, cpBody* body_)
+{
+    cpAssertHard(cpSpaceContainsBody(space, body_), "Cannot remove a body_ that was not added to the space. (Removed twice maybe?)");
+    cpAssertSpaceUnlocked(space);
+
+    cpBodyActivate(body_);
+
+    //	cpSpaceFilterArbiters(space, body_, null);
+    cpArrayDeleteObj(space.bodies, body_);
+    body_.space = null;
+}
+
+void cpSpaceRemoveConstraint(cpSpace* space, cpConstraint* constraint)
+{
+    cpAssertHard(cpSpaceContainsConstraint(space, constraint), "Cannot remove a constraint that was not added to the space. (Removed twice maybe?)");
+    cpAssertSpaceUnlocked(space);
+
+    cpBodyActivate(constraint.a);
+    cpBodyActivate(constraint.b);
+    cpArrayDeleteObj(space.constraints, constraint);
+
+    cpBodyRemoveConstraint(constraint.a, constraint);
+    cpBodyRemoveConstraint(constraint.b, constraint);
+    constraint.space = null;
+}
+
+cpBool cpSpaceContainsShape(cpSpace* space, cpShape* shape)
+{
+    return (shape.space == space);
+}
+
+cpBool cpSpaceContainsBody(cpSpace* space, cpBody* body_)
+{
+    return (body_.space == space);
+}
+
+cpBool cpSpaceContainsConstraint(cpSpace* space, cpConstraint* constraint)
+{
+    return (constraint.space == space);
+}
+
+//MARK: Static/rogue body_ conversion.
+
+void cpSpaceConvertBodyToStatic(cpSpace* space, cpBody* body_)
+{
+    cpAssertHard(!cpBodyIsStatic(body_), "Body is already static.");
+    cpAssertHard(cpBodyIsRogue(body_), "Remove the body_ from the space before calling this function.");
+    cpAssertSpaceUnlocked(space);
+
+    cpBodySetMass(body_, INFINITY);
+    cpBodySetMoment(body_, INFINITY);
+
+    cpBodySetVel(body_, cpvzero);
+    cpBodySetAngVel(body_, 0.0f);
+
+    body_.node.idleTime = INFINITY;
+
+    mixin(CP_BODY_FOREACH_SHAPE!("body_", "shape", q{
+        cpSpatialIndexRemove(space.activeShapes, shape, shape.hashid);
+        cpSpatialIndexInsert(space.staticShapes, shape, shape.hashid);
+    }));
+}
+
+void cpSpaceConvertBodyToDynamic(cpSpace* space, cpBody* body_, cpFloat m, cpFloat i)
+{
+    cpAssertHard(cpBodyIsStatic(body_), "Body is already dynamic.");
+    cpAssertSpaceUnlocked(space);
+
+    cpBodyActivateStatic(body_, null);
+
+    cpBodySetMass(body_, m);
+    cpBodySetMoment(body_, i);
+
+    body_.node.idleTime = 0.0f;
+    mixin(CP_BODY_FOREACH_SHAPE!("body_", "shape", q{
+        cpSpatialIndexRemove(space.staticShapes, shape, shape.hashid);
+        cpSpatialIndexInsert(space.activeShapes, shape, shape.hashid);
+    }));
+}
+
+//MARK: Iteration
+
+void cpSpaceEachBody(cpSpace* space, cpSpaceBodyIteratorFunc func, void* data)
+{
+    cpSpaceLock(space);
+    {
+        cpArray* bodies = space.bodies;
+
+        for (int i = 0; i < bodies.num; i++)
+        {
+            func(cast(cpBody*)bodies.arr[i], data);
+        }
+
+        cpArray* components = space.sleepingComponents;
+
+        for (int i = 0; i < components.num; i++)
+        {
+            cpBody* root = cast(cpBody*)components.arr[i];
+
+            cpBody* body_ = root;
+
+            while (body_)
+            {
+                cpBody* next = body_.node.next;
+                func(body_, data);
+                body_ = next;
+            }
+        }
+    }
+    cpSpaceUnlock(space, cpTrue);
+}
+
+struct spaceShapeContext
+{
+    cpSpaceShapeIteratorFunc func;
+    void* data;
+}
+
+void spaceEachShapeIterator(cpShape* shape, spaceShapeContext* context)
+{
+    context.func(shape, context.data);
+}
+
+void cpSpaceEachShape(cpSpace* space, cpSpaceShapeIteratorFunc func, void* data)
+{
+    cpSpaceLock(space);
+    {
+        spaceShapeContext context = { func, data };
+        cpSpatialIndexEach(space.activeShapes, cast(cpSpatialIndexIteratorFunc)&spaceEachShapeIterator, &context);
+        cpSpatialIndexEach(space.staticShapes, cast(cpSpatialIndexIteratorFunc)&spaceEachShapeIterator, &context);
+    }
+    cpSpaceUnlock(space, cpTrue);
+}
+
+void cpSpaceEachConstraint(cpSpace* space, cpSpaceConstraintIteratorFunc func, void* data)
+{
+    cpSpaceLock(space);
+    {
+        cpArray* constraints = space.constraints;
+
+        for (int i = 0; i < constraints.num; i++)
+        {
+            func(cast(cpConstraint*)constraints.arr[i], data);
+        }
+    }
+    cpSpaceUnlock(space, cpTrue);
+}
+
+//MARK: Spatial Index Management
+
+void updateBBCache(cpShape* shape, void* unused)
+{
+    cpBody* body_ = shape.body_;
+    cpShapeUpdate(shape, body_.p, body_.rot);
+}
+
+void cpSpaceReindexStatic(cpSpace* space)
+{
+    cpAssertHard(!space.locked, "You cannot manually reindex objects while the space is locked. Wait until the current query or step is complete.");
+
+    cpSpatialIndexEach(space.staticShapes, cast(cpSpatialIndexIteratorFunc)&updateBBCache, null);
+    cpSpatialIndexReindex(space.staticShapes);
+}
+
+void cpSpaceReindexShape(cpSpace* space, cpShape* shape)
+{
+    cpAssertHard(!space.locked, "You cannot manually reindex objects while the space is locked. Wait until the current query or step is complete.");
+
+    cpBody* body_ = shape.body_;
+    cpShapeUpdate(shape, body_.p, body_.rot);
+
+    // attempt to rehash the shape in both hashes
+    cpSpatialIndexReindexObject(space.activeShapes, shape, shape.hashid);
+    cpSpatialIndexReindexObject(space.staticShapes, shape, shape.hashid);
+}
+
+void cpSpaceReindexShapesForBody(cpSpace* space, cpBody* body_)
+{
+    mixin(CP_BODY_FOREACH_SHAPE!("body_", "shape", "cpSpaceReindexShape(space, shape);"));
+}
+
+void copyShapes(cpShape* shape, cpSpatialIndex* index)
+{
+    cpSpatialIndexInsert(index, shape, shape.hashid);
+}
+
+void cpSpaceUseSpatialHash(cpSpace* space, cpFloat dim, int count)
+{
+    cpSpatialIndex* staticShapes = cpSpaceHashNew(dim, count, cast(cpSpatialIndexBBFunc)&cpShapeGetBB, null);
+    cpSpatialIndex* activeShapes = cpSpaceHashNew(dim, count, cast(cpSpatialIndexBBFunc)&cpShapeGetBB, staticShapes);
+
+    cpSpatialIndexEach(space.staticShapes, cast(cpSpatialIndexIteratorFunc)&copyShapes, staticShapes);
+    cpSpatialIndexEach(space.activeShapes, cast(cpSpatialIndexIteratorFunc)&copyShapes, activeShapes);
+
+    cpSpatialIndexFree(space.staticShapes);
+    cpSpatialIndexFree(space.activeShapes);
+
+    space.staticShapes = staticShapes;
+    space.activeShapes = activeShapes;
+}

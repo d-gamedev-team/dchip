@@ -21,6 +21,9 @@
  */
 module dchip.chipmunk_private;
 
+import std.string;
+
+import dchip.cpArray;
 import dchip.cpBody;
 import dchip.chipmunk;
 import dchip.chipmunk_types;
@@ -49,7 +52,6 @@ struct cpArray
     void** arr;
 }
 
-void cpArrayDeleteObj(cpArray* arr, void* obj);
 cpBool cpArrayContains(cpArray* arr, void* ptr);
 
 void cpArrayFreeEach(cpArray * arr, void function(void*) freeFunc);
@@ -142,7 +144,6 @@ cpFloat cpSplittingPlaneCompare(cpSplittingPlane plane, cpVect v)
 
 void cpLoopIndexes(cpVect* verts, int count, int* start, int* end);
 
-extern cpCollisionHandler cpDefaultCollisionHandler;
 void cpSpaceProcessComponents(cpSpace* space, cpFloat dt);
 
 void cpSpacePushFreshContactBuffer(cpSpace* space);
@@ -162,8 +163,6 @@ cpBool cpSpaceArbiterSetFilter(cpArbiter* arb, cpSpace* space);
 void cpSpaceFilterArbiters(cpSpace* space, cpBody* bdy, cpShape* filter);
 
 void cpSpaceActivateBody(cpSpace* space, cpBody* bdy);
-void cpSpaceLock(cpSpace* space);
-void cpSpaceUnlock(cpSpace* space, cpBool runPostStep);
 
 cpCollisionHandler* cpSpaceLookupHandler(cpSpace* space, cpCollisionType a, cpCollisionType b)
 {

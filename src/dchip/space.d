@@ -25,6 +25,8 @@ import dchip.arbiter;
 import dchip.body_;
 import dchip.chipmunk_private;
 import dchip.hash_set;
+import dchip.space_step;
+import dchip.spatial_index;
 import dchip.types;
 import dchip.vector;
 

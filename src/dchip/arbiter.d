@@ -24,6 +24,7 @@ module dchip.arbiter;
 import std.string;
 
 import dchip.body_;
+import dchip.chipmunk_private;
 import dchip.space;
 import dchip.spatial_index;
 import dchip.shape;

@@ -23,8 +23,12 @@ module dchip.body_;
 
 import std.string;
 
-import dchip.types;
+import dchip.constraints.constraint;
+
+import dchip.arbiter;
+import dchip.shape;
 import dchip.space;
+import dchip.types;
 
 /// Chipmunk's rigid body type. Rigid bodies hold the physical properties of an object like
 /// it's mass, and position and velocity of it's center of gravity. They don't have an shape on their own.

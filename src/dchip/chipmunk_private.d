@@ -22,6 +22,7 @@
 module dchip.chipmunk_private;
 
 import dchip.chipmunk;
+import dchip.space;
 import dchip.types;
 
 // drey todo
@@ -175,12 +176,12 @@ alias cpHashSetFilterFunc = cpBool function(void* elt, void* data);
 //~ cpContact* cpContactBufferGetArray(cpSpace* space);
 //~ void cpSpacePushContacts(cpSpace* space, int count);
 
-//~ struct cpPostStepCallback
-//~ {
-    //~ cpPostStepFunc func;
-    //~ void* key;
-    //~ void* data;
-//~ }
+struct cpPostStepCallback
+{
+    cpPostStepFunc func;
+    void* key;
+    void* data;
+}
 
 //~ cpPostStepCallback* cpSpaceGetPostStepCallback(cpSpace* space, void* key);
 
@@ -216,19 +217,19 @@ alias cpHashSetFilterFunc = cpBool function(void* elt, void* data);
 
 //~ //MARK: Arbiters
 
-//~ struct cpContact
-//~ {
-    //~ cpVect p, n;
-    //~ cpFloat dist;
+struct cpContact
+{
+    cpVect p, n;
+    cpFloat dist;
 
-    //~ cpVect r1, r2;
-    //~ cpFloat nMass, tMass, bounce;
+    cpVect r1, r2;
+    cpFloat nMass, tMass, bounce;
 
-    //~ cpFloat jnAcc, jtAcc, jBias;
-    //~ cpFloat bias;
+    cpFloat jnAcc, jtAcc, jBias;
+    cpFloat bias;
 
-    //~ cpHashValue hash;
-//~ };
+    cpHashValue hash;
+};
 
 //~ cpContact* cpContactInit(cpContact* con, cpVect p, cpVect n, cpFloat dist, cpHashValue hash);
 //~ cpArbiter* cpArbiterInit(cpArbiter* arb, cpShape* a, cpShape* b);

@@ -19,36 +19,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip;
+module dchip.cpPivotJoint;
 
-public
+import std.string;
+
+import dchip.chipmunk;
+import dchip.cpBody;
+import dchip.cpConstraint;
+import dchip.chipmunk_types;
+
+const cpConstraintClass* cpPivotJointGetClass();
+
+/// @private
+struct cpPivotJoint
 {
-    import dchip.chipmunk;
-    import dchip.chipmunk_private;
-    import dchip.chipmunk_types;
-    import dchip.chipmunk_unsafe;
-    import dchip.cpArbiter;
-    import dchip.cpArray;
-    import dchip.cpBB;
-    import dchip.cpBBTree;
-    import dchip.cpBody;
-    import dchip.cpConstraint;
-    import dchip.cpDampedRotarySpring;
-    import dchip.cpDampedSpring;
-    import dchip.cpGearJoint;
-    import dchip.cpGrooveJoint;
-    import dchip.cpHashSet;
-    import dchip.cpPinJoint;
-    import dchip.cpPivotJoint;
-    import dchip.cpPolyShape;
-    import dchip.cpRatchetJoint;
-    import dchip.cpShape;
-    import dchip.cpSpace;
-    import dchip.cpSpaceHash;
-    import dchip.cpSpaceStep;
-    import dchip.cpSpatialIndex;
-    import dchip.cpSweep1D;
-    import dchip.cpVect;
-    import dchip.prime;
-    import dchip.util;
+    cpConstraint constraint;
+    cpVect anchr1, anchr2;
+
+    cpVect r1, r2;
+    cpMat2x2 k;
+
+    cpVect jAcc;
+    cpVect bias;
 }
+
+/// Allocate a pivot joint
+cpPivotJoint* cpPivotJointAlloc();
+
+/// Initialize a pivot joint.
+cpPivotJoint* cpPivotJointInit(cpPivotJoint* joint, cpBody* a, cpBody* b, cpVect anchr1, cpVect anchr2);
+
+/// Allocate and initialize a pivot joint.
+cpConstraint* cpPivotJointNew(cpBody* a, cpBody* b, cpVect pivot);
+
+/// Allocate and initialize a pivot joint with specific anchors.
+cpConstraint* cpPivotJointNew2(cpBody* a, cpBody* b, cpVect anchr1, cpVect anchr2);
+
+mixin CP_DefineConstraintProperty!("cpPivotJoint", cpVect, "anchr1", "Anchr1");
+mixin CP_DefineConstraintProperty!("cpPivotJoint", cpVect, "anchr2", "Anchr2");

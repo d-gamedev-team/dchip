@@ -19,36 +19,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip;
+module dchip.cpRatchetJoint;
 
-public
+import std.string;
+
+import dchip.chipmunk;
+import dchip.cpBody;
+import dchip.cpConstraint;
+import dchip.chipmunk_types;
+
+const cpConstraintClass* cpRatchetJointGetClass();
+
+/// @private
+struct cpRatchetJoint
 {
-    import dchip.chipmunk;
-    import dchip.chipmunk_private;
-    import dchip.chipmunk_types;
-    import dchip.chipmunk_unsafe;
-    import dchip.cpArbiter;
-    import dchip.cpArray;
-    import dchip.cpBB;
-    import dchip.cpBBTree;
-    import dchip.cpBody;
-    import dchip.cpConstraint;
-    import dchip.cpDampedRotarySpring;
-    import dchip.cpDampedSpring;
-    import dchip.cpGearJoint;
-    import dchip.cpGrooveJoint;
-    import dchip.cpHashSet;
-    import dchip.cpPinJoint;
-    import dchip.cpPivotJoint;
-    import dchip.cpPolyShape;
-    import dchip.cpRatchetJoint;
-    import dchip.cpShape;
-    import dchip.cpSpace;
-    import dchip.cpSpaceHash;
-    import dchip.cpSpaceStep;
-    import dchip.cpSpatialIndex;
-    import dchip.cpSweep1D;
-    import dchip.cpVect;
-    import dchip.prime;
-    import dchip.util;
+    cpConstraint constraint;
+    cpFloat angle, phase, ratchet;
+
+    cpFloat iSum;
+
+    cpFloat bias;
+    cpFloat jAcc;
 }
+
+/// Allocate a ratchet joint.
+cpRatchetJoint* cpRatchetJointAlloc();
+
+/// Initialize a ratched joint.
+cpRatchetJoint* cpRatchetJointInit(cpRatchetJoint* joint, cpBody* a, cpBody* b, cpFloat phase, cpFloat ratchet);
+
+/// Allocate and initialize a ratchet joint.
+cpConstraint* cpRatchetJointNew(cpBody* a, cpBody* b, cpFloat phase, cpFloat ratchet);
+
+mixin CP_DefineConstraintProperty!("cpRatchetJoint", cpFloat, "angle", "Angle");
+mixin CP_DefineConstraintProperty!("cpRatchetJoint", cpFloat, "phase", "Phase");
+mixin CP_DefineConstraintProperty!("cpRatchetJoint", cpFloat, "ratchet", "Ratchet");

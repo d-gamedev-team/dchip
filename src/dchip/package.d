@@ -24,4 +24,24 @@ module dchip;
 public
 {
     import dchip.chipmunk;
+    import dchip.chipmunk_private;
+    import dchip.chipmunk_types;
+    import dchip.chipmunk_unsafe;
+    import dchip.cpArbiter;
+    import dchip.cpArray;
+    import dchip.cpBB;
+    import dchip.cpBBTree;
+    import dchip.cpBody;
+    import dchip.cpConstraint;
+    import dchip.cpHashSet;
+    import dchip.cpPolyShape;
+    import dchip.cpShape;
+    import dchip.cpSpace;
+    import dchip.cpSpaceHash;
+    import dchip.cpSpaceStep;
+    import dchip.cpSpatialIndex;
+    import dchip.cpSweep1D;
+    import dchip.cpVect;
+    import dchip.prime;
+    import dchip.util;
 }

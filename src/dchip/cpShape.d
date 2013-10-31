@@ -258,9 +258,6 @@ cpCircleShape* cpCircleShapeInit(cpCircleShape* circle, cpBody* body_, cpFloat r
 /// Allocate and initialize a circle shape.
 cpShape* cpCircleShapeNew(cpBody* body_, cpFloat radius, cpVect offset);
 
-//~ CP_DeclareShapeGetter(cpCircleShape, cpVect, Offset);
-//~ CP_DeclareShapeGetter(cpCircleShape, cpFloat, Radius);
-
 /// @private
 struct cpSegmentShape
 {
@@ -284,8 +281,3 @@ cpShape* cpSegmentShapeNew(cpBody* body_, cpVect a, cpVect b, cpFloat radius);
 
 /// Let Chipmunk know about the geometry of adjacent segments to avoid colliding with endcaps.
 void cpSegmentShapeSetNeighbors(cpShape* shape, cpVect prev, cpVect next);
-
-//~ CP_DeclareShapeGetter(cpSegmentShape, cpVect, A);
-//~ CP_DeclareShapeGetter(cpSegmentShape, cpVect, B);
-//~ CP_DeclareShapeGetter(cpSegmentShape, cpVect, Normal);
-//~ CP_DeclareShapeGetter(cpSegmentShape, cpFloat, Radius);

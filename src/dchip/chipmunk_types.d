@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip.types;
+module dchip.chipmunk_types;
 
 import core.stdc.stdint : uintptr_t, uint32_t;
 

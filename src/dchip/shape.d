@@ -25,8 +25,8 @@ import std.string;
 
 import dchip.bb;
 import dchip.body_;
+import dchip.chipmunk_types;
 import dchip.space;
-import dchip.types;
 import dchip.util;
 import dchip.vector;
 

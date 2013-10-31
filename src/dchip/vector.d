@@ -21,7 +21,7 @@
  */
 module dchip.vector;
 
-import dchip.types;
+import dchip.chipmunk_types;
 
 /// Chipmunk's 2D vector type along with a handy 2D vector math lib.
 

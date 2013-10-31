@@ -28,11 +28,11 @@ import dchip.bb;
 import dchip.body_;
 import dchip.constraint;
 import dchip.chipmunk_private;
+import dchip.chipmunk_types;
 import dchip.hash_set;
 import dchip.shape;
 import dchip.space_step;
 import dchip.spatial_index;
-import dchip.types;
 import dchip.vector;
 
 alias cpSpaceArbiterApplyImpulseFunc = void function(cpArbiter* arb);

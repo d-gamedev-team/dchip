@@ -21,7 +21,7 @@
  */
 module dchip.chipmunk_unsafe;
 
-import dchip.types;
+import dchip.chipmunk_types;
 
 /// Set the radius of a circle shape.
 void cpCircleShapeSetRadius(cpShape* shape, cpFloat radius);

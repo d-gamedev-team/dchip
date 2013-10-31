@@ -24,9 +24,9 @@ module dchip.spatial_index;
 import dchip.bb;
 import dchip.bb_tree;
 import dchip.chipmunk;
+import dchip.chipmunk_types;
 import dchip.space_hash;
 import dchip.sweep1D;
-import dchip.types;
 
 /**
     Spatial indexes are data structures that are used to accelerate collision detection

@@ -29,11 +29,11 @@ import dchip.constraint;
 import dchip.contact;
 import dchip.chipmunk;
 import dchip.chipmunk_private;
+import dchip.chipmunk_types;
 import dchip.hash_set;
 import dchip.shape;
 import dchip.space;
 import dchip.spatial_index;
-import dchip.types;
 
 cpPostStepCallback* cpSpaceGetPostStepCallback(cpSpace* space, void* key)
 {

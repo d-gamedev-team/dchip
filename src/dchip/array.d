@@ -23,7 +23,7 @@ module dchip.array;
 
 import dchip.chipmunk;
 import dchip.chipmunk_private;
-import dchip.types;
+import dchip.chipmunk_types;
 
 cpArray* cpArrayNew(int size)
 {

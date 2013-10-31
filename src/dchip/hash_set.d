@@ -24,8 +24,8 @@ module dchip.hash_set;
 import dchip.array;
 import dchip.chipmunk;
 import dchip.chipmunk_private;
+import dchip.chipmunk_types;
 import dchip.prime;
-import dchip.types;
 
 struct cpHashSetBin
 {

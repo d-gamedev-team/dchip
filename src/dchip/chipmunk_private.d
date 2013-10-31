@@ -25,12 +25,12 @@ import dchip.arbiter;
 import dchip.body_;
 import dchip.constraint;
 import dchip.chipmunk;
+import dchip.chipmunk_types;
 import dchip.hash_set;
 import dchip.poly_shape;
 import dchip.shape;
 import dchip.space;
 import dchip.spatial_index;
-import dchip.types;
 import dchip.vector;
 
 enum CP_HASH_COEF = 3344921057uL;

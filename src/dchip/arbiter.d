@@ -25,10 +25,10 @@ import std.string;
 
 import dchip.body_;
 import dchip.chipmunk_private;
+import dchip.chipmunk_types;
 import dchip.space;
 import dchip.spatial_index;
 import dchip.shape;
-import dchip.types;
 import dchip.util;
 
 /// The cpArbiter struct controls pairs of colliding shapes.

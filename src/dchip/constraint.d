@@ -24,8 +24,8 @@ module dchip.constraint;
 import std.string;
 
 import dchip.body_;
+import dchip.chipmunk_types;
 import dchip.space;
-import dchip.types;
 
 alias cpConstraintPreStepImpl = void function(cpConstraint* constraint, cpFloat dt);
 alias cpConstraintApplyCachedImpulseImpl = void function(cpConstraint* constraint, cpFloat dt_coef);

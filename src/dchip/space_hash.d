@@ -25,10 +25,11 @@ import dchip.array;
 import dchip.bb;
 import dchip.chipmunk;
 import dchip.chipmunk_private;
+import dchip.chipmunk_types;
 import dchip.hash_set;
 import dchip.prime;
 import dchip.spatial_index;
-import dchip.types;
+import dchip.chipmunk_types;
 import dchip.vector;
 
 struct cpSpaceHash

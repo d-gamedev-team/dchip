@@ -21,7 +21,7 @@
  */
 module dchip.bb;
 
-import dchip.types;
+import dchip.chipmunk_types;
 import dchip.vector;
 
 /// Chipmunk's axis-aligned 2D bounding box type along with a few handy routines.

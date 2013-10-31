@@ -24,10 +24,10 @@ module dchip.body_;
 import std.string;
 
 import dchip.arbiter;
+import dchip.chipmunk_types;
 import dchip.constraint;
 import dchip.shape;
 import dchip.space;
-import dchip.types;
 import dchip.vector;
 
 /// Chipmunk's rigid body type. Rigid bodies hold the physical properties of an object like

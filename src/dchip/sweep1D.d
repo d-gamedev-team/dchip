@@ -23,10 +23,10 @@ module dchip.sweep1D;
 
 import core.stdc.stdlib : qsort;
 
-import dchip.spatial_index;
 import dchip.bb;
 import dchip.chipmunk;
-import dchip.types;
+import dchip.chipmunk_types;
+import dchip.spatial_index;
 
 cpSpatialIndexClass* Klass();
 

@@ -23,8 +23,8 @@ module dchip.poly_shape;
 
 import dchip.bb;
 import dchip.body_;
+import dchip.chipmunk_types;
 import dchip.shape;
-import dchip.types;
 
 /// @private
 struct cpSplittingPlane

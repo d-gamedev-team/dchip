@@ -25,9 +25,9 @@ import core.stdc.stdlib : calloc, realloc, free;
 
 import dchip.bb;
 import dchip.body_;
+import dchip.chipmunk_types;
 import dchip.vector;
 import dchip.spatial_index;
-import dchip.types;
 
 /**
     Workaround for a linker bug with RDMD local imports:

@@ -33,6 +33,9 @@ rem
 rem CHIP_ENABLE_WARNINGS
 rem     - Enable internal warnings.
 rem
+rem CHIP_ENABLE_CHECKS
+rem     - Enable additional internal checks.
+rem
 rem CHIP_USE_DOUBLES
 rem     - Use double-precision floating point internally.
 

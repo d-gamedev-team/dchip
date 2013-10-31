@@ -4,18 +4,9 @@
  *     (See accompanying file LICENSE_1_0.txt or copy at
  *           http://www.boost.org/LICENSE_1_0.txt)
  */
-module dchip.test;
+module dchip.util;
 
 import core.exception;
-
-//~ version (CHIP_ENABLE_UNITTESTS)
-//~ {
-    //~ import std.conv;
-    //~ import std.exception;
-    //~ import std.range;
-    //~ import std.string;
-    //~ import std.traits;
-//~ }
 
 /**
     Return the exception of type $(D Exc) that is
@@ -353,4 +344,44 @@ unittest
     assert(enquote(enquote(0)) == `"0"`);
     assert(enquote("foo") == `"foo"`);
     assert(enquote('a') == "'a'");
+}
+
+/**
+    Export all enum members as aliases. This allows enums to be used as types
+    and allows its members to be used as if they're defined in module scope.
+*/
+package mixin template _ExportEnumMembers(E) if (is(E == enum))
+{
+    mixin(_makeEnumAliases!(E)());
+}
+
+/// ditto
+package string _makeEnumAliases(E)() if (is(E == enum))
+{
+    import std.array;
+    import std.string;
+
+    enum enumName = __traits(identifier, E);
+    Appender!(string[]) result;
+
+    foreach (string member; __traits(allMembers, E))
+        result ~= format("alias %s = %s.%s;", member, enumName, member);
+
+    return result.data.join("\n");
+}
+
+///
+version (CHIP_ENABLE_UNITTESTS)
+unittest
+{
+    enum enum_type_t
+    {
+        foo,
+        bar,
+    }
+
+    mixin _ExportEnumMembers!enum_type_t;
+
+    enum_type_t e1 = enum_type_t.foo;  // ok
+    enum_type_t e2 = bar;    // ok
 }

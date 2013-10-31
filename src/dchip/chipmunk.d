@@ -24,6 +24,7 @@ module dchip.chipmunk;
 import core.stdc.stdlib : calloc, realloc, free;
 
 import dchip.bb;
+import dchip.body_;
 import dchip.vector;
 import dchip.spatial_index;
 import dchip.types;
@@ -34,7 +35,7 @@ import dchip.types;
 */
 version (CHIP_ENABLE_UNITTESTS)
 {
-    import dchip.test;
+    import dchip.util;
 }
 
 /**
@@ -120,7 +121,7 @@ version (CHIP_ENABLE_UNITTESTS)
 unittest
 {
     import std.exception : assertNotThrown;
-    import dchip.test : assertErrorsWith;
+    import dchip.util : assertErrorsWith;
 
     int iteration = 10;
     int WARN_GJK_ITERATIONS = 10;
@@ -172,7 +173,7 @@ version (CHIP_ENABLE_UNITTESTS)
 unittest
 {
     import std.exception : assertNotThrown;
-    import dchip.test : assertErrorsWith;
+    import dchip.util : assertErrorsWith;
 
     int iteration = 10;
     int WARN_GJK_ITERATIONS = 10;

@@ -5,7 +5,6 @@ Todo:
     version (CHIP_ALLOW_PRIVATE_ACCESS)
         int x;
     else
-        private
-        int x;
+        package int x;
 
 - Introduce -version=CHIP_ENABLE_WARNINGS

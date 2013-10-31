@@ -176,7 +176,7 @@ struct cpArbiter
 mixin template CP_DefineArbiterStructGetter(type, string member, string name)
 {
     mixin(q{
-        type cpArbiterGet%s(const cpArbiter * arb) { return arb.%s; }
+        type cpArbiterGet%s(const cpArbiter * arb) { return cast(typeof(return))arb.%s; }
     }.format(name, member));
 }
 
@@ -228,13 +228,15 @@ void cpArbiterIgnore(cpArbiter* arb);
 /// the order set when the collision handler was registered.
 void cpArbiterGetShapes(const cpArbiter* arb, cpShape** a, cpShape** b)
 {
-    if (arb.CP_PRIVATE(swappedColl))
+    if (arb.swappedColl)
     {
-        (*a) = arb.CP_PRIVATE(b), (*b) = arb.CP_PRIVATE(a);
+        (*a) = cast(typeof(*a))arb.b;
+        (*b) = cast(typeof(*a))arb.a;
     }
     else
     {
-        (*a) = arb.CP_PRIVATE(a), (*b) = arb.CP_PRIVATE(b);
+        (*a) = cast(typeof(*a))arb.a;
+        (*b) = cast(typeof(*b))arb.b;
     }
 }
 
@@ -244,7 +246,7 @@ string CP_ARBITER_GET_SHAPES(string arb, string a, string b)
     return q{
         cpShape * %2$s;
         cpShape * %3$s;
-        cpArbiterGetShapes(%1$s, %2$s, %3$s);
+        cpArbiterGetShapes(%1$s, &%2$s, &%3$s);
     }.format(arb, a, b);
 }
 

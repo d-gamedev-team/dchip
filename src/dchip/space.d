@@ -21,10 +21,15 @@
  */
 module dchip.space;
 
+import std.string;
+
 import dchip.arbiter;
+import dchip.bb;
 import dchip.body_;
+import dchip.constraint;
 import dchip.chipmunk_private;
 import dchip.hash_set;
+import dchip.shape;
 import dchip.space_step;
 import dchip.spatial_index;
 import dchip.types;
@@ -199,7 +204,7 @@ void cpSpaceFree(cpSpace* space);
 mixin template CP_DefineSpaceStructGetter(type, string member, string name)
 {
     mixin(q{
-        type cpSpaceGet%s(const cpSpace * space) { return space.%s; }
+        type cpSpaceGet%s(const cpSpace * space) { return cast(typeof(return))space.%s; }
     }.format(name, member));
 }
 
@@ -216,23 +221,23 @@ mixin template CP_DefineSpaceStructProperty(type, string member, string name)
     mixin CP_DefineSpaceStructSetter!(type, member, name);
 }
 
-mixin CP_DefineSpaceStructProperty!(int, iterations, Iterations);
-mixin CP_DefineSpaceStructProperty!(cpVect, gravity, Gravity);
-mixin CP_DefineSpaceStructProperty!(cpFloat, damping, Damping);
-mixin CP_DefineSpaceStructProperty!(cpFloat, idleSpeedThreshold, IdleSpeedThreshold);
-mixin CP_DefineSpaceStructProperty!(cpFloat, sleepTimeThreshold, SleepTimeThreshold);
-mixin CP_DefineSpaceStructProperty!(cpFloat, collisionSlop, CollisionSlop);
-mixin CP_DefineSpaceStructProperty!(cpFloat, collisionBias, CollisionBias);
-mixin CP_DefineSpaceStructProperty!(cpTimestamp, collisionPersistence, CollisionPersistence);
-mixin CP_DefineSpaceStructProperty!(cpBool, enableContactGraph, EnableContactGraph);
-mixin CP_DefineSpaceStructProperty!(cpDataPointer, data, UserData);
-mixin CP_DefineSpaceStructGetter!(cpBody*, staticBody, StaticBody);
-mixin CP_DefineSpaceStructGetter!(cpFloat, CP_PRIVATE(curr_dt), CurrentTimeStep);
+mixin CP_DefineSpaceStructProperty!(int, "iterations", "Iterations");
+mixin CP_DefineSpaceStructProperty!(cpVect, "gravity", "Gravity");
+mixin CP_DefineSpaceStructProperty!(cpFloat, "damping", "Damping");
+mixin CP_DefineSpaceStructProperty!(cpFloat, "idleSpeedThreshold", "IdleSpeedThreshold");
+mixin CP_DefineSpaceStructProperty!(cpFloat, "sleepTimeThreshold", "SleepTimeThreshold");
+mixin CP_DefineSpaceStructProperty!(cpFloat, "collisionSlop", "CollisionSlop");
+mixin CP_DefineSpaceStructProperty!(cpFloat, "collisionBias", "CollisionBias");
+mixin CP_DefineSpaceStructProperty!(cpTimestamp, "collisionPersistence", "CollisionPersistence");
+mixin CP_DefineSpaceStructProperty!(cpBool, "enableContactGraph", "EnableContactGraph");
+mixin CP_DefineSpaceStructProperty!(cpDataPointer, "data", "UserData");
+mixin CP_DefineSpaceStructGetter!(cpBody*, "staticBody", "StaticBody");
+mixin CP_DefineSpaceStructGetter!(cpFloat, "curr_dt", "CurrentTimeStep");
 
 /// returns true from inside a callback and objects cannot be added/removed.
 cpBool cpSpaceIsLocked(cpSpace* space)
 {
-    return space.locked;
+    return cast(bool)space.locked;
 }
 
 /// Set a default collision handler for this space.

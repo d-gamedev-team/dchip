@@ -23,12 +23,12 @@ module dchip.body_;
 
 import std.string;
 
-import dchip.constraints.constraint;
-
 import dchip.arbiter;
+import dchip.constraint;
 import dchip.shape;
 import dchip.space;
 import dchip.types;
+import dchip.vector;
 
 /// Chipmunk's rigid body type. Rigid bodies hold the physical properties of an object like
 /// it's mass, and position and velocity of it's center of gravity. They don't have an shape on their own.
@@ -106,35 +106,35 @@ struct cpBody
     /// Maximum rotational rate (in radians/second) allowed when updating the angular velocity.
     cpFloat w_limit;
 
-    version (CHIP_ALLOW_PRIVATE_ACCESS)
-        cpVect v_bias;
-    else
-        package cpVect v_bias;
+    //~ version (CHIP_ALLOW_PRIVATE_ACCESS)
+        //~ cpVect v_bias;
+    //~ else
+        //~ package cpVect v_bias;
+
+    //~ version (CHIP_ALLOW_PRIVATE_ACCESS)
+        //~ cpFloat w_bias;
+    //~ else
+        //~ package cpFloat w_bias;
 
     version (CHIP_ALLOW_PRIVATE_ACCESS)
-        cpFloat w_bias;
+        cpSpace * space;
     else
-        package cpFloat w_bias;
+        package cpSpace * space;
 
     version (CHIP_ALLOW_PRIVATE_ACCESS)
-        cpSpace space;
+        cpShape * shapeList;
     else
-        package cpSpace space;
+        package cpShape * shapeList;
 
     version (CHIP_ALLOW_PRIVATE_ACCESS)
-        cpShape shapeList;
+        cpArbiter * arbiterList;
     else
-        package cpShape shapeList;
+        package cpArbiter *arbiterList;
 
     version (CHIP_ALLOW_PRIVATE_ACCESS)
-        cpArbiter arbiterList;
+        cpConstraint * constraintList;
     else
-        package cpArbiter arbiterList;
-
-    version (CHIP_ALLOW_PRIVATE_ACCESS)
-        cpConstraint constraintList;
-    else
-        package cpConstraint constraintList;
+        package cpConstraint * constraintList;
 
     version (CHIP_ALLOW_PRIVATE_ACCESS)
         cpComponentNode node;
@@ -192,26 +192,26 @@ void cpBodySleepWithGroup(cpBody* bdy, cpBody* group);
 /// Returns true if the body is sleeping.
 cpBool cpBodyIsSleeping(const cpBody* bdy)
 {
-    return (CP_PRIVATE(bdy.node).root != (cast(cpBody*)null));
+    return (bdy.node.root != (cast(cpBody*)null));
 }
 
 /// Returns true if the body is static.
 cpBool cpBodyIsStatic(const cpBody* bdy)
 {
-    return CP_PRIVATE(bdy.node).idleTime == INFINITY;
+    return bdy.node.idleTime == INFINITY;
 }
 
 /// Returns true if the body has not been added to a space.
 /// Note: Static bodies are a subtype of rogue bodies.
 cpBool cpBodyIsRogue(const cpBody* bdy)
 {
-    return (bdy.CP_PRIVATE(space) == (cast(cpSpace*)null));
+    return (bdy.space == (cast(cpSpace*)null));
 }
 
 mixin template CP_DefineBodyStructGetter(type, string member, string name)
 {
     mixin(q{
-        type cpBodyGet%s(const cpBody * bdy) { return bdy.%s; }
+        type cpBodyGet%s(const cpBody * bdy) { return cast(typeof(return))bdy.%s; }
     }.format(name, member));
 }
 
@@ -221,10 +221,10 @@ mixin template CP_DefineBodyStructSetter(type, string member, string name)
         void cpBodySet%s(cpBody * bdy, const type value)
         {
             cpBodyActivate(bdy);
-            bdy.%s = value;
+            bdy.%s = cast(typeof(bdy.%s))value;
             cpBodyAssertSane(bdy);
         }
-    }.format(name, member));
+    }.format(name, member, member));
 }
 
 mixin template CP_DefineBodyStructProperty(type, string member, string name)

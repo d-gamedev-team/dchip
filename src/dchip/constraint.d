@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module dchip.constraints.constraint;
+module dchip.constraint;
 
 import std.string;
 
@@ -126,7 +126,7 @@ void cpConstraintActivateBodies(cpConstraint* constraint)
 mixin template CP_DefineConstraintStructGetter(type, string member, string name)
 {
     mixin(q{
-        type cpConstraintGet%s(const cpConstraint * constraint) { return constraint.%s; }
+        type cpConstraintGet%s(const cpConstraint * constraint) { return cast(typeof(return))constraint.%s; }
     }.format(name, member));
 }
 
@@ -147,16 +147,16 @@ mixin template CP_DefineConstraintStructProperty(type, string member, string nam
     mixin CP_DefineConstraintStructSetter!(type, member, name);
 }
 
-mixin CP_DefineConstraintStructGetter!(cpSpace*, CP_PRIVATE(space), Space);
+mixin CP_DefineConstraintStructGetter!(cpSpace*, "space", "Space");
 
-mixin CP_DefineConstraintStructGetter!(cpBody*, a, A);
-mixin CP_DefineConstraintStructGetter!(cpBody*, b, B);
-mixin CP_DefineConstraintStructProperty!(cpFloat, maxForce, MaxForce);
-mixin CP_DefineConstraintStructProperty!(cpFloat, errorBias, ErrorBias);
-mixin CP_DefineConstraintStructProperty!(cpFloat, maxBias, MaxBias);
-mixin CP_DefineConstraintStructProperty!(cpConstraintPreSolveFunc, preSolve, PreSolveFunc);
-mixin CP_DefineConstraintStructProperty!(cpConstraintPostSolveFunc, postSolve, PostSolveFunc);
-mixin CP_DefineConstraintStructProperty!(cpDataPointer, data, UserData);
+mixin CP_DefineConstraintStructGetter!(cpBody*, "a", "A");
+mixin CP_DefineConstraintStructGetter!(cpBody*, "b", "B");
+mixin CP_DefineConstraintStructProperty!(cpFloat, "maxForce", "MaxForce");
+mixin CP_DefineConstraintStructProperty!(cpFloat, "errorBias", "ErrorBias");
+mixin CP_DefineConstraintStructProperty!(cpFloat, "maxBias", "MaxBias");
+mixin CP_DefineConstraintStructProperty!(cpConstraintPreSolveFunc, "preSolve", "PreSolveFunc");
+mixin CP_DefineConstraintStructProperty!(cpConstraintPostSolveFunc, "postSolve", "PostSolveFunc");
+mixin CP_DefineConstraintStructProperty!(cpDataPointer, "data", "UserData");
 
 // Get the last impulse applied by this constraint.
 cpFloat cpConstraintGetImpulse(cpConstraint* constraint)
@@ -175,7 +175,7 @@ mixin template CP_DefineConstraintGetter(string struct_, type, string member, st
         type %1$sGet%2$s(const cpConstraint* constraint)
         {
             mixin(cpConstraintCheckCast(constraint, %1$s));
-            return (cast(%1$s*)constraint).%3$s;
+            return cast(typeof(return))((cast(%1$s*)constraint).%3$s);
         }
     }.format(struct_, name, member));
 }

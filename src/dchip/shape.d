@@ -28,6 +28,7 @@ import dchip.body_;
 import dchip.space;
 import dchip.types;
 import dchip.util;
+import dchip.vector;
 
 /// The cpShape struct defines the shape of a rigid body.
 
@@ -188,7 +189,7 @@ cpFloat cpSegmentQueryHitDist(const cpVect start, const cpVect end, const cpSegm
 mixin template CP_DefineShapeStructGetter(type, string member, string name)
 {
     mixin(q{
-        type cpShapeGet%s(const cpShape * shape) { return shape.%s; }
+        type cpShapeGet%s(const cpShape * shape) { return cast(typeof(return))shape.%s; }
     }.format(name, member));
 }
 

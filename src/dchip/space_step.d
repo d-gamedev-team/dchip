@@ -21,13 +21,19 @@
  */
 module dchip.space_step;
 
+import dchip.array;
 import dchip.arbiter;
+import dchip.bb;
+import dchip.body_;
+import dchip.constraint;
 import dchip.contact;
 import dchip.chipmunk;
 import dchip.chipmunk_private;
-import dchip.types;
+import dchip.hash_set;
 import dchip.shape;
 import dchip.space;
+import dchip.spatial_index;
+import dchip.types;
 
 cpPostStepCallback* cpSpaceGetPostStepCallback(cpSpace* space, void* key)
 {
@@ -41,7 +47,7 @@ cpPostStepCallback* cpSpaceGetPostStepCallback(cpSpace* space, void* key)
             return callback;
     }
 
-    return NULL;
+    return null;
 }
 
 void PostStepDoNothing(cpSpace* space, void* obj, void* data)
@@ -57,7 +63,7 @@ cpBool cpSpaceAddPostStepCallback(cpSpace* space, cpPostStepFunc func, void* key
     if (!cpSpaceGetPostStepCallback(space, key))
     {
         cpPostStepCallback* callback = cast(cpPostStepCallback*)cpcalloc(1, cpPostStepCallback.sizeof);
-        callback.func = (func ? func : PostStepDoNothing);
+        callback.func = (func ? func : &PostStepDoNothing);
         callback.key  = key;
         callback.data = data;
 
@@ -89,7 +95,7 @@ void cpSpaceUnlock(cpSpace* space, cpBool runPostStep)
         for (int i = 0, count = waking.num; i < count; i++)
         {
             cpSpaceActivateBody(space, cast(cpBody*)waking.arr[i]);
-            waking.arr[i] = NULL;
+            waking.arr[i] = null;
         }
 
         waking.num = 0;
@@ -105,14 +111,14 @@ void cpSpaceUnlock(cpSpace* space, cpBool runPostStep)
                 cpPostStepCallback* callback = cast(cpPostStepCallback*)arr.arr[i];
                 cpPostStepFunc func = callback.func;
 
-                // Mark the func as NULL in case calling it calls cpSpaceRunPostStepCallbacks() again.
+                // Mark the func as null in case calling it calls cpSpaceRunPostStepCallbacks() again.
                 // TODO need more tests around this case I think.
-                callback.func = NULL;
+                callback.func = null;
 
                 if (func)
                     func(space, callback.key, callback.data);
 
-                arr.arr[i] = NULL;
+                arr.arr[i] = null;
                 cpfree(callback);
             }
 
@@ -164,7 +170,7 @@ void cpSpacePushFreshContactBuffer(cpSpace* space)
     if (!head)
     {
         // No buffers have been allocated, make one
-        space.contactBuffersHead = cpContactBufferHeaderInit(cpSpaceAllocContactBuffer(space), stamp, NULL);
+        space.contactBuffersHead = cpContactBufferHeaderInit(cpSpaceAllocContactBuffer(space), stamp, null);
     }
     else if (stamp - head.next.stamp > space.collisionPersistence)
     {
@@ -189,7 +195,7 @@ cpContact* cpContactBufferGetArray(cpSpace* space)
     }
 
     cpContactBufferHeader* head = space.contactBuffersHead;
-    return (cast(cpContactBuffer*)head).contacts + head.numContacts;
+    return &(cast(cpContactBuffer*)head).contacts[head.numContacts];
 }
 
 void cpSpacePushContacts(cpSpace* space, int count)
@@ -210,7 +216,7 @@ void* cpSpaceArbiterSetTrans(cpShape** shapes, cpSpace* space)
     if (space.pooledArbiters.num == 0)
     {
         // arbiter pool is exhausted, make more
-        int count = CP_BUFFER_BYTES / sizeof(cpArbiter);
+        int count = CP_BUFFER_BYTES / cpArbiter.sizeof;
         cpAssertHard(count, "Internal Error: Buffer size too small.");
 
         cpArbiter* buffer = cast(cpArbiter*)cpcalloc(1, CP_BUFFER_BYTES);
@@ -277,9 +283,11 @@ cpCollisionID cpSpaceCollideShapes(cpShape* a, cpShape* b, cpCollisionID id, cpS
 
     // Get an arbiter from space.arbiterSet for the two shapes.
     // This is where the persistant contact magic comes from.
-    cpShape* shape_pair[] = { a, b };
+    cpShape*[2] shape_pair;
+    shape_pair[0] = a;
+    shape_pair[1] = b;
     cpHashValue arbHashID = CP_HASH_PAIR(cast(cpHashValue)a, cast(cpHashValue)b);
-    cpArbiter * arb       = cast(cpArbiter*)cpHashSetInsert(space.cachedArbiters, arbHashID, shape_pair, space, cast(cpHashSetTransFunc)cpSpaceArbiterSetTrans);
+    cpArbiter * arb       = cast(cpArbiter*)cpHashSetInsert(space.cachedArbiters, arbHashID, shape_pair.ptr, space, cast(cpHashSetTransFunc)&cpSpaceArbiterSetTrans);
     cpArbiterUpdate(arb, contacts, numContacts, handler, a, b);
 
     // Call the begin function first if it's the first step
@@ -306,7 +314,7 @@ cpCollisionID cpSpaceCollideShapes(cpShape* a, cpShape* b, cpCollisionID id, cpS
     {
         cpSpacePopContacts(space, numContacts);
 
-        arb.contacts    = NULL;
+        arb.contacts    = null;
         arb.numContacts = 0;
 
         // Normally arbiters are set as used after calling the post-solve callback.
@@ -348,7 +356,7 @@ cpBool cpSpaceArbiterSetFilter(cpArbiter* arb, cpSpace* space)
 
     if (ticks >= space.collisionPersistence)
     {
-        arb.contacts    = NULL;
+        arb.contacts    = null;
         arb.numContacts = 0;
 
         cpArrayPush(space.pooledArbiters, arb);
@@ -407,8 +415,8 @@ void cpSpaceStep(cpSpace* space, cpFloat dt)
 
         // Find colliding pairs.
         cpSpacePushFreshContactBuffer(space);
-        cpSpatialIndexEach(space.activeShapes, cast(cpSpatialIndexIteratorFunc)cpShapeUpdateFunc, NULL);
-        cpSpatialIndexReindexQuery(space.activeShapes, cast(cpSpatialIndexQueryFunc)cpSpaceCollideShapes, space);
+        cpSpatialIndexEach(space.activeShapes, cast(cpSpatialIndexIteratorFunc)&cpShapeUpdateFunc, null);
+        cpSpatialIndexReindexQuery(space.activeShapes, cast(cpSpatialIndexQueryFunc)&cpSpaceCollideShapes, space);
     }
     cpSpaceUnlock(space, cpFalse);
 
@@ -418,7 +426,7 @@ void cpSpaceStep(cpSpace* space, cpFloat dt)
     cpSpaceLock(space);
     {
         // Clear out old cached arbiters and call separate callbacks
-        cpHashSetFilter(space.cachedArbiters, cast(cpHashSetFilterFunc)cpSpaceArbiterSetFilter, space);
+        cpHashSetFilter(space.cachedArbiters, cast(cpHashSetFilterFunc)&cpSpaceArbiterSetFilter, space);
 
         // Prestep the arbiters and constraints.
         cpFloat slop     = space.collisionSlop;

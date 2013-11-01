@@ -52,8 +52,6 @@ struct cpArray
     void** arr;
 }
 
-cpBool cpArrayContains(cpArray* arr, void* ptr);
-
 void cpArrayFreeEach(cpArray * arr, void function(void*) freeFunc);
 
 cpConstraint* cpConstraintNext(cpConstraint* node, cpBody* bdy)
@@ -71,7 +69,7 @@ cpArbiter* cpArbiterNext(cpArbiter* node, cpBody* bdy)
 }
 
 enum CP_BODY_FOREACH_ARBITER(string bdy, string var, string code)
-    = format("for (cpArbiter* %2$s = %1$s->arbiterList; %2$s; %2$s = cpArbiterNext(%2$s, %1$s)) { %3$s }",
+    = format("for (cpArbiter* %2$s = %1$s.arbiterList; %2$s; %2$s = cpArbiterNext(%2$s, %1$s)) { %3$s }",
              bdy, var, code);
 
 enum CP_BODY_FOREACH_SHAPE(string bdy, string var, string code)

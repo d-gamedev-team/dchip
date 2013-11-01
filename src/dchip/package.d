@@ -48,6 +48,7 @@ public
     import dchip.cpSimpleMotor;
     import dchip.cpSlideJoint;
     import dchip.cpSpace;
+    import dchip.cpSpaceComponent;
     import dchip.cpSpaceHash;
     import dchip.cpSpaceStep;
     import dchip.cpSpatialIndex;

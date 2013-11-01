@@ -28,6 +28,7 @@ import dchip.chipmunk;
 import dchip.cpBody;
 import dchip.cpConstraint;
 import dchip.chipmunk_types;
+import dchip.cpVect;
 
 const cpConstraintClass* cpSimpleMotorGetClass();
 
@@ -52,3 +53,83 @@ cpSimpleMotor* cpSimpleMotorInit(cpSimpleMotor* joint, cpBody* a, cpBody* b, cpF
 cpConstraint* cpSimpleMotorNew(cpBody* a, cpBody* b, cpFloat rate);
 
 mixin CP_DefineConstraintProperty!("cpSimpleMotor", cpFloat, "rate", "Rate");
+
+static void preStep(cpSimpleMotor* joint, cpFloat dt)
+{
+    cpBody* a = joint.constraint.a;
+    cpBody* b = joint.constraint.b;
+
+    // calculate moment of inertia coefficient.
+    joint.iSum = 1.0f / (a.i_inv + b.i_inv);
+}
+
+static void applyCachedImpulse(cpSimpleMotor* joint, cpFloat dt_coef)
+{
+    cpBody* a = joint.constraint.a;
+    cpBody* b = joint.constraint.b;
+
+    cpFloat j = joint.jAcc * dt_coef;
+    a.w -= j * a.i_inv;
+    b.w += j * b.i_inv;
+}
+
+static void applyImpulse(cpSimpleMotor* joint, cpFloat dt)
+{
+    cpBody* a = joint.constraint.a;
+    cpBody* b = joint.constraint.b;
+
+    // compute relative rotational velocity
+    cpFloat wr = b.w - a.w + joint.rate;
+
+    cpFloat jMax = joint.constraint.maxForce * dt;
+
+    // compute normal impulse
+    cpFloat j    = -wr * joint.iSum;
+    cpFloat jOld = joint.jAcc;
+    joint.jAcc = cpfclamp(jOld + j, -jMax, jMax);
+    j = joint.jAcc - jOld;
+
+    // apply impulse
+    a.w -= j * a.i_inv;
+    b.w += j * b.i_inv;
+}
+
+static cpFloat getImpulse(cpSimpleMotor* joint)
+{
+    return cpfabs(joint.jAcc);
+}
+
+const cpConstraintClass klass;
+shared static this()
+{
+    klass = cpConstraintClass(
+        cast(cpConstraintPreStepImpl)&preStep,
+        cast(cpConstraintApplyCachedImpulseImpl)&applyCachedImpulse,
+        cast(cpConstraintApplyImpulseImpl)&applyImpulse,
+        cast(cpConstraintGetImpulseImpl)&getImpulse,
+    );
+}
+
+mixin CP_DefineClassGetter!("cpSimpleMotor");
+
+cpSimpleMotor *
+cpSimpleMotorAlloc()
+{
+    return cast(cpSimpleMotor*)cpcalloc(1, cpSimpleMotor.sizeof);
+}
+
+cpSimpleMotor* cpSimpleMotorInit(cpSimpleMotor* joint, cpBody* a, cpBody* b, cpFloat rate)
+{
+    cpConstraintInit(cast(cpConstraint*)joint, &klass, a, b);
+
+    joint.rate = rate;
+
+    joint.jAcc = 0.0f;
+
+    return joint;
+}
+
+cpConstraint* cpSimpleMotorNew(cpBody* a, cpBody* b, cpFloat rate)
+{
+    return cast(cpConstraint*)cpSimpleMotorInit(cpSimpleMotorAlloc(), a, b, rate);
+}

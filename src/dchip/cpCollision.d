@@ -294,7 +294,7 @@ static ClosestPoints EPARecurse(const SupportContext* ctx, const int count, cons
 
     MinkowskiPoint v0 = hull[mini];
     MinkowskiPoint v1 = hull[(mini + 1) % count];
-    cpAssertSoft(!cpveql(v0.ab, v1.ab), "Internal Error: EPA vertexes are the same (%d and %d)", mini, (mini + 1) % count);
+    cpAssertSoft(!cpveql(v0.ab, v1.ab), "!cpveql(v0.ab, v1.ab)", "Internal Error: EPA vertexes are the same (%d and %d)", mini, (mini + 1) % count);
 
     MinkowskiPoint p = Support(ctx, cpvperp(cpvsub(v1.ab, v0.ab)));
 

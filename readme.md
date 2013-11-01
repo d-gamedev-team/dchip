@@ -30,6 +30,7 @@ which will allow building in a cross-platform way.
 
 - Chipmunk2D [homepage](http://chipmunk2d.net/).
 - Chipmunk2D [github page](https://github.com/slembcke/Chipmunk2D).
+- Chipmunk2D [v6.2.1 documentation](http://chipmunk-physics.net/release/Chipmunk-6.x/Chipmunk-6.2.1-Docs/).
 
 ## License
 

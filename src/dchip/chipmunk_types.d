@@ -168,7 +168,7 @@ enum CP_ALL_LAYERS = ~cast(cpLayers)0;
 /// Chipmunk's 2D vector type.
 struct cpVect
 {
-    cpFloat x, y;
+    cpFloat x = 0, y = 0;
 
     cpVect opBinary(string op : "*")(const cpFloat s)
     {

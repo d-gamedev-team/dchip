@@ -23,6 +23,7 @@ module dchip.cpPinJoint;
 
 import std.string;
 
+import dchip.constraints_util;
 import dchip.chipmunk;
 import dchip.cpBody;
 import dchip.cpConstraint;

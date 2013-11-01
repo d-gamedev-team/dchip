@@ -52,9 +52,9 @@ alias cpConstraintPostSolveFunc = void function(cpConstraint* constraint, cpSpac
 struct cpConstraint
 {
     version (CHIP_ALLOW_PRIVATE_ACCESS)
-        const cpConstraintClass * klass;
+        /* const */ cpConstraintClass * klass;
     else
-        package const cpConstraintClass * klass;
+        package /* const */ cpConstraintClass * klass;
 
     /// The first body connected to this constraint.
     cpBody* a;
@@ -201,4 +201,38 @@ mixin template CP_DefineConstraintProperty(string struct_, type, string member, 
 {
     mixin CP_DefineConstraintGetter!(struct_, type, member, name);
     mixin CP_DefineConstraintSetter!(struct_, type, member, name);
+}
+
+void cpConstraintDestroy(cpConstraint* constraint)
+{
+}
+
+void cpConstraintFree(cpConstraint* constraint)
+{
+    if (constraint)
+    {
+        cpConstraintDestroy(constraint);
+        cpfree(constraint);
+    }
+}
+
+// *** declared in util.h TODO move declaration to chipmunk_private.h
+
+void cpConstraintInit(cpConstraint* constraint, const cpConstraintClass* klass, cpBody* a, cpBody* b)
+{
+    constraint.klass = cast(typeof(constraint.klass))klass;
+
+    constraint.a     = a;
+    constraint.b     = b;
+    constraint.space = null;
+
+    constraint.next_a = null;
+    constraint.next_b = null;
+
+    constraint.maxForce  = cast(cpFloat)INFINITY;
+    constraint.errorBias = cpfpow(1.0f - 0.1f, 60.0f);
+    constraint.maxBias   = cast(cpFloat)INFINITY;
+
+    constraint.preSolve  = null;
+    constraint.postSolve = null;
 }

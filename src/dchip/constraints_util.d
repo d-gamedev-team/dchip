@@ -31,9 +31,10 @@ import dchip.cpVect;
 // I'm not sure if this should be part of the private API or not.
 // I should probably clean up the naming conventions if it is...
 
-//~ #define CP_DefineClassGetter(t) const cpConstraintClass * t ## GetClass(void){ return (cpConstraintClass*)&klass; }
-
-void cpConstraintInit(cpConstraint* constraint, const cpConstraintClass* klass, cpBody* a, cpBody* b);
+mixin template CP_DefineClassGetter(string t)
+{
+    mixin("const cpConstraintClass * %sGetClass() { return cast(cpConstraintClass*)&klass; }".format(t));
+}
 
 cpVect relative_velocity(cpBody* a, cpBody* b, cpVect r1, cpVect r2)
 {

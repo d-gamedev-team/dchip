@@ -144,51 +144,12 @@ struct cpSpatialIndexClass
     cpSpatialIndexSegmentQueryImpl segmentQuery;
 };
 
-/// Destroy and free a spatial index.
-void cpSpatialIndexFree(cpSpatialIndex* index)
-{
-    if (index)
-    {
-        cpSpatialIndexDestroy(index);
-        cpfree(index);
-    }
-}
-
-cpSpatialIndex* cpSpatialIndexInit(cpSpatialIndex* index, cpSpatialIndexClass* klass, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex* staticIndex)
-{
-    index.klass       = klass;
-    index.bbfunc      = bbfunc;
-    index.staticIndex = staticIndex;
-
-    if (staticIndex)
-    {
-        cpAssertHard(!staticIndex.dynamicIndex, "This static index is already associated with a dynamic index.");
-        staticIndex.dynamicIndex = index;
-    }
-
-    return index;
-}
-
 struct dynamicToStaticContext
 {
     cpSpatialIndexBBFunc bbfunc;
     cpSpatialIndex* staticIndex;
     cpSpatialIndexQueryFunc queryFunc;
     void* data;
-}
-
-void dynamicToStaticIter(void* obj, dynamicToStaticContext* context)
-{
-    cpSpatialIndexQuery(context.staticIndex, obj, context.bbfunc(obj), context.queryFunc, context.data);
-}
-
-void cpSpatialIndexCollideStatic(cpSpatialIndex* dynamicIndex, cpSpatialIndex* staticIndex, cpSpatialIndexQueryFunc func, void* data)
-{
-    if (staticIndex && cpSpatialIndexCount(staticIndex) > 0)
-    {
-        dynamicToStaticContext context = { dynamicIndex.bbfunc, staticIndex, func, data };
-        cpSpatialIndexEach(dynamicIndex, cast(cpSpatialIndexIteratorFunc)&dynamicToStaticIter, &context);
-    }
 }
 
 /// Collide the objects in @c dynamicIndex against the objects in @c staticIndex using the query callback function.
@@ -264,4 +225,43 @@ void cpSpatialIndexSegmentQuery(cpSpatialIndex* index, void* obj, cpVect a, cpVe
 void cpSpatialIndexReindexQuery(cpSpatialIndex* index, cpSpatialIndexQueryFunc func, void* data)
 {
     index.klass.reindexQuery(index, func, data);
+}
+
+/// Destroy and free a spatial index.
+void cpSpatialIndexFree(cpSpatialIndex* index)
+{
+    if (index)
+    {
+        cpSpatialIndexDestroy(index);
+        cpfree(index);
+    }
+}
+
+cpSpatialIndex* cpSpatialIndexInit(cpSpatialIndex* index, cpSpatialIndexClass* klass, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex* staticIndex)
+{
+    index.klass       = klass;
+    index.bbfunc      = bbfunc;
+    index.staticIndex = staticIndex;
+
+    if (staticIndex)
+    {
+        cpAssertHard(!staticIndex.dynamicIndex, "This static index is already associated with a dynamic index.");
+        staticIndex.dynamicIndex = index;
+    }
+
+    return index;
+}
+
+void dynamicToStaticIter(void* obj, dynamicToStaticContext* context)
+{
+    cpSpatialIndexQuery(context.staticIndex, obj, context.bbfunc(obj), context.queryFunc, context.data);
+}
+
+void cpSpatialIndexCollideStatic(cpSpatialIndex* dynamicIndex, cpSpatialIndex* staticIndex, cpSpatialIndexQueryFunc func, void* data)
+{
+    if (staticIndex && cpSpatialIndexCount(staticIndex) > 0)
+    {
+        dynamicToStaticContext context = { dynamicIndex.bbfunc, staticIndex, func, data };
+        cpSpatialIndexEach(dynamicIndex, cast(cpSpatialIndexIteratorFunc)&dynamicToStaticIter, &context);
+    }
 }

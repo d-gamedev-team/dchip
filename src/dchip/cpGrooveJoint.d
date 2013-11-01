@@ -23,10 +23,12 @@ module dchip.cpGrooveJoint;
 
 import std.string;
 
+import dchip.constraints_util;
 import dchip.chipmunk;
 import dchip.cpBody;
 import dchip.cpConstraint;
 import dchip.chipmunk_types;
+import dchip.cpVect;
 
 const cpConstraintClass* cpGrooveJointGetClass();
 
@@ -65,3 +67,147 @@ mixin CP_DefineConstraintGetter!("cpGrooveJoint", cpVect, "grv_b", "GrooveB");
 void cpGrooveJointSetGrooveB(cpConstraint* constraint, cpVect value);
 mixin CP_DefineConstraintProperty!("cpGrooveJoint", cpVect, "anchr2", "Anchr2");
 
+
+void preStep(cpGrooveJoint* joint, cpFloat dt)
+{
+    cpBody* a = joint.constraint.a;
+    cpBody* b = joint.constraint.b;
+
+    // calculate endpoints in worldspace
+    cpVect ta = cpBodyLocal2World(a, joint.grv_a);
+    cpVect tb = cpBodyLocal2World(a, joint.grv_b);
+
+    // calculate axis
+    cpVect  n = cpvrotate(joint.grv_n, a.rot);
+    cpFloat d = cpvdot(ta, n);
+
+    joint.grv_tn = n;
+    joint.r2     = cpvrotate(joint.anchr2, b.rot);
+
+    // calculate tangential distance along the axis of r2
+    cpFloat td = cpvcross(cpvadd(b.p, joint.r2), n);
+
+    // calculate clamping factor and r2
+    if (td <= cpvcross(ta, n))
+    {
+        joint.clamp = 1.0f;
+        joint.r1    = cpvsub(ta, a.p);
+    }
+    else if (td >= cpvcross(tb, n))
+    {
+        joint.clamp = -1.0f;
+        joint.r1    = cpvsub(tb, a.p);
+    }
+    else
+    {
+        joint.clamp = 0.0f;
+        joint.r1    = cpvsub(cpvadd(cpvmult(cpvperp(n), -td), cpvmult(n, d)), a.p);
+    }
+
+    // Calculate mass tensor
+    joint.k = k_tensor(a, b, joint.r1, joint.r2);
+
+    // calculate bias velocity
+    cpVect delta = cpvsub(cpvadd(b.p, joint.r2), cpvadd(a.p, joint.r1));
+    joint.bias = cpvclamp(cpvmult(delta, -bias_coef(joint.constraint.errorBias, dt) / dt), joint.constraint.maxBias);
+}
+
+void applyCachedImpulse(cpGrooveJoint* joint, cpFloat dt_coef)
+{
+    cpBody* a = joint.constraint.a;
+    cpBody* b = joint.constraint.b;
+
+    apply_impulses(a, b, joint.r1, joint.r2, cpvmult(joint.jAcc, dt_coef));
+}
+
+cpVect grooveConstrain(cpGrooveJoint* joint, cpVect j, cpFloat dt)
+{
+    cpVect n      = joint.grv_tn;
+    cpVect jClamp = (joint.clamp * cpvcross(j, n) > 0.0f) ? j : cpvproject(j, n);
+    return cpvclamp(jClamp, joint.constraint.maxForce * dt);
+}
+
+void applyImpulse(cpGrooveJoint* joint, cpFloat dt)
+{
+    cpBody* a = joint.constraint.a;
+    cpBody* b = joint.constraint.b;
+
+    cpVect r1 = joint.r1;
+    cpVect r2 = joint.r2;
+
+    // compute impulse
+    cpVect vr = relative_velocity(a, b, r1, r2);
+
+    cpVect j    = cpMat2x2Transform(joint.k, cpvsub(joint.bias, vr));
+    cpVect jOld = joint.jAcc;
+    joint.jAcc = grooveConstrain(joint, cpvadd(jOld, j), dt);
+    j = cpvsub(joint.jAcc, jOld);
+
+    // apply impulse
+    apply_impulses(a, b, joint.r1, joint.r2, j);
+}
+
+cpFloat getImpulse(cpGrooveJoint* joint)
+{
+    return cpvlength(joint.jAcc);
+}
+
+const cpConstraintClass klass;
+shared static this()
+{
+    klass = cpConstraintClass(
+        cast(cpConstraintPreStepImpl)&preStep,
+        cast(cpConstraintApplyCachedImpulseImpl)&applyCachedImpulse,
+        cast(cpConstraintApplyImpulseImpl)&applyImpulse,
+        cast(cpConstraintGetImpulseImpl)&getImpulse,
+    );
+}
+
+mixin CP_DefineClassGetter!("cpGrooveJoint");
+
+cpGrooveJoint *
+cpGrooveJointAlloc()
+{
+    return cast(cpGrooveJoint*)cpcalloc(1, cpGrooveJoint.sizeof);
+}
+
+cpGrooveJoint* cpGrooveJointInit(cpGrooveJoint* joint, cpBody* a, cpBody* b, cpVect groove_a, cpVect groove_b, cpVect anchr2)
+{
+    cpConstraintInit(cast(cpConstraint*)joint, &klass, a, b);
+
+    joint.grv_a  = groove_a;
+    joint.grv_b  = groove_b;
+    joint.grv_n  = cpvperp(cpvnormalize(cpvsub(groove_b, groove_a)));
+    joint.anchr2 = anchr2;
+
+    joint.jAcc = cpvzero;
+
+    return joint;
+}
+
+cpConstraint* cpGrooveJointNew(cpBody* a, cpBody* b, cpVect groove_a, cpVect groove_b, cpVect anchr2)
+{
+    return cast(cpConstraint*)cpGrooveJointInit(cpGrooveJointAlloc(), a, b, groove_a, groove_b, anchr2);
+}
+
+void cpGrooveJointSetGrooveA(cpConstraint* constraint, cpVect value)
+{
+    cpGrooveJoint* g = cast(cpGrooveJoint*)constraint;
+    mixin(cpConstraintCheckCast("constraint", "cpGrooveJoint"));
+
+    g.grv_a = value;
+    g.grv_n = cpvperp(cpvnormalize(cpvsub(g.grv_b, value)));
+
+    cpConstraintActivateBodies(constraint);
+}
+
+void cpGrooveJointSetGrooveB(cpConstraint* constraint, cpVect value)
+{
+    cpGrooveJoint* g = cast(cpGrooveJoint*)constraint;
+    mixin(cpConstraintCheckCast("constraint", "cpGrooveJoint"));
+
+    g.grv_b = value;
+    g.grv_n = cpvperp(cpvnormalize(cpvsub(value, g.grv_a)));
+
+    cpConstraintActivateBodies(constraint);
+}

@@ -23,6 +23,7 @@ module dchip.cpDampedRotarySpring;
 
 import std.string;
 
+import dchip.constraints_util;
 import dchip.chipmunk;
 import dchip.cpBody;
 import dchip.cpConstraint;
@@ -61,3 +62,96 @@ mixin CP_DefineConstraintProperty!("cpDampedRotarySpring", cpFloat, "restAngle",
 mixin CP_DefineConstraintProperty!("cpDampedRotarySpring", cpFloat, "stiffness", "Stiffness");
 mixin CP_DefineConstraintProperty!("cpDampedRotarySpring", cpFloat, "damping", "Damping");
 mixin CP_DefineConstraintProperty!("cpDampedRotarySpring", cpDampedRotarySpringTorqueFunc, "springTorqueFunc", "SpringTorqueFunc");
+
+cpFloat defaultSpringTorque(cpDampedRotarySpring* spring, cpFloat relativeAngle)
+{
+    return (relativeAngle - spring.restAngle) * spring.stiffness;
+}
+
+void preStep(cpDampedRotarySpring* spring, cpFloat dt)
+{
+    cpBody* a = spring.constraint.a;
+    cpBody* b = spring.constraint.b;
+
+    cpFloat moment = a.i_inv + b.i_inv;
+    cpAssertSoft(moment != 0.0, "Unsolvable spring.");
+    spring.iSum = 1.0f / moment;
+
+    spring.w_coef     = 1.0f - cpfexp(-spring.damping * dt * moment);
+    spring.target_wrn = 0.0f;
+
+    // apply spring torque
+    cpFloat j_spring = spring.springTorqueFunc(cast(cpConstraint*)spring, a.a - b.a) * dt;
+    spring.jAcc = j_spring;
+
+    a.w -= j_spring * a.i_inv;
+    b.w += j_spring * b.i_inv;
+}
+
+void applyCachedImpulse(cpDampedRotarySpring* spring, cpFloat dt_coef)
+{
+}
+
+void applyImpulse(cpDampedRotarySpring* spring, cpFloat dt)
+{
+    cpBody* a = spring.constraint.a;
+    cpBody* b = spring.constraint.b;
+
+    // compute relative velocity
+    cpFloat wrn = a.w - b.w;    //normal_relative_velocity(a, b, r1, r2, n) - spring.target_vrn;
+
+    // compute velocity loss from drag
+    // not 100% certain this is derived correctly, though it makes sense
+    cpFloat w_damp = (spring.target_wrn - wrn) * spring.w_coef;
+    spring.target_wrn = wrn + w_damp;
+
+    //apply_impulses(a, b, spring.r1, spring.r2, cpvmult(spring.n, v_damp*spring.nMass));
+    cpFloat j_damp = w_damp * spring.iSum;
+    spring.jAcc += j_damp;
+
+    a.w += j_damp * a.i_inv;
+    b.w -= j_damp * b.i_inv;
+}
+
+cpFloat getImpulse(cpDampedRotarySpring* spring)
+{
+    return spring.jAcc;
+}
+
+const cpConstraintClass klass;
+shared static this()
+{
+    klass = cpConstraintClass(
+        cast(cpConstraintPreStepImpl)&preStep,
+        cast(cpConstraintApplyCachedImpulseImpl)&applyCachedImpulse,
+        cast(cpConstraintApplyImpulseImpl)&applyImpulse,
+        cast(cpConstraintGetImpulseImpl)&getImpulse,
+    );
+};
+
+mixin CP_DefineClassGetter!("cpDampedRotarySpring");
+
+cpDampedRotarySpring *
+cpDampedRotarySpringAlloc()
+{
+    return cast(cpDampedRotarySpring*)cpcalloc(1, cpDampedRotarySpring.sizeof);
+}
+
+cpDampedRotarySpring* cpDampedRotarySpringInit(cpDampedRotarySpring* spring, cpBody* a, cpBody* b, cpFloat restAngle, cpFloat stiffness, cpFloat damping)
+{
+    cpConstraintInit(cast(cpConstraint*)spring, &klass, a, b);
+
+    spring.restAngle        = restAngle;
+    spring.stiffness        = stiffness;
+    spring.damping          = damping;
+    spring.springTorqueFunc = cast(cpDampedRotarySpringTorqueFunc)&defaultSpringTorque;
+
+    spring.jAcc = 0.0f;
+
+    return spring;
+}
+
+cpConstraint* cpDampedRotarySpringNew(cpBody* a, cpBody* b, cpFloat restAngle, cpFloat stiffness, cpFloat damping)
+{
+    return cast(cpConstraint*)cpDampedRotarySpringInit(cpDampedRotarySpringAlloc(), a, b, restAngle, stiffness, damping);
+}

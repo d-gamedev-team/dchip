@@ -31,7 +31,7 @@ import dchip.chipmunk_types;
 
 alias cpDampedRotarySpringTorqueFunc = cpFloat function(cpConstraint* spring, cpFloat relativeAngle);
 
-const cpConstraintClass* cpDampedRotarySpringGetClass();
+//~ const cpConstraintClass* cpDampedRotarySpringGetClass();
 
 /// @private
 struct cpDampedRotarySpring

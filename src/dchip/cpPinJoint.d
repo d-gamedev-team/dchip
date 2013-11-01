@@ -47,15 +47,6 @@ struct cpPinJoint
     cpFloat bias;
 }
 
-/// Allocate a pin joint.
-cpPinJoint* cpPinJointAlloc();
-
-/// Initialize a pin joint.
-cpPinJoint* cpPinJointInit(cpPinJoint* joint, cpBody* a, cpBody* b, cpVect anchr1, cpVect anchr2);
-
-/// Allocate and initialize a pin joint.
-cpConstraint* cpPinJointNew(cpBody* a, cpBody* b, cpVect anchr1, cpVect anchr2);
-
 mixin CP_DefineConstraintProperty!("cpPinJoint", cpVect, "anchr1", "Anchr1");
 mixin CP_DefineConstraintProperty!("cpPinJoint", cpVect, "anchr2", "Anchr2");
 mixin CP_DefineConstraintProperty!("cpPinJoint", cpFloat, "dist", "Dist");

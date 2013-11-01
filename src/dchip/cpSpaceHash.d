@@ -180,8 +180,6 @@ void cpSpaceHashAllocTable(cpSpaceHash* hash, int numcells)
     hash.table    = cast(cpSpaceHashBin**)cpcalloc(numcells, (cpSpaceHashBin*).sizeof);
 }
 
-cpSpatialIndexClass* Klass();
-
 cpSpatialIndex* cpSpaceHashInit(cpSpaceHash* hash, cpFloat celldim, int numcells, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex* staticIndex)
 {
     cpSpatialIndexInit(cast(cpSpatialIndex*)hash, Klass(), bbfunc, staticIndex);

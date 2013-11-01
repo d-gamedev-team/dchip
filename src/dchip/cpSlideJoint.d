@@ -30,7 +30,7 @@ import dchip.cpConstraint;
 import dchip.chipmunk_types;
 import dchip.cpVect;
 
-const cpConstraintClass* cpSlideJointGetClass();
+//~ const cpConstraintClass* cpSlideJointGetClass();
 
 /// @private
 struct cpSlideJoint
@@ -46,15 +46,6 @@ struct cpSlideJoint
     cpFloat jnAcc;
     cpFloat bias;
 }
-
-/// Allocate a slide joint.
-cpSlideJoint* cpSlideJointAlloc();
-
-/// Initialize a slide joint.
-cpSlideJoint* cpSlideJointInit(cpSlideJoint* joint, cpBody* a, cpBody* b, cpVect anchr1, cpVect anchr2, cpFloat min, cpFloat max);
-
-/// Allocate and initialize a slide joint.
-cpConstraint* cpSlideJointNew(cpBody* a, cpBody* b, cpVect anchr1, cpVect anchr2, cpFloat min, cpFloat max);
 
 mixin CP_DefineConstraintProperty!("cpSlideJoint", cpVect, "anchr1", "Anchr1");
 mixin CP_DefineConstraintProperty!("cpSlideJoint", cpVect, "anchr2", "Anchr2");

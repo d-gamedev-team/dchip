@@ -25,6 +25,7 @@ import std.string;
 
 import dchip.cpArray;
 import dchip.cpBB;
+import dchip.cpBBTree;
 import dchip.cpBody;
 import dchip.chipmunk;
 import dchip.chipmunk_private;
@@ -33,6 +34,7 @@ import dchip.cpArbiter;
 import dchip.cpConstraint;
 import dchip.cpHashSet;
 import dchip.cpShape;
+import dchip.cpSpaceHash;
 import dchip.cpSpaceStep;
 import dchip.cpSpatialIndex;
 import dchip.cpVect;
@@ -188,21 +190,6 @@ struct cpSpace
         package cpBody _staticBody;
 }
 
-/// Allocate a cpSpace.
-cpSpace* cpSpaceAlloc();
-
-/// Initialize a cpSpace.
-cpSpace* cpSpaceInit(cpSpace* space);
-
-/// Allocate and initialize a cpSpace.
-cpSpace* cpSpaceNew();
-
-/// Destroy a cpSpace.
-void cpSpaceDestroy(cpSpace* space);
-
-/// Destroy and free a cpSpace.
-void cpSpaceFree(cpSpace* space);
-
 mixin template CP_DefineSpaceStructGetter(type, string member, string name)
 {
     mixin(q{
@@ -242,160 +229,32 @@ cpBool cpSpaceIsLocked(cpSpace* space)
     return cast(bool)space.locked;
 }
 
-/// Set a default collision handler for this space.
-/// The default collision handler is invoked for each colliding pair of shapes
-/// that isn't explicitly handled by a specific collision handler.
-/// You can pass null for any function you don't want to implement.
-void cpSpaceSetDefaultCollisionHandler(
-    cpSpace* space,
-    cpCollisionBeginFunc begin,
-    cpCollisionPreSolveFunc preSolve,
-    cpCollisionPostSolveFunc postSolve,
-    cpCollisionSeparateFunc separate,
-    void* data
-    );
-
-/// Set a collision handler to be used whenever the two shapes with the given collision types collide.
-/// You can pass null for any function you don't want to implement.
-void cpSpaceAddCollisionHandler(
-    cpSpace* space,
-    cpCollisionType a, cpCollisionType b,
-    cpCollisionBeginFunc begin,
-    cpCollisionPreSolveFunc preSolve,
-    cpCollisionPostSolveFunc postSolve,
-    cpCollisionSeparateFunc separate,
-    void* data
-    );
-
-/// Unset a collision handler.
-void cpSpaceRemoveCollisionHandler(cpSpace* space, cpCollisionType a, cpCollisionType b);
-
-/// Add a collision shape to the simulation.
-/// If the shape is attached to a static body_, it will be added as a static shape.
-cpShape* cpSpaceAddShape(cpSpace* space, cpShape* shape);
-
-/// Explicity add a shape as a static shape to the simulation.
-cpShape* cpSpaceAddStaticShape(cpSpace* space, cpShape* shape);
-
-/// Add a rigid body_ to the simulation.
-cpBody* cpSpaceAddBody(cpSpace* space, cpBody* bdy);
-
-/// Add a constraint to the simulation.
-cpConstraint* cpSpaceAddConstraint(cpSpace* space, cpConstraint* constraint);
-
-/// Remove a collision shape from the simulation.
-void cpSpaceRemoveShape(cpSpace* space, cpShape* shape);
-
-/// Remove a collision shape added using cpSpaceAddStaticShape() from the simulation.
-void cpSpaceRemoveStaticShape(cpSpace* space, cpShape* shape);
-
-/// Remove a rigid body_ from the simulation.
-void cpSpaceRemoveBody(cpSpace* space, cpBody* bdy);
-
-/// Remove a constraint from the simulation.
-void cpSpaceRemoveConstraint(cpSpace* space, cpConstraint* constraint);
-
-/// Test if a collision shape has been added to the space.
-cpBool cpSpaceContainsShape(cpSpace* space, cpShape* shape);
-
-/// Test if a rigid body_ has been added to the space.
-cpBool cpSpaceContainsBody(cpSpace* space, cpBody* bdy);
-
-/// Test if a constraint has been added to the space.
-cpBool cpSpaceContainsConstraint(cpSpace* space, cpConstraint* constraint);
-
-/// Convert a dynamic rogue body_ to a static one.
-/// If the body_ is active, you must remove it from the space first.
-void cpSpaceConvertBodyToStatic(cpSpace* space, cpBody* bdy);
-
-/// Convert a body_ to a dynamic rogue body_.
-/// If you want the body_ to be active after the transition, you must add it to the space also.
-void cpSpaceConvertBodyToDynamic(cpSpace* space, cpBody* bdy, cpFloat mass, cpFloat moment);
-
 /// Post Step callback function type.
 alias cpPostStepFunc = void function(cpSpace* space, void* key, void* data);
-
-/// Schedule a post-step callback to be called when cpSpaceStep() finishes.
-/// You can only register one callback per unique value for @c key.
-/// Returns true only if @c key has never been scheduled before.
-/// It's possible to pass @c null for @c func if you only want to mark @c key as being used.
-cpBool cpSpaceAddPostStepCallback(cpSpace* space, cpPostStepFunc func, void* key, void* data);
 
 /// Point query callback function type.
 alias cpSpacePointQueryFunc = void function(cpShape* shape, void* data);
 
-/// Query the space at a point and call @c func for each shape found.
-void cpSpacePointQuery(cpSpace* space, cpVect point, cpLayers layers, cpGroup group, cpSpacePointQueryFunc func, void* data);
-
-/// Query the space at a point and return the first shape found. Returns null if no shapes were found.
-cpShape* cpSpacePointQueryFirst(cpSpace* space, cpVect point, cpLayers layers, cpGroup group);
-
 /// Nearest point query callback function type.
 alias cpSpaceNearestPointQueryFunc = void function(cpShape* shape, cpFloat distance, cpVect point, void* data);
-
-/// Query the space at a point and call @c func for each shape found.
-void cpSpaceNearestPointQuery(cpSpace* space, cpVect point, cpFloat maxDistance, cpLayers layers, cpGroup group, cpSpaceNearestPointQueryFunc func, void* data);
-
-/// Query the space at a point and return the nearest shape found. Returns null if no shapes were found.
-cpShape* cpSpaceNearestPointQueryNearest(cpSpace* space, cpVect point, cpFloat maxDistance, cpLayers layers, cpGroup group, cpNearestPointQueryInfo* out_);
 
 /// Segment query callback function type.
 alias cpSpaceSegmentQueryFunc = void function(cpShape* shape, cpFloat t, cpVect n, void* data);
 
-/// Perform a directed line segment query (like a raycast) against the space calling @c func for each shape intersected.
-void cpSpaceSegmentQuery(cpSpace* space, cpVect start, cpVect end, cpLayers layers, cpGroup group, cpSpaceSegmentQueryFunc func, void* data);
-
-/// Perform a directed line segment query (like a raycast) against the space and return the first shape hit. Returns null if no shapes were hit.
-cpShape* cpSpaceSegmentQueryFirst(cpSpace* space, cpVect start, cpVect end, cpLayers layers, cpGroup group, cpSegmentQueryInfo* out_);
-
 /// Rectangle Query callback function type.
 alias cpSpaceBBQueryFunc= void function(cpShape* shape, void* data);
-
-/// Perform a fast rectangle query on the space calling @c func for each shape found.
-/// Only the shape's bounding boxes are checked for overlap, not their full shape.
-void cpSpaceBBQuery(cpSpace* space, cpBB bb, cpLayers layers, cpGroup group, cpSpaceBBQueryFunc func, void* data);
 
 /// Shape query callback function type.
 alias cpSpaceShapeQueryFunc = void function(cpShape* shape, cpContactPointSet* points, void* data);
 
-/// Query a space for any shapes overlapping the given shape and call @c func for each shape found.
-cpBool cpSpaceShapeQuery(cpSpace* space, cpShape* shape, cpSpaceShapeQueryFunc func, void* data);
-
-/// Call cpBodyActivate() for any shape that is overlaps the given shape.
-void cpSpaceActivateShapesTouchingShape(cpSpace* space, cpShape* shape);
-
 /// Space/body_ iterator callback function type.
 alias cpSpaceBodyIteratorFunc= void function(cpBody* bdy, void* data);
-
-/// Call @c func for each body_ in the space.
-void cpSpaceEachBody(cpSpace* space, cpSpaceBodyIteratorFunc func, void* data);
 
 /// Space/body_ iterator callback function type.
 alias cpSpaceShapeIteratorFunc = void function(cpShape* shape, void* data);
 
-/// Call @c func for each shape in the space.
-void cpSpaceEachShape(cpSpace* space, cpSpaceShapeIteratorFunc func, void* data);
-
 /// Space/constraint iterator callback function type.
 alias cpSpaceConstraintIteratorFunc = void function(cpConstraint* constraint, void* data);
-
-/// Call @c func for each shape in the space.
-void cpSpaceEachConstraint(cpSpace* space, cpSpaceConstraintIteratorFunc func, void* data);
-
-/// Update the collision detection info for the static shapes in the space.
-void cpSpaceReindexStatic(cpSpace* space);
-
-/// Update the collision detection data for a specific shape in the space.
-void cpSpaceReindexShape(cpSpace* space, cpShape* shape);
-
-/// Update the collision detection data for all shapes attached to a body_.
-void cpSpaceReindexShapesForBody(cpSpace* space, cpBody* bdy);
-
-/// Switch the space to use a spatial has as it's spatial index.
-void cpSpaceUseSpatialHash(cpSpace* space, cpFloat dim, int count);
-
-/// Step the space forward in time by @c dt.
-void cpSpaceStep(cpSpace* space, cpFloat dt);
 
 // Equal function for arbiterSet.
 cpBool arbiterSetEql(cpShape** shapes, cpArbiter* arb)

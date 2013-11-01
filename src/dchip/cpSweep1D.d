@@ -28,8 +28,6 @@ import dchip.chipmunk_types;
 import dchip.cpBB;
 import dchip.cpSpatialIndex;
 
-cpSpatialIndexClass* Klass();
-
 struct Bounds
 {
     cpFloat min, max;

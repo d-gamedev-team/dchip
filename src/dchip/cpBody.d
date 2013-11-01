@@ -27,10 +27,12 @@ import dchip.chipmunk;
 import dchip.chipmunk_private;
 import dchip.chipmunk_types;
 import dchip.constraints_util;
+import dchip.cpArray;
 import dchip.cpArbiter;
 import dchip.cpConstraint;
 import dchip.cpShape;
 import dchip.cpSpace;
+import dchip.cpSpaceComponent;
 import dchip.cpVect;
 
 /// Chipmunk's rigid body_ type. Rigid bodies hold the physical properties of an object like
@@ -145,27 +147,6 @@ struct cpBody
         package cpComponentNode node;
 }
 
-/// Allocate a cpBody.
-cpBody* cpBodyAlloc();
-
-/// Initialize a cpBody.
-cpBody* cpBodyInit(cpBody* bdy, cpFloat m, cpFloat i);
-
-/// Allocate and initialize a cpBody.
-cpBody* cpBodyNew(cpFloat m, cpFloat i);
-
-/// Initialize a static cpBody.
-cpBody* cpBodyInitStatic(cpBody* bdy);
-
-/// Allocate and initialize a static cpBody.
-cpBody* cpBodyNewStatic();
-
-/// Destroy a cpBody.
-void cpBodyDestroy(cpBody* bdy);
-
-/// Destroy and free a cpBody.
-void cpBodyFree(cpBody* bdy);
-
 /// Check that the properties of a body_ is sane.
 version (CHIP_ENABLE_CHECKS)
 {
@@ -181,16 +162,82 @@ else
 
 // Defined in cpSpace.c
 /// Wake up a sleeping or idle body_.
-void cpBodyActivate(cpBody* bdy);
+void cpBodyActivate(cpBody* body_)
+{
+    if (!cpBodyIsRogue(body_))
+    {
+        body_.node.idleTime = 0.0f;
+        ComponentActivate(ComponentRoot(body_));
+    }
+
+    mixin(CP_BODY_FOREACH_ARBITER!("body_", "arb", q{
+        // Reset the idle timer of things the body_ is touching as well.
+        // That way things don't get left hanging in the air.
+        cpBody* other = (arb.body_a == body_ ? arb.body_b : arb.body_a);
+
+        if (!cpBodyIsStatic(other))
+            other.node.idleTime = 0.0f;
+    }));
+}
 
 /// Wake up any sleeping or idle bodies touching a static body_.
-void cpBodyActivateStatic(cpBody* bdy, cpShape* filter);
+void cpBodyActivateStatic(cpBody* body_, cpShape* filter)
+{
+    cpAssertHard(cpBodyIsStatic(body_), "cpBodyActivateStatic() called on a non-static body_.");
+
+    mixin(CP_BODY_FOREACH_ARBITER!("body_", "arb", q{
+        if (!filter || filter == arb.a || filter == arb.b)
+        {
+            cpBodyActivate(arb.body_a == body_ ? arb.body_b : arb.body_a);
+        }
+    }));
+
+    // TODO should also activate joints?
+}
 
 /// Force a body_ to fall asleep immediately.
-void cpBodySleep(cpBody* bdy);
+void cpBodySleep(cpBody* body_)
+{
+    cpBodySleepWithGroup(body_, null);
+}
 
 /// Force a body_ to fall asleep immediately along with other bodies in a group.
-void cpBodySleepWithGroup(cpBody* bdy, cpBody* group);
+void cpBodySleepWithGroup(cpBody* body_, cpBody* group)
+{
+    cpAssertHard(!cpBodyIsRogue(body_), "Rogue (and static) bodies cannot be put to sleep.");
+
+    cpSpace* space = body_.space;
+    cpAssertHard(!space.locked, "Bodies cannot be put to sleep during a query or a call to cpSpaceStep(). Put these calls into a post-step callback.");
+    cpAssertHard(group == null || cpBodyIsSleeping(group), "Cannot use a non-sleeping body_ as a group identifier.");
+
+    if (cpBodyIsSleeping(body_))
+    {
+        cpAssertHard(ComponentRoot(body_) == ComponentRoot(group), "The body_ is already sleeping and it's group cannot be reassigned.");
+        return;
+    }
+
+    mixin(CP_BODY_FOREACH_SHAPE!("body_", "shape", "cpShapeUpdate(shape, body_.p, body_.rot);"));
+    cpSpaceDeactivateBody(space, body_);
+
+    if (group)
+    {
+        cpBody* root = ComponentRoot(group);
+
+        cpComponentNode node = { root, root.node.next, 0.0f };
+        body_.node = node;
+
+        root.node.next = body_;
+    }
+    else
+    {
+        cpComponentNode node = { body_, null, 0.0f };
+        body_.node = node;
+
+        cpArrayPush(space.sleepingComponents, body_);
+    }
+
+    cpArrayDeleteObj(space.bodies, body_);
+}
 
 /// Returns true if the body_ is sleeping.
 cpBool cpBodyIsSleeping(const cpBody* bdy)
@@ -241,34 +288,20 @@ mixin CP_DefineBodyStructGetter!(cpSpace*, "space", "Space");
 
 mixin CP_DefineBodyStructGetter!(cpFloat, "m", "Mass");
 
-/// Set the mass of a body_.
-void cpBodySetMass(cpBody* bdy, cpFloat m);
-
 mixin CP_DefineBodyStructGetter!(cpFloat, "i", "Moment");
-
-/// Set the moment of a body_.
-void cpBodySetMoment(cpBody* bdy, cpFloat i);
 
 mixin CP_DefineBodyStructGetter!(cpVect, "p", "Pos");
 
-/// Set the position of a body_.
-void cpBodySetPos(cpBody* bdy, cpVect pos);
 mixin CP_DefineBodyStructProperty!(cpVect, "v", "Vel");
 mixin CP_DefineBodyStructProperty!(cpVect, "f", "Force");
 mixin CP_DefineBodyStructGetter!(cpFloat, "a", "Angle");
 
-/// Set the angle of a body_.
-void cpBodySetAngle(cpBody* bdy, cpFloat a);
 mixin CP_DefineBodyStructProperty!(cpFloat, "w", "AngVel");
 mixin CP_DefineBodyStructProperty!(cpFloat, "t", "Torque");
 mixin CP_DefineBodyStructGetter!(cpVect, "rot", "Rot");
 mixin CP_DefineBodyStructProperty!(cpFloat, "v_limit", "VelLimit");
 mixin CP_DefineBodyStructProperty!(cpFloat, "w_limit", "AngVelLimit");
 mixin CP_DefineBodyStructProperty!(cpDataPointer, "data", "UserData");
-
-/// Default Integration functions.
-void cpBodyUpdateVelocity(cpBody* bdy, cpVect gravity, cpFloat damping, cpFloat dt);
-void cpBodyUpdatePosition(cpBody* bdy, cpFloat dt);
 
 /// Convert body_ relative/local coordinates to absolute/world coordinates.
 cpVect cpBodyLocal2World(const cpBody* bdy, const cpVect v)
@@ -282,21 +315,6 @@ cpVect cpBodyWorld2Local(const cpBody* bdy, const cpVect v)
     return cpvunrotate(cpvsub(v, bdy.p), bdy.rot);
 }
 
-/// Set the forces and torque or a body_ to zero.
-void cpBodyResetForces(cpBody* bdy);
-
-/// Apply an force (in world coordinates) to the body_ at a point relative to the center of gravity (also in world coordinates).
-void cpBodyApplyForce(cpBody* bdy, const cpVect f, const cpVect r);
-
-/// Apply an impulse (in world coordinates) to the body_ at a point relative to the center of gravity (also in world coordinates).
-void cpBodyApplyImpulse(cpBody* bdy, const cpVect j, const cpVect r);
-
-/// Get the velocity on a body_ (in world units) at a point on the body_ in world coordinates.
-cpVect cpBodyGetVelAtWorldPoint(cpBody* bdy, cpVect point);
-
-/// Get the velocity on a body_ (in world units) at a point on the body_ in local coordinates.
-cpVect cpBodyGetVelAtLocalPoint(cpBody* bdy, cpVect point);
-
 /// Get the kinetic energy of a body_.
 cpFloat cpBodyKineticEnergy(const cpBody* bdy)
 {
@@ -309,20 +327,11 @@ cpFloat cpBodyKineticEnergy(const cpBody* bdy)
 /// Body/shape iterator callback function type.
 alias cpBodyShapeIteratorFunc= void function(cpBody* bdy, cpShape* shape, void* data);
 
-/// Call @c func once for each shape attached to @c body_ and added to the space.
-void cpBodyEachShape(cpBody* bdy, cpBodyShapeIteratorFunc func, void* data);
-
 /// Body/constraint iterator callback function type.
 alias cpBodyConstraintIteratorFunc= void function(cpBody* bdy, cpConstraint* constraint, void* data);
 
-/// Call @c func once for each constraint attached to @c body_ and added to the space.
-void cpBodyEachConstraint(cpBody* bdy, cpBodyConstraintIteratorFunc func, void* data);
-
 /// Body/arbiter iterator callback function type.
 alias cpBodyArbiterIteratorFunc = void function(cpBody* bdy, cpArbiter* arbiter, void* data);
-
-/// Call @c func once for each arbiter that is currently active on the body_.
-void cpBodyEachArbiter(cpBody* bdy, cpBodyArbiterIteratorFunc func, void* data);
 
 // initialized in cpInitChipmunk()
 cpBody cpStaticBodySingleton;

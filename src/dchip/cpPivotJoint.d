@@ -30,7 +30,7 @@ import dchip.cpConstraint;
 import dchip.chipmunk_types;
 import dchip.cpVect;
 
-const cpConstraintClass* cpPivotJointGetClass();
+//~ const cpConstraintClass* cpPivotJointGetClass();
 
 /// @private
 struct cpPivotJoint
@@ -44,18 +44,6 @@ struct cpPivotJoint
     cpVect jAcc;
     cpVect bias;
 }
-
-/// Allocate a pivot joint
-cpPivotJoint* cpPivotJointAlloc();
-
-/// Initialize a pivot joint.
-cpPivotJoint* cpPivotJointInit(cpPivotJoint* joint, cpBody* a, cpBody* b, cpVect anchr1, cpVect anchr2);
-
-/// Allocate and initialize a pivot joint.
-cpConstraint* cpPivotJointNew(cpBody* a, cpBody* b, cpVect pivot);
-
-/// Allocate and initialize a pivot joint with specific anchors.
-cpConstraint* cpPivotJointNew2(cpBody* a, cpBody* b, cpVect anchr1, cpVect anchr2);
 
 mixin CP_DefineConstraintProperty!("cpPivotJoint", cpVect, "anchr1", "Anchr1");
 mixin CP_DefineConstraintProperty!("cpPivotJoint", cpVect, "anchr2", "Anchr2");

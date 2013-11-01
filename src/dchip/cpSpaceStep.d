@@ -33,6 +33,7 @@ import dchip.cpConstraint;
 import dchip.cpHashSet;
 import dchip.cpShape;
 import dchip.cpSpace;
+import dchip.cpSpaceComponent;
 import dchip.cpSpatialIndex;
 
 cpPostStepCallback* cpSpaceGetPostStepCallback(cpSpace* space, void* key)

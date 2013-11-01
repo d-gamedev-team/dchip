@@ -104,12 +104,6 @@ struct cpConstraint
     cpDataPointer data;
 }
 
-/// Destroy a constraint.
-void cpConstraintDestroy(cpConstraint* constraint);
-
-/// Destroy and free a constraint.
-void cpConstraintFree(cpConstraint* constraint);
-
 /// @private
 void cpConstraintActivateBodies(cpConstraint* constraint)
 {

@@ -30,7 +30,7 @@ import dchip.cpConstraint;
 import dchip.chipmunk_types;
 import dchip.cpVect;
 
-const cpConstraintClass* cpGrooveJointGetClass();
+//~ const cpConstraintClass* cpGrooveJointGetClass();
 
 /// @private
 struct cpGrooveJoint
@@ -48,15 +48,6 @@ struct cpGrooveJoint
     cpVect bias;
 }
 
-/// Allocate a groove joint.
-cpGrooveJoint* cpGrooveJointAlloc();
-
-/// Initialize a groove joint.
-cpGrooveJoint* cpGrooveJointInit(cpGrooveJoint* joint, cpBody* a, cpBody* b, cpVect groove_a, cpVect groove_b, cpVect anchr2);
-
-/// Allocate and initialize a groove joint.
-cpConstraint* cpGrooveJointNew(cpBody* a, cpBody* b, cpVect groove_a, cpVect groove_b, cpVect anchr2);
-
 mixin CP_DefineConstraintGetter!("cpGrooveJoint", cpVect, "grv_a", "GrooveA");
 
 /// Set endpoint a of a groove joint's groove
@@ -66,7 +57,6 @@ mixin CP_DefineConstraintGetter!("cpGrooveJoint", cpVect, "grv_b", "GrooveB");
 /// Set endpoint b of a groove joint's groove
 void cpGrooveJointSetGrooveB(cpConstraint* constraint, cpVect value);
 mixin CP_DefineConstraintProperty!("cpGrooveJoint", cpVect, "anchr2", "Anchr2");
-
 
 void preStep(cpGrooveJoint* joint, cpFloat dt)
 {

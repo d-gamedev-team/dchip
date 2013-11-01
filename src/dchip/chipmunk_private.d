@@ -94,8 +94,6 @@ cpVect cpClosetPointOnSegment(const cpVect p, const cpVect a, const cpVect b)
     return cpvadd(b, cpvmult(delta, t));
 }
 
-cpShape* cpShapeInit(cpShape* shape, const cpShapeClass* klass, cpBody* bdy);
-
 cpBool cpShapeActive(cpShape* shape)
 {
     return shape.prev || (shape.body_ && shape.body_.shapeList == shape);
@@ -138,27 +136,12 @@ cpFloat cpSplittingPlaneCompare(cpSplittingPlane plane, cpVect v)
     return cpvdot(plane.n, v) - plane.d;
 }
 
-void cpLoopIndexes(cpVect* verts, int count, int* start, int* end);
-
-void cpSpaceProcessComponents(cpSpace* space, cpFloat dt);
-
-void cpSpacePushFreshContactBuffer(cpSpace* space);
-cpContact* cpContactBufferGetArray(cpSpace* space);
-void cpSpacePushContacts(cpSpace* space, int count);
-
 struct cpPostStepCallback
 {
     cpPostStepFunc func;
     void* key;
     void* data;
 }
-
-cpPostStepCallback* cpSpaceGetPostStepCallback(cpSpace* space, void* key);
-
-cpBool cpSpaceArbiterSetFilter(cpArbiter* arb, cpSpace* space);
-void cpSpaceFilterArbiters(cpSpace* space, cpBody* bdy, cpShape* filter);
-
-void cpSpaceActivateBody(cpSpace* space, cpBody* bdy);
 
 cpCollisionHandler* cpSpaceLookupHandler(cpSpace* space, cpCollisionType a, cpCollisionType b)
 {
@@ -178,9 +161,6 @@ void cpSpaceUncacheArbiter(cpSpace* space, cpArbiter* arb)
     cpHashSetRemove(space.cachedArbiters, arbHashID, shape_pair.ptr);
     cpArrayDeleteObj(space.arbiters, arb);
 }
-
-void cpShapeUpdateFunc(cpShape* shape, void* unused);
-cpCollisionID cpSpaceCollideShapes(cpShape* a, cpShape* b, cpCollisionID id, cpSpace* space);
 
 struct cpContact
 {

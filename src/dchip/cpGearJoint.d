@@ -29,7 +29,7 @@ import dchip.cpBody;
 import dchip.cpConstraint;
 import dchip.chipmunk_types;
 
-const cpConstraintClass* cpGearJointGetClass();
+//~ const cpConstraintClass* cpGearJointGetClass();
 
 /// @private
 struct cpGearJoint
@@ -44,20 +44,8 @@ struct cpGearJoint
     cpFloat jAcc;
 }
 
-/// Allocate a gear joint.
-cpGearJoint* cpGearJointAlloc();
-
-/// Initialize a gear joint.
-cpGearJoint* cpGearJointInit(cpGearJoint* joint, cpBody* a, cpBody* b, cpFloat phase, cpFloat ratio);
-
-/// Allocate and initialize a gear joint.
-cpConstraint* cpGearJointNew(cpBody* a, cpBody* b, cpFloat phase, cpFloat ratio);
-
 mixin CP_DefineConstraintProperty!("cpGearJoint", cpFloat, "phase", "Phase");
 mixin CP_DefineConstraintGetter!("cpGearJoint", cpFloat, "ratio", "Ratio");
-
-/// Set the ratio of a gear joint.
-void cpGearJointSetRatio(cpConstraint* constraint, cpFloat value);
 
 void preStep(cpGearJoint* joint, cpFloat dt)
 {

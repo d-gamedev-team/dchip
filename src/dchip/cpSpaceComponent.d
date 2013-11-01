@@ -31,6 +31,8 @@ import dchip.cpConstraint;
 import dchip.cpHashSet;
 import dchip.cpShape;
 import dchip.cpSpace;
+import dchip.cpSpaceStep;
+import dchip.cpSpaceQuery;
 import dchip.cpSpatialIndex;
 import dchip.cpVect;
 

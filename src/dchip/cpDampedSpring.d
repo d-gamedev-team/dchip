@@ -32,7 +32,7 @@ import dchip.cpVect;
 
 alias cpDampedSpringForceFunc = cpFloat function(cpConstraint* spring, cpFloat dist);
 
-const cpConstraintClass* cpDampedSpringGetClass();
+//~ const cpConstraintClass* cpDampedSpringGetClass();
 
 /// @private
 struct cpDampedSpring
@@ -53,15 +53,6 @@ struct cpDampedSpring
 
     cpFloat jAcc;
 }
-
-/// Allocate a damped spring.
-cpDampedSpring* cpDampedSpringAlloc();
-
-/// Initialize a damped spring.
-cpDampedSpring* cpDampedSpringInit(cpDampedSpring* joint, cpBody* a, cpBody* b, cpVect anchr1, cpVect anchr2, cpFloat restLength, cpFloat stiffness, cpFloat damping);
-
-/// Allocate and initialize a damped spring.
-cpConstraint* cpDampedSpringNew(cpBody* a, cpBody* b, cpVect anchr1, cpVect anchr2, cpFloat restLength, cpFloat stiffness, cpFloat damping);
 
 mixin CP_DefineConstraintProperty!("cpDampedSpring", cpVect, "anchr1", "Anchr1");
 mixin CP_DefineConstraintProperty!("cpDampedSpring", cpVect, "anchr2", "Anchr2");

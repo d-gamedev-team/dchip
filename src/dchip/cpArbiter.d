@@ -199,32 +199,7 @@ mixin template CP_DefineArbiterStructProperty(type, string member, string name)
 mixin CP_DefineArbiterStructProperty!(cpFloat, "e", "Elasticity");
 mixin CP_DefineArbiterStructProperty!(cpFloat, "u", "Friction");
 
-// Get the relative surface velocity of the two shapes in contact.
-cpVect cpArbiterGetSurfaceVelocity(cpArbiter* arb);
-
-// Override the relative surface velocity of the two shapes in contact.
-// By default this is calculated to be the difference of the two
-// surface velocities clamped to the tangent plane.
-void cpArbiterSetSurfaceVelocity(cpArbiter* arb, cpVect vr);
-
 mixin CP_DefineArbiterStructProperty!(cpDataPointer, "data", "UserData");
-
-/// Calculate the total impulse that was applied by this arbiter.
-/// This function should only be called from a post-solve, post-step or cpBodyEachArbiter callback.
-cpVect cpArbiterTotalImpulse(const cpArbiter* arb);
-
-/// Calculate the total impulse including the friction that was applied by this arbiter.
-/// This function should only be called from a post-solve, post-step or cpBodyEachArbiter callback.
-cpVect cpArbiterTotalImpulseWithFriction(const cpArbiter* arb);
-
-/// Calculate the amount of energy lost in a collision including static, but not dynamic friction.
-/// This function should only be called from a post-solve, post-step or cpBodyEachArbiter callback.
-cpFloat cpArbiterTotalKE(const cpArbiter* arb);
-
-/// Causes a collision pair to be ignored as if you returned false from a begin callback.
-/// If called from a pre-step callback, you will still need to return false
-/// if you want it to be ignored in the current step.
-void cpArbiterIgnore(cpArbiter* arb);
 
 /// Return the colliding shapes involved for this arbiter.
 /// The order of their cpSpace.collision_type values will match
@@ -287,29 +262,6 @@ struct cpContactPointSet
 
     Point[CP_MAX_CONTACTS_PER_ARBITER] points;
 }
-
-/// Return a contact set from an arbiter.
-cpContactPointSet cpArbiterGetContactPointSet(const cpArbiter* arb);
-
-/// Replace the contact point set for an arbiter.
-/// This can be a very powerful feature, but use it with caution!
-void cpArbiterSetContactPointSet(cpArbiter* arb, cpContactPointSet* set);
-
-/// Returns true if this is the first step a pair of objects started colliding.
-cpBool cpArbiterIsFirstContact(const cpArbiter* arb);
-
-/// Get the number of contact points for this arbiter.
-int cpArbiterGetCount(const cpArbiter* arb);
-
-/// Get the normal of the @c ith contact point.
-cpVect cpArbiterGetNormal(const cpArbiter* arb, int i);
-
-/// Get the position of the @c ith contact point.
-cpVect cpArbiterGetPoint(const cpArbiter* arb, int i);
-
-/// Get the depth of the @c ith contact point.
-cpFloat cpArbiterGetDepth(const cpArbiter* arb, int i);
-
 
 cpContact* cpContactInit(cpContact* con, cpVect p, cpVect n, cpFloat dist, cpHashValue hash)
 {

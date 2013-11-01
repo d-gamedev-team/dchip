@@ -30,7 +30,7 @@ import dchip.cpConstraint;
 import dchip.chipmunk_types;
 import dchip.cpVect;
 
-const cpConstraintClass* cpSimpleMotorGetClass();
+//~ const cpConstraintClass* cpSimpleMotorGetClass();
 
 /// @private
 struct cpSimpleMotor
@@ -42,15 +42,6 @@ struct cpSimpleMotor
 
     cpFloat jAcc;
 }
-
-/// Allocate a simple motor.
-cpSimpleMotor* cpSimpleMotorAlloc();
-
-/// initialize a simple motor.
-cpSimpleMotor* cpSimpleMotorInit(cpSimpleMotor* joint, cpBody* a, cpBody* b, cpFloat rate);
-
-/// Allocate and initialize a simple motor.
-cpConstraint* cpSimpleMotorNew(cpBody* a, cpBody* b, cpFloat rate);
 
 mixin CP_DefineConstraintProperty!("cpSimpleMotor", cpFloat, "rate", "Rate");
 

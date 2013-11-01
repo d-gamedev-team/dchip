@@ -66,48 +66,9 @@ package struct cpSpatialIndex
     cpSpatialIndex* dynamicIndex;
 }
 
-/// Allocate a spatial hash.
-cpSpaceHash* cpSpaceHashAlloc();
-
-/// Initialize a spatial hash.
-cpSpatialIndex* cpSpaceHashInit(cpSpaceHash* hash, cpFloat celldim, int numcells, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex* staticIndex);
-
-/// Allocate and initialize a spatial hash.
-cpSpatialIndex* cpSpaceHashNew(cpFloat celldim, int cells, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex* staticIndex);
-
-/// Change the cell dimensions and table size of the spatial hash to tune it.
-/// The cell dimensions should roughly match the average size of your objects
-/// and the table size should be ~10 larger than the number of objects inserted.
-/// Some trial and error is required to find the optimum numbers for efficiency.
-void cpSpaceHashResize(cpSpaceHash* hash, cpFloat celldim, int numcells);
-
-/// Allocate a bounding box tree.
-cpBBTree* cpBBTreeAlloc();
-
-/// Initialize a bounding box tree.
-cpSpatialIndex* cpBBTreeInit(cpBBTree* tree, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex* staticIndex);
-
-/// Allocate and initialize a bounding box tree.
-cpSpatialIndex* cpBBTreeNew(cpSpatialIndexBBFunc bbfunc, cpSpatialIndex* staticIndex);
-
-/// Perform a static top down optimization of the tree.
-void cpBBTreeOptimize(cpSpatialIndex* index);
-
 /// Bounding box tree velocity callback function.
 /// This function should return an estimate for the object's velocity.
 alias cpBBTreeVelocityFunc = cpVect function(void* obj);
-
-/// Set the velocity function for the bounding box tree to enable temporal coherence.
-void cpBBTreeSetVelocityFunc(cpSpatialIndex* index, cpBBTreeVelocityFunc func);
-
-/// Allocate a 1D sort and sweep broadphase.
-cpSweep1D* cpSweep1DAlloc();
-
-/// Initialize a 1D sort and sweep broadphase.
-cpSpatialIndex* cpSweep1DInit(cpSweep1D* sweep, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex* staticIndex);
-
-/// Allocate and initialize a 1D sort and sweep broadphase.
-cpSpatialIndex* cpSweep1DNew(cpSpatialIndexBBFunc bbfunc, cpSpatialIndex* staticIndex);
 
 alias cpSpatialIndexDestroyImpl = void function(cpSpatialIndex* index);
 
@@ -151,9 +112,6 @@ struct dynamicToStaticContext
     cpSpatialIndexQueryFunc queryFunc;
     void* data;
 }
-
-/// Collide the objects in @c dynamicIndex against the objects in @c staticIndex using the query callback function.
-void cpSpatialIndexCollideStatic(cpSpatialIndex* dynamicIndex, cpSpatialIndex* staticIndex, cpSpatialIndexQueryFunc func, void* data);
 
 /// Destroy a spatial index.
 void cpSpatialIndexDestroy(cpSpatialIndex* index)

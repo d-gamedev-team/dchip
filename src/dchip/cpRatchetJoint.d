@@ -44,15 +44,6 @@ struct cpRatchetJoint
     cpFloat jAcc;
 }
 
-/// Allocate a ratchet joint.
-cpRatchetJoint* cpRatchetJointAlloc();
-
-/// Initialize a ratched joint.
-cpRatchetJoint* cpRatchetJointInit(cpRatchetJoint* joint, cpBody* a, cpBody* b, cpFloat phase, cpFloat ratchet);
-
-/// Allocate and initialize a ratchet joint.
-cpConstraint* cpRatchetJointNew(cpBody* a, cpBody* b, cpFloat phase, cpFloat ratchet);
-
 mixin CP_DefineConstraintProperty!("cpRatchetJoint", cpFloat, "angle", "Angle");
 mixin CP_DefineConstraintProperty!("cpRatchetJoint", cpFloat, "phase", "Phase");
 mixin CP_DefineConstraintProperty!("cpRatchetJoint", cpFloat, "ratchet", "Ratchet");

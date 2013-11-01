@@ -32,8 +32,6 @@ import dchip.cpHashSet;
 import dchip.cpSpatialIndex;
 import dchip.cpVect;
 
-cpSpatialIndexClass* Klass();
-
 struct cpBBTree
 {
     cpSpatialIndex spatialIndex;

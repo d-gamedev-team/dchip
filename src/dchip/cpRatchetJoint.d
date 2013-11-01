@@ -30,7 +30,7 @@ import dchip.cpConstraint;
 import dchip.chipmunk_types;
 import dchip.cpVect;
 
-const cpConstraintClass* cpRatchetJointGetClass();
+//~ const cpConstraintClass* cpRatchetJointGetClass();
 
 /// @private
 struct cpRatchetJoint

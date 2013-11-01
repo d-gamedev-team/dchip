@@ -25,6 +25,7 @@ import dchip.chipmunk_private;
 import dchip.chipmunk_types;
 import dchip.cpArbiter;
 import dchip.cpBB;
+import dchip.cpCollision;
 import dchip.cpBody;
 import dchip.cpSpace;
 import dchip.cpSpaceStep;

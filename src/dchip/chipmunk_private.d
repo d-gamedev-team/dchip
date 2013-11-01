@@ -38,7 +38,7 @@ import dchip.cpVect;
 
 enum CP_HASH_COEF = 3344921057uL;
 
-cpHashValue CP_HASH_PAIR(T)(T a, T b)
+cpHashValue CP_HASH_PAIR(T1, T2)(T1 a, T2 b)
 {
     return cast(cpHashValue)(cast(cpHashValue)a * CP_HASH_COEF ^ cast(cpHashValue)b * CP_HASH_COEF);
 }
@@ -100,8 +100,6 @@ cpBool cpShapeActive(cpShape* shape)
 {
     return shape.prev || (shape.body_ && shape.body_.shapeList == shape);
 }
-
-int cpCollideShapes(const cpShape* a, const cpShape* b, cpCollisionID* id, cpContact* arr);
 
 void CircleSegmentQuery(cpShape* shape, cpVect center, cpFloat r, cpVect a, cpVect b, cpSegmentQueryInfo* info)
 {
@@ -197,8 +195,6 @@ struct cpContact
 
     cpHashValue hash;
 };
-
-//~ cpContact* cpContactInit(cpContact* con, cpVect p, cpVect n, cpFloat dist, cpHashValue hash);
 
 void cpArbiterCallSeparate(cpArbiter* arb, cpSpace* space)
 {

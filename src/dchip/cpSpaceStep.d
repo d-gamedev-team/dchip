@@ -23,6 +23,7 @@ module dchip.cpSpaceStep;
 
 import dchip.cpBB;
 import dchip.cpBody;
+import dchip.cpCollision;
 import dchip.chipmunk;
 import dchip.chipmunk_private;
 import dchip.chipmunk_types;

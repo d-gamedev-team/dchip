@@ -33,6 +33,7 @@ public
     import dchip.cpBB;
     import dchip.cpBBTree;
     import dchip.cpBody;
+    import dchip.cpCollision;
     import dchip.cpConstraint;
     import dchip.cpDampedRotarySpring;
     import dchip.cpDampedSpring;

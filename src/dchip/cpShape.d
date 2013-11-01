@@ -165,14 +165,63 @@ cpBB cpShapeCacheBB(cpShape* shape);
 cpBB cpShapeUpdate(cpShape* shape, cpVect pos, cpVect rot);
 
 /// Test if a point lies within a shape.
-cpBool cpShapePointQuery(cpShape* shape, cpVect p);
+cpBool cpShapePointQuery(cpShape* shape, cpVect p)
+{
+    cpNearestPointQueryInfo info = { null, cpvzero, INFINITY, cpvzero };
+    cpShapeNearestPointQuery(shape, p, &info);
+
+    return (info.d < 0.0f);
+}
 
 /// Perform a nearest point query. It finds the closest point on the surface of shape to a specific point.
 /// The value returned is the distance between the points. A negative distance means the point is inside the shape.
-cpFloat cpShapeNearestPointQuery(cpShape* shape, cpVect p, cpNearestPointQueryInfo* out_);
+cpFloat cpShapeNearestPointQuery(cpShape* shape, cpVect p, cpNearestPointQueryInfo* info)
+{
+    cpNearestPointQueryInfo blank = { null, cpvzero, INFINITY, cpvzero };
+
+    if (info)
+    {
+        (*info) = blank;
+    }
+    else
+    {
+        info = &blank;
+    }
+
+    shape.klass.nearestPointQuery(shape, p, info);
+    return info.d;
+}
 
 /// Perform a segment query against a shape. @c info must be a pointer to a valid cpSegmentQueryInfo structure.
-cpBool cpShapeSegmentQuery(cpShape* shape, cpVect a, cpVect b, cpSegmentQueryInfo* info);
+cpBool cpShapeSegmentQuery(cpShape* shape, cpVect a, cpVect b, cpSegmentQueryInfo* info)
+{
+    cpSegmentQueryInfo blank = { null, 1.0f, cpvzero };
+
+    if (info)
+    {
+        (*info) = blank;
+    }
+    else
+    {
+        info = &blank;
+    }
+
+    cpNearestPointQueryInfo nearest;
+    shape.klass.nearestPointQuery(shape, a, &nearest);
+
+    if (nearest.d <= 0.0)
+    {
+        info.shape = shape;
+        info.t     = 0.0;
+        info.n     = cpvnormalize(cpvsub(a, nearest.p));
+    }
+    else
+    {
+        shape.klass.segmentQuery(shape, a, b, info);
+    }
+
+    return (info.shape != null);
+}
 
 /// Get the hit point for a segment query.
 cpVect cpSegmentQueryHitPoint(const cpVect start, const cpVect end, const cpSegmentQueryInfo info)

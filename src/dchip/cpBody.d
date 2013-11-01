@@ -148,7 +148,7 @@ struct cpBody
 }
 
 /// Check that the properties of a body_ is sane.
-version (CHIP_ENABLE_CHECKS)
+version (CHIP_ENABLE_WARNINGS)
 {
     void cpBodyAssertSane(T)(T bdy)
     {

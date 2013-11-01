@@ -211,10 +211,8 @@ enum CP_VERSION_RELEASE = 1;
 enum cpVersionString = format("%s.%s.%s", CP_VERSION_MAJOR, CP_VERSION_MINOR, CP_VERSION_RELEASE);
 
 /// @deprecated
-void cpInitChipmunk()
-{
-    cpAssertWarn(cpFalse, "cpInitChipmunk is deprecated and no longer required. It will be removed in the future.");
-}
+deprecated("cpInitChipmunk is deprecated and no longer required. It will be removed in the future.")
+void cpInitChipmunk() { }
 
 /// Calculate the moment of inertia for a circle.
 /// @c r1 and @c r2 are the inner and outer diameters. A solid circle has an inner diameter of 0.

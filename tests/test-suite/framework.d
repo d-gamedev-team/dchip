@@ -52,6 +52,7 @@ void startup(string _title,int _width,int _height,bool useVsync=true)
         throw new Exception("Failed to open SDL window");
     }
 
+    /** Enable anti-aliasing by default. */
     glEnable(GL_LINE_SMOOTH);
     glEnable(GL_POINT_SMOOTH);
     glEnable(GL_BLEND);

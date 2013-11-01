@@ -31,6 +31,7 @@ import dchip.prime;
 import dchip.cpSpatialIndex;
 import dchip.chipmunk_types;
 import dchip.cpVect;
+import dchip.util;
 
 struct cpSpaceHash
 {
@@ -303,7 +304,7 @@ void rehash_helper(cpHandle* hand, cpSpaceHash* hash)
 void cpSpaceHashRehash(cpSpaceHash* hash)
 {
     clearTable(hash);
-    cpHashSetEach(hash.handleSet, cast(cpHashSetIteratorFunc)&rehash_helper, hash);
+    cpHashSetEach(hash.handleSet, safeCast!cpHashSetIteratorFunc(&rehash_helper), hash);
 }
 
 void cpSpaceHashRemove(cpSpaceHash* hash, void* obj, cpHashValue hashid)
@@ -331,7 +332,7 @@ void eachHelper(cpHandle* hand, eachContext* context)
 void cpSpaceHashEach(cpSpaceHash* hash, cpSpatialIndexIteratorFunc func, void* data)
 {
     eachContext context = { func, data };
-    cpHashSetEach(hash.handleSet, cast(cpHashSetIteratorFunc)&eachHelper, &context);
+    cpHashSetEach(hash.handleSet, safeCast!cpHashSetIteratorFunc(&eachHelper), &context);
 }
 
 void remove_orphaned_handles(cpSpaceHash* hash, cpSpaceHashBin** bin_ptr)
@@ -469,7 +470,7 @@ void cpSpaceHashReindexQuery(cpSpaceHash* hash, cpSpatialIndexQueryFunc func, vo
     clearTable(hash);
 
     queryRehashContext context = { hash, func, data };
-    cpHashSetEach(hash.handleSet, cast(cpHashSetIteratorFunc)&queryRehash_helper, &context);
+    cpHashSetEach(hash.handleSet, safeCast!cpHashSetIteratorFunc(&queryRehash_helper), &context);
 
     cpSpatialIndexCollideStatic(cast(cpSpatialIndex*)hash, hash.spatialIndex.staticIndex, func, data);
 }

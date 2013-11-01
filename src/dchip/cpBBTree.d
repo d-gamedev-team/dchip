@@ -31,6 +31,7 @@ import dchip.cpBB;
 import dchip.cpHashSet;
 import dchip.cpSpatialIndex;
 import dchip.cpVect;
+import dchip.util;
 
 struct cpBBTree
 {
@@ -732,8 +733,14 @@ void cpBBTreeReindexQuery(cpBBTree* tree, cpSpatialIndexQueryFunc func, void* da
     if (!tree.root)
         return;
 
+    /** Workaround for https://github.com/slembcke/Chipmunk2D/issues/56. */
+    static void LeafUpdateWrap(void* elt, void* data)
+    {
+        LeafUpdate(cast(Node*)elt, cast(cpBBTree*)data);
+    }
+
     // LeafUpdate() may modify tree.root. Don't cache it.
-    cpHashSetEach(tree.leaves, cast(cpHashSetIteratorFunc)&LeafUpdate, tree);
+    cpHashSetEach(tree.leaves, safeCast!cpHashSetIteratorFunc(&LeafUpdateWrap), tree);
 
     cpSpatialIndex* staticIndex = tree.spatialIndex.staticIndex;
     Node* staticRoot = (staticIndex && staticIndex.klass == Klass() ? (cast(cpBBTree*)staticIndex).root : null);
@@ -799,7 +806,7 @@ void each_helper(Node* node, eachContext* context)
 void cpBBTreeEach(cpBBTree* tree, cpSpatialIndexIteratorFunc func, void* data)
 {
     eachContext context = { func, data };
-    cpHashSetEach(tree.leaves, cast(cpHashSetIteratorFunc)&each_helper, &context);
+    cpHashSetEach(tree.leaves, safeCast!cpHashSetIteratorFunc(&each_helper), &context);
 }
 
 cpSpatialIndexClass klass;
@@ -807,21 +814,21 @@ cpSpatialIndexClass klass;
 shared static this()
 {
     klass = cpSpatialIndexClass(
-        cast(cpSpatialIndexDestroyImpl)&cpBBTreeDestroy,
+        safeCast!cpSpatialIndexDestroyImpl(&cpBBTreeDestroy),
 
-        cast(cpSpatialIndexCountImpl)&cpBBTreeCount,
-        cast(cpSpatialIndexEachImpl)&cpBBTreeEach,
+        safeCast!cpSpatialIndexCountImpl(&cpBBTreeCount),
+        safeCast!cpSpatialIndexEachImpl(&cpBBTreeEach),
 
-        cast(cpSpatialIndexContainsImpl)&cpBBTreeContains,
-        cast(cpSpatialIndexInsertImpl)&cpBBTreeInsert,
-        cast(cpSpatialIndexRemoveImpl)&cpBBTreeRemove,
+        safeCast!cpSpatialIndexContainsImpl(&cpBBTreeContains),
+        safeCast!cpSpatialIndexInsertImpl(&cpBBTreeInsert),
+        safeCast!cpSpatialIndexRemoveImpl(&cpBBTreeRemove),
 
-        cast(cpSpatialIndexReindexImpl)&cpBBTreeReindex,
-        cast(cpSpatialIndexReindexObjectImpl)&cpBBTreeReindexObject,
-        cast(cpSpatialIndexReindexQueryImpl)&cpBBTreeReindexQuery,
+        safeCast!cpSpatialIndexReindexImpl(&cpBBTreeReindex),
+        safeCast!cpSpatialIndexReindexObjectImpl(&cpBBTreeReindexObject),
+        safeCast!cpSpatialIndexReindexQueryImpl(&cpBBTreeReindexQuery),
 
-        cast(cpSpatialIndexQueryImpl)&cpBBTreeQuery,
-        cast(cpSpatialIndexSegmentQueryImpl)&cpBBTreeSegmentQuery,
+        safeCast!cpSpatialIndexQueryImpl(&cpBBTreeQuery),
+        safeCast!cpSpatialIndexSegmentQueryImpl(&cpBBTreeSegmentQuery),
     );
 }
 
@@ -971,7 +978,7 @@ void cpBBTreeOptimize(cpSpatialIndex* index)
     Node** nodes  = cast(Node**)cpcalloc(count, (Node*).sizeof);
     Node** cursor = nodes;
 
-    cpHashSetEach(tree.leaves, cast(cpHashSetIteratorFunc)&fillNodeArray, &cursor);
+    cpHashSetEach(tree.leaves, safeCast!cpHashSetIteratorFunc(&fillNodeArray), &cursor);
 
     SubtreeRecycle(tree, root);
     tree.root = partitionNodes(tree, nodes, count);

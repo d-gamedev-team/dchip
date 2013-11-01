@@ -32,6 +32,7 @@ import dchip.cpPolyShape;
 import dchip.chipmunk_types;
 import dchip.cpVect;
 import dchip.cpSpatialIndex;
+import dchip.util;
 
 /**
     Workaround for a linker bug with RDMD local imports:
@@ -226,7 +227,7 @@ cpFloat cpMomentForCircle(cpFloat m, cpFloat r1, cpFloat r2, cpVect offset)
 /// @c r1 and @c r2 are the inner and outer diameters. A solid circle has an inner diameter of 0.
 cpFloat cpAreaForCircle(cpFloat r1, cpFloat r2)
 {
-    return cast(cpFloat)M_PI * cpfabs(r1 * r1 - r2 * r2);
+    return safeCast!cpFloat(M_PI) * cpfabs(r1 * r1 - r2 * r2);
 }
 
 /// Calculate the moment of inertia for a line segment.
@@ -240,7 +241,7 @@ cpFloat cpMomentForSegment(cpFloat m, cpVect a, cpVect b)
 /// Calculate the area of a fattened (capsule shaped) line segment.
 cpFloat cpAreaForSegment(cpVect a, cpVect b, cpFloat r)
 {
-    return r * (cast(cpFloat)M_PI * r + 2.0f * cpvdist(a, b));
+    return r * (safeCast!cpFloat(M_PI) * r + 2.0f * cpvdist(a, b));
 }
 
 /// Calculate the moment of inertia for a solid polygon shape assuming it's center of gravity is at it's centroid. The offset is added to each vertex.

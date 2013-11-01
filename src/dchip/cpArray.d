@@ -47,7 +47,7 @@ void cpArrayFree(cpArray* arr)
     }
 }
 
-void cpArrayPush(cpArray* arr, void* object)
+void cpArrayPush(cpArray* arr, void* obj)
 {
     if (arr.num == arr.max)
     {
@@ -55,7 +55,7 @@ void cpArrayPush(cpArray* arr, void* object)
         arr.arr  = cast(void**)cprealloc(arr.arr, arr.max * (void**).sizeof);
     }
 
-    arr.arr[arr.num] = object;
+    arr.arr[arr.num] = obj;
     arr.num++;
 }
 

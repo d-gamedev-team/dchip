@@ -162,7 +162,7 @@ else
 
 // Defined in cpSpace.c
 /// Wake up a sleeping or idle body_.
-void cpBodyActivate(cpBody* body_)
+void cpBodyActivate(cpBody* body_, void* = null)
 {
     if (!cpBodyIsRogue(body_))
     {

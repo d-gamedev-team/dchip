@@ -7,6 +7,54 @@
 module dchip.util;
 
 import core.exception;
+import std.traits;
+import std.typetuple;
+
+/**
+    See: https://github.com/slembcke/Chipmunk2D/issues/56
+
+    For two function pointers to be safely casted:
+    Either return type and parameters must match perfectly,
+    or they have to be pointers.
+*/
+T safeCast(T, S)(S s)
+{
+    static if (is(Unqual!T == Unqual!S))
+        return cast(T)s;
+    else
+    static if (isSomeFunction!T && isSomeFunction!S)
+    {
+        alias TParams = ParameterTypeTuple!T;
+        alias SParams = ParameterTypeTuple!S;
+
+        alias TReturn = ReturnType!T;
+        alias SReturn = ReturnType!S;
+
+        static assert(is(TReturn == SReturn) || isPointer!TReturn && isPointer!SReturn);
+
+        static assert(TParams.length == SParams.length);
+
+        static if (is(TParams == SParams))
+        {
+            return cast(T)s;
+        }
+        else
+        {
+            foreach (IDX, _; SParams)
+            {
+                static assert(is(SParams[IDX] == TParams[IDX])
+                              || isPointer!(SParams[IDX]) && isPointer!(TParams[IDX]));
+            }
+
+            return cast(T)s;
+        }
+    }
+    else
+    static if (isFloatingPoint!T && isFloatingPoint!S)
+        return cast(T)s;
+    else
+        static assert(0);
+}
 
 /**
     Return the exception of type $(D Exc) that is

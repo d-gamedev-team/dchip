@@ -35,6 +35,7 @@ import dchip.cpShape;
 import dchip.cpSpace;
 import dchip.cpSpaceComponent;
 import dchip.cpSpatialIndex;
+import dchip.util;
 
 cpPostStepCallback* cpSpaceGetPostStepCallback(cpSpace* space, void* key)
 {
@@ -416,8 +417,8 @@ void cpSpaceStep(cpSpace* space, cpFloat dt)
 
         // Find colliding pairs.
         cpSpacePushFreshContactBuffer(space);
-        cpSpatialIndexEach(space.activeShapes, cast(cpSpatialIndexIteratorFunc)&cpShapeUpdateFunc, null);
-        cpSpatialIndexReindexQuery(space.activeShapes, cast(cpSpatialIndexQueryFunc)&cpSpaceCollideShapes, space);
+        cpSpatialIndexEach(space.activeShapes, safeCast!cpSpatialIndexIteratorFunc(&cpShapeUpdateFunc), null);
+        cpSpatialIndexReindexQuery(space.activeShapes, safeCast!cpSpatialIndexQueryFunc(&cpSpaceCollideShapes), space);
     }
     cpSpaceUnlock(space, cpFalse);
 

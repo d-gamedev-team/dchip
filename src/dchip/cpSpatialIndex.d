@@ -27,6 +27,7 @@ import dchip.chipmunk_types;
 import dchip.cpBB;
 import dchip.cpSpaceHash;
 import dchip.cpSweep1D;
+import dchip.util;
 
 /**
     Spatial indexes are data structures that are used to accelerate collision detection
@@ -220,6 +221,6 @@ void cpSpatialIndexCollideStatic(cpSpatialIndex* dynamicIndex, cpSpatialIndex* s
     if (staticIndex && cpSpatialIndexCount(staticIndex) > 0)
     {
         dynamicToStaticContext context = { dynamicIndex.bbfunc, staticIndex, func, data };
-        cpSpatialIndexEach(dynamicIndex, cast(cpSpatialIndexIteratorFunc)&dynamicToStaticIter, &context);
+        cpSpatialIndexEach(dynamicIndex, safeCast!cpSpatialIndexIteratorFunc(&dynamicToStaticIter), &context);
     }
 }

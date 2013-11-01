@@ -38,6 +38,7 @@ import dchip.cpSpaceHash;
 import dchip.cpSpaceStep;
 import dchip.cpSpatialIndex;
 import dchip.cpVect;
+import dchip.util;
 
 alias cpSpaceArbiterApplyImpulseFunc = void function(cpArbiter* arb);
 
@@ -382,7 +383,7 @@ cpSpace* cpSpaceNew()
 
 void cpSpaceDestroy(cpSpace* space)
 {
-    cpSpaceEachBody(space, cast(cpSpaceBodyIteratorFunc)&cpBodyActivate, null);
+    cpSpaceEachBody(space, &cpBodyActivate, null);
 
     cpSpatialIndexFree(space.staticShapes);
     cpSpatialIndexFree(space.activeShapes);
@@ -778,8 +779,8 @@ void cpSpaceEachShape(cpSpace* space, cpSpaceShapeIteratorFunc func, void* data)
     cpSpaceLock(space);
     {
         spaceShapeContext context = { func, data };
-        cpSpatialIndexEach(space.activeShapes, cast(cpSpatialIndexIteratorFunc)&spaceEachShapeIterator, &context);
-        cpSpatialIndexEach(space.staticShapes, cast(cpSpatialIndexIteratorFunc)&spaceEachShapeIterator, &context);
+        cpSpatialIndexEach(space.activeShapes, safeCast!cpSpatialIndexIteratorFunc(&spaceEachShapeIterator), &context);
+        cpSpatialIndexEach(space.staticShapes, safeCast!cpSpatialIndexIteratorFunc(&spaceEachShapeIterator), &context);
     }
     cpSpaceUnlock(space, cpTrue);
 }
@@ -810,7 +811,7 @@ void cpSpaceReindexStatic(cpSpace* space)
 {
     cpAssertHard(!space.locked, "You cannot manually reindex objects while the space is locked. Wait until the current query or step is complete.");
 
-    cpSpatialIndexEach(space.staticShapes, cast(cpSpatialIndexIteratorFunc)&updateBBCache, null);
+    cpSpatialIndexEach(space.staticShapes, safeCast!cpSpatialIndexIteratorFunc(&updateBBCache), null);
     cpSpatialIndexReindex(space.staticShapes);
 }
 
@@ -838,11 +839,11 @@ void copyShapes(cpShape* shape, cpSpatialIndex* index)
 
 void cpSpaceUseSpatialHash(cpSpace* space, cpFloat dim, int count)
 {
-    cpSpatialIndex* staticShapes = cpSpaceHashNew(dim, count, cast(cpSpatialIndexBBFunc)&cpShapeGetBB, null);
-    cpSpatialIndex* activeShapes = cpSpaceHashNew(dim, count, cast(cpSpatialIndexBBFunc)&cpShapeGetBB, staticShapes);
+    cpSpatialIndex* staticShapes = cpSpaceHashNew(dim, count, safeCast!cpSpatialIndexBBFunc(&cpShapeGetBB), null);
+    cpSpatialIndex* activeShapes = cpSpaceHashNew(dim, count, safeCast!cpSpatialIndexBBFunc(&cpShapeGetBB), staticShapes);
 
-    cpSpatialIndexEach(space.staticShapes, cast(cpSpatialIndexIteratorFunc)&copyShapes, staticShapes);
-    cpSpatialIndexEach(space.activeShapes, cast(cpSpatialIndexIteratorFunc)&copyShapes, activeShapes);
+    cpSpatialIndexEach(space.staticShapes, safeCast!cpSpatialIndexIteratorFunc(&copyShapes), staticShapes);
+    cpSpatialIndexEach(space.activeShapes, safeCast!cpSpatialIndexIteratorFunc(&copyShapes), activeShapes);
 
     cpSpatialIndexFree(space.staticShapes);
     cpSpatialIndexFree(space.activeShapes);

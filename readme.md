@@ -26,6 +26,39 @@ Samples were created by [Stephan Dilly], and updated to the new API by [Andrej M
 Currently only the `build.bat` files are provided. A dub package will be added later
 which will allow building in a cross-platform way.
 
+### Version switches
+
+The following `-version=VERSION` switches are supported:
+
+- `CHIP_ENABLE_UNITTESTS`
+
+Enable unittest blocks.
+By default unittest blocks are not compiled-in, leading to huge savings in compilation time.
+
+**Note:** The `-unittest` flag still needs to be passed to run the tests.
+
+- `CHIP_ALLOW_PRIVATE_ACCESS`
+
+Make private or package fields public. This switch will enable you to directly
+manipulate internal fields. However this is not future-compatible since these fields might
+be reordered or changed in the future. You should prefer to use accessor methods unless
+performance demands that you directly manipulate internal fields.
+
+- `CHIP_ENABLE_WARNINGS`
+
+Enable internal library warnings. When the internal state is in an unexpected state
+turning this switch on will print out warnings to stderr.
+
+- `CHIP_USE_DOUBLES`
+
+By default all floating-point types are declared as `float`. Enabling this switch will use
+`double` types instead.
+
+**Note:** Regardless of this switch the D compiler will still use `real`'s for floating-point calculations,
+meaning that enabling this switch will likely **not** give you a big improvement in accuracy. On the
+other hand, using `double`'s will use twice as much memory and could lead to a performance
+degradation.
+
 ## Links
 
 - Chipmunk2D [homepage](http://chipmunk2d.net/).

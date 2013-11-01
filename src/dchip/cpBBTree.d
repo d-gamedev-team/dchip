@@ -728,16 +728,16 @@ cpBool cpBBTreeContains(cpBBTree* tree, void* obj, cpHashValue hashid)
 
 //MARK: Reindex
 
+/** Workaround for https://github.com/slembcke/Chipmunk2D/issues/56. */
+void LeafUpdateWrap(void* elt, void* data)
+{
+    LeafUpdate(cast(Node*)elt, cast(cpBBTree*)data);
+}
+
 void cpBBTreeReindexQuery(cpBBTree* tree, cpSpatialIndexQueryFunc func, void* data)
 {
     if (!tree.root)
         return;
-
-    /** Workaround for https://github.com/slembcke/Chipmunk2D/issues/56. */
-    static void LeafUpdateWrap(void* elt, void* data)
-    {
-        LeafUpdate(cast(Node*)elt, cast(cpBBTree*)data);
-    }
 
     // LeafUpdate() may modify tree.root. Don't cache it.
     cpHashSetEach(tree.leaves, safeCast!cpHashSetIteratorFunc(&LeafUpdateWrap), tree);

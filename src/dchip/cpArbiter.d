@@ -219,7 +219,7 @@ void cpArbiterGetShapes(const cpArbiter* arb, cpShape** a, cpShape** b)
 }
 
 /// A macro shortcut for defining and retrieving the shapes from an arbiter.
-string CP_ARBITER_GET_SHAPES(string arb, string a, string b)
+string CP_ARBITER_GET_SHAPES(string arb, string a, string b)()
 {
     return q{
         cpShape * %2$s;
@@ -233,7 +233,7 @@ string CP_ARBITER_GET_SHAPES(string arb, string a, string b)
 /// the order set when the collision handler was registered.
 void cpArbiterGetBodies(const cpArbiter* arb, cpBody** a, cpBody** b)
 {
-    mixin(CP_ARBITER_GET_SHAPES("arb", "shape_a", "shape_b"));
+    mixin(CP_ARBITER_GET_SHAPES!("arb", "shape_a", "shape_b"));
     (*a) = shape_a.body_;
     (*b) = shape_b.body_;
 }

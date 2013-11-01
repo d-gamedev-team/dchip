@@ -301,11 +301,6 @@ cpVect shapeVelocityFunc(cpShape* shape)
     return shape.body_.v;
 }
 
-void freeWrap(void* ptr, void* unused)
-{
-    cpfree(ptr);
-}
-
 //MARK: Memory Management Functions
 
 cpSpace* cpSpaceAlloc()
@@ -382,14 +377,19 @@ cpSpace* cpSpaceNew()
     return cpSpaceInit(cpSpaceAlloc());
 }
 
+extern(C) void cpConstraintFreeWrap(void* constraint)
+{
+    cpConstraintFree(cast(cpConstraint*)constraint);
+}
+
+/** Workarounds for https://github.com/slembcke/Chipmunk2D/issues/56. */
+void freeWrap(void *ptr, void *unused) { cpfree(ptr); }
+void shapeFreeWrap(void *ptr, void *unused) { cpShapeFree(cast(cpShape*)ptr); }
+void bodyFreeWrap(void* ptr, void *unused) { cpBodyFree(cast(cpBody*)ptr); }
+void constraintFreeWrap(void* ptr, void *unused) { cpConstraintFree(cast(cpConstraint*)ptr); }
+
 void cpSpaceDestroy(cpSpace* space)
 {
-    /** Workaround for https://github.com/slembcke/Chipmunk2D/issues/56. */
-    static void cpBodyActivateWrap(cpBody* body_, void* data)
-    {
-        cpBodyActivate(body_);
-    }
-
     cpSpaceEachBody(space, &cpBodyActivateWrap, null);
 
     cpSpatialIndexFree(space.staticShapes);

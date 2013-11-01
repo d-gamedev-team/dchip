@@ -399,6 +399,11 @@ void cpBodyDestroy(cpBody* body_)
 {
 }
 
+extern(C) void cpBodyFreeVoid(void* body_)
+{
+    cpBodyFree(cast(cpBody*)body_);
+}
+
 void cpBodyFree(cpBody* body_)
 {
     if (body_)
@@ -647,4 +652,10 @@ void cpBodyPushArbiter(cpBody* body_, cpArbiter* arb)
     if (next)
         cpArbiterThreadForBody(next, body_).prev = arb;
     body_.arbiterList = arb;
+}
+
+/** Workaround for https://github.com/slembcke/Chipmunk2D/issues/56. */
+void cpBodyActivateWrap(cpBody* body_, void* data)
+{
+    cpBodyActivate(body_);
 }

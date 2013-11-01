@@ -280,8 +280,6 @@ cpFloat cpAreaForPoly(const int numVerts, const cpVect* verts)
     return -area / 2.0f;
 }
 
-//MARK: Quick Hull
-
 void cpLoopIndexes(cpVect* verts, int count, int* start, int* end)
 {
     (*start) = (*end) = 0;
@@ -305,6 +303,7 @@ void cpLoopIndexes(cpVect* verts, int count, int* start, int* end)
     }
 }
 
+/** Avoid bringing in std.algorithm. */
 void SWAP(ref cpVect a, ref cpVect b)
 {
     cpVect tmp = a;
@@ -466,11 +465,3 @@ int cpConvexHull(int count, cpVect* verts, cpVect* result, int* first, cpFloat t
                  "Please report this error with as much info as you can.");
     return resultCount;
 }
-
-/// Convenience macro to work with cpConvexHull.
-/// @c count and @c verts is the input array passed to cpConvexHull().
-/// @c count_var and @c verts_var are the names of the variables the macro creates to store the result.
-/// The output vertex array is allocated on the stack using alloca() so it will be freed automatically, but cannot be returned from the current scope.
-//~ #define CP_CONVEX_HULL(__count__, __verts__, __count_var__, __verts_var__) \
-    //~ cpVect * __verts_var__ = (cpVect*)alloca(__count__ * sizeof(cpVect)); \
-    //~ int __count_var__ = cpConvexHull(__count__, __verts__, __verts_var__, NULL, 0.0); \

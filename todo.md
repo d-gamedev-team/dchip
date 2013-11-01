@@ -6,3 +6,4 @@ Todo:
 - Port test-suite to GLFW.
 - Diff the test-suite of v6.2.1 and v5.3.5 and add missing tests.
 - See the Box2D test-suite and port some of the interesting samples to our test-suite.
+- Implement the DRAW_GJK debug drawing routines.

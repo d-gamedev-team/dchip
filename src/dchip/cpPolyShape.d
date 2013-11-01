@@ -250,7 +250,7 @@ cpFloat cpPolyShapeGetRadius(const cpShape* shape)
 static void setUpVerts(cpPolyShape* poly, int numVerts, const cpVect* verts, cpVect offset)
 {
     // Fail if the user attempts to pass a concave poly, or a bad winding.
-    cpAssertHard(cpPolyValidate(verts, numVerts), "Polygon is concave or has a reversed winding. Consider using cpConvexHull() or CP_CONVEX_HULL().");
+    cpAssertHard(cpPolyValidate(verts, numVerts), "Polygon is concave or has a reversed winding. Consider using cpConvexHull().");
 
     poly.numVerts = numVerts;
     poly.verts    = cast(cpVect*)cpcalloc(2 * numVerts, cpVect.sizeof);

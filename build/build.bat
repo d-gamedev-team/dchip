@@ -4,8 +4,8 @@ setlocal EnableDelayedExpansion
 rem Build options
 rem -------------
 set do_build_tests=1
-rem set do_run_tests=1
-rem set do_build_lib=1
+set do_run_tests=1
+set do_build_lib=1
 
 set this_path=%~dp0
 set dchip_root=%this_path%\..
@@ -36,7 +36,9 @@ rem
 rem CHIP_USE_DOUBLES
 rem     - Use double-precision floating point internally.
 
-rem set CHIP_ENABLE_UNITTESTS=-version=CHIP_ENABLE_UNITTESTS
+if [%build_tests%]==[] goto :NEXT
+set CHIP_ENABLE_UNITTESTS=-version=CHIP_ENABLE_UNITTESTS
+:NEXT
 rem set CHIP_ALLOW_PRIVATE_ACCESS=-version=CHIP_ALLOW_PRIVATE_ACCESS
 rem set CHIP_ENABLE_WARNINGS=-version=CHIP_ENABLE_WARNINGS
 set CHIP_USE_DOUBLES=-version=CHIP_USE_DOUBLES
@@ -65,11 +67,12 @@ if [%do_build_tests%]==[] goto :BUILD
 
 :TEST
 
-timeit %build_tests%
+%build_tests%
 if errorlevel 1 GOTO :ERROR
 if [%do_run_tests%]==[] (
     echo Success: dchip tests built. >> %stdout_log%
     type %stdout_log%
+    type NUL > %stdout_log%
 )
 
 if [%do_run_tests%]==[] goto :BUILD
@@ -79,6 +82,7 @@ if errorlevel 1 GOTO :ERROR
 
 echo Success: dchip tests passed. >> %stdout_log%
 type %stdout_log%
+type NUL > %stdout_log%
 
 :BUILD
 

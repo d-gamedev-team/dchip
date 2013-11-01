@@ -67,16 +67,16 @@ version (CHIP_USE_DOUBLES)
 }
 else
 {
-    alias cpfsqrt = sqrtf;
-    alias cpfsin = sinf;
-    alias cpfcos = cosf;
-    alias cpfacos = acosf;
-    alias cpfatan2 = atan2f;
-    alias cpfmod = fmodf;
-    alias cpfexp = expf;
-    alias cpfpow = powf;
-    alias cpffloor = floorf;
-    alias cpfceil = ceilf;
+    alias cpfsqrt = sqrt;
+    alias cpfsin = sin;
+    alias cpfcos = cos;
+    alias cpfacos = acos;
+    alias cpfatan2 = atan2;
+    alias cpfmod = fmod;
+    alias cpfexp = exp;
+    alias cpfpow = pow;
+    alias cpffloor = floor;
+    alias cpfceil = ceil;
 }
 
 ///

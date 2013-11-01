@@ -24,4 +24,3 @@
 *.xml
 *.deps
 *.modTime
-/tests/*

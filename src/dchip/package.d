@@ -50,6 +50,7 @@ public
     import dchip.cpSpace;
     import dchip.cpSpaceComponent;
     import dchip.cpSpaceHash;
+    import dchip.cpSpaceQuery;
     import dchip.cpSpaceStep;
     import dchip.cpSpatialIndex;
     import dchip.cpSweep1D;

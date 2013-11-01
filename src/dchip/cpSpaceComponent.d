@@ -163,52 +163,6 @@ void ComponentActivate(cpBody* root)
     cpArrayDeleteObj(space.sleepingComponents, root);
 }
 
-void cpBodyActivate(cpBody* body_)
-{
-    if (!cpBodyIsRogue(body_))
-    {
-        body_.node.idleTime = 0.0f;
-        ComponentActivate(ComponentRoot(body_));
-    }
-
-    mixin(CP_BODY_FOREACH_ARBITER!("body_", "arb", q{
-        // Reset the idle timer of things the body_ is touching as well.
-        // That way things don't get left hanging in the air.
-        cpBody* other = (arb.body_a == body_ ? arb.body_b : arb.body_a);
-
-        if (!cpBodyIsStatic(other))
-            other.node.idleTime = 0.0f;
-    }));
-}
-
-void cpBodyActivateStatic(cpBody* body_, cpShape* filter)
-{
-    cpAssertHard(cpBodyIsStatic(body_), "cpBodyActivateStatic() called on a non-static body_.");
-
-    mixin(CP_BODY_FOREACH_ARBITER!("body_", "arb", q{
-        if (!filter || filter == arb.a || filter == arb.b)
-        {
-            cpBodyActivate(arb.body_a == body_ ? arb.body_b : arb.body_a);
-        }
-    }));
-
-    // TODO should also activate joints?
-}
-
-void cpBodyPushArbiter(cpBody* body_, cpArbiter* arb)
-{
-    cpAssertSoft(cpArbiterThreadForBody(arb, body_).next == null, "Internal Error: Dangling contact graph pointers detected. (A)");
-    cpAssertSoft(cpArbiterThreadForBody(arb, body_).prev == null, "Internal Error: Dangling contact graph pointers detected. (B)");
-
-    cpArbiter* next = body_.arbiterList;
-    cpAssertSoft(next == null || cpArbiterThreadForBody(next, body_).prev == null, "Internal Error: Dangling contact graph pointers detected. (C)");
-    cpArbiterThreadForBody(arb, body_).next = next;
-
-    if (next)
-        cpArbiterThreadForBody(next, body_).prev = arb;
-    body_.arbiterList = arb;
-}
-
 void ComponentAdd(cpBody* root, cpBody* body_)
 {
     body_.node.root = root;
@@ -354,48 +308,6 @@ void cpSpaceProcessComponents(cpSpace* space, cpFloat dt)
             body_.node.next = null;
         }
     }
-}
-
-void cpBodySleep(cpBody* body_)
-{
-    cpBodySleepWithGroup(body_, null);
-}
-
-void cpBodySleepWithGroup(cpBody* body_, cpBody* group)
-{
-    cpAssertHard(!cpBodyIsRogue(body_), "Rogue (and static) bodies cannot be put to sleep.");
-
-    cpSpace* space = body_.space;
-    cpAssertHard(!space.locked, "Bodies cannot be put to sleep during a query or a call to cpSpaceStep(). Put these calls into a post-step callback.");
-    cpAssertHard(group == null || cpBodyIsSleeping(group), "Cannot use a non-sleeping body_ as a group identifier.");
-
-    if (cpBodyIsSleeping(body_))
-    {
-        cpAssertHard(ComponentRoot(body_) == ComponentRoot(group), "The body_ is already sleeping and it's group cannot be reassigned.");
-        return;
-    }
-
-    mixin(CP_BODY_FOREACH_SHAPE!("body_", "shape", "cpShapeUpdate(shape, body_.p, body_.rot);"));
-    cpSpaceDeactivateBody(space, body_);
-
-    if (group)
-    {
-        cpBody* root = ComponentRoot(group);
-
-        cpComponentNode node = { root, root.node.next, 0.0f };
-        body_.node = node;
-
-        root.node.next = body_;
-    }
-    else
-    {
-        cpComponentNode node = { body_, null, 0.0f };
-        body_.node = node;
-
-        cpArrayPush(space.sleepingComponents, body_);
-    }
-
-    cpArrayDeleteObj(space.bodies, body_);
 }
 
 void activateTouchingHelper(cpShape* shape, cpContactPointSet* points, cpShape* other)

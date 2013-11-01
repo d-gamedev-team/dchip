@@ -26,7 +26,6 @@ public
     import dchip.chipmunk;
     import dchip.chipmunk_private;
     import dchip.chipmunk_types;
-    import dchip.chipmunk_unsafe;
     import dchip.constraints_util;
     import dchip.cpArbiter;
     import dchip.cpArray;

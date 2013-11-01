@@ -384,7 +384,13 @@ cpSpace* cpSpaceNew()
 
 void cpSpaceDestroy(cpSpace* space)
 {
-    cpSpaceEachBody(space, &cpBodyActivate, null);
+    /** Workaround for https://github.com/slembcke/Chipmunk2D/issues/56. */
+    static void cpBodyActivateWrap(cpBody* body_, void* data)
+    {
+        cpBodyActivate(body_);
+    }
+
+    cpSpaceEachBody(space, &cpBodyActivateWrap, null);
 
     cpSpatialIndexFree(space.staticShapes);
     cpSpatialIndexFree(space.activeShapes);

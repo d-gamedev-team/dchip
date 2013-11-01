@@ -1,5 +1,7 @@
 Todo:
 
+- Remove duplicate functions
+
 - Introduce -version=CHIP_ALLOW_PRIVATE_ACCESS:
 
     version (CHIP_ALLOW_PRIVATE_ACCESS)

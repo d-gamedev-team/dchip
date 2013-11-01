@@ -162,7 +162,7 @@ else
 
 // Defined in cpSpace.c
 /// Wake up a sleeping or idle body_.
-void cpBodyActivate(cpBody* body_, void* = null)
+void cpBodyActivate(cpBody* body_)
 {
     if (!cpBodyIsRogue(body_))
     {
@@ -633,4 +633,18 @@ void cpBodyEachArbiter(cpBody* body_, cpBodyArbiterIteratorFunc func, void* data
 
         arb = next;
     }
+}
+
+void cpBodyPushArbiter(cpBody* body_, cpArbiter* arb)
+{
+    cpAssertSoft(cpArbiterThreadForBody(arb, body_).next == null, "Internal Error: Dangling contact graph pointers detected. (A)");
+    cpAssertSoft(cpArbiterThreadForBody(arb, body_).prev == null, "Internal Error: Dangling contact graph pointers detected. (B)");
+
+    cpArbiter* next = body_.arbiterList;
+    cpAssertSoft(next == null || cpArbiterThreadForBody(next, body_).prev == null, "Internal Error: Dangling contact graph pointers detected. (C)");
+    cpArbiterThreadForBody(arb, body_).next = next;
+
+    if (next)
+        cpArbiterThreadForBody(next, body_).prev = arb;
+    body_.arbiterList = arb;
 }

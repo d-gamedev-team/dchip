@@ -52,8 +52,6 @@ struct cpArray
     void** arr;
 }
 
-void cpArrayFreeEach(cpArray * arr, void function(void*) freeFunc);
-
 cpConstraint* cpConstraintNext(cpConstraint* node, cpBody* bdy)
 {
     return (node.a == bdy ? node.next_a : node.next_b);

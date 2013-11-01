@@ -1,7 +1,7 @@
 # dchip
 
 This is a D2 port of the [Chipmunk2D](http://chipmunk2d.net/) library.
-Currently it targets Chipmunk2D v6.2.1.
+Currently it targets version 6.2.1.
 
 **Note:** Currently dchip is in a pre-alpha state.
 Once it's tested on multiple platforms a `dub` package will be added.

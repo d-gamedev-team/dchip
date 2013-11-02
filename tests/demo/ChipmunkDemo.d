@@ -21,8 +21,6 @@
  */
 module demo.ChipmunkDemo;
 
-pragma(lib, "glu32_implib.lib");
-
 import core.stdc.stdlib;
 
 import std.exception;
@@ -41,6 +39,8 @@ import demo.ChipmunkDebugDraw;
 import demo.ChipmunkDemoTextSupport;
 import demo.glu;
 import demo.types;
+
+import demo.LogoSmash;
 
 alias ChipmunkDemoInitFunc = cpSpace* function();
 alias ChipmunkDemoUpdateFunc = void function(cpSpace* space, double dt);
@@ -339,7 +339,7 @@ extern(C) void Reshape(GLFWwindow* window, int width, int height)
 char[] DemoTitle(int index)
 {
     static char[1024] title;
-    sformat(title, "Demo(%c): %s", 'a' + index, demos[demo_index].name);
+    sformat(title, "Demo(%s): %s", 'a' + index, demos[demo_index].name);
     return title;
 }
 
@@ -514,7 +514,8 @@ extern(C) void Click(GLFWwindow* window, int button, int state, int mods)
 extern(C) void WindowClose(GLFWwindow* window)
 {
     glfwTerminate();
-    exit(EXIT_SUCCESS);
+    glfwSetWindowShouldClose(window, true);
+    //~ exit(EXIT_SUCCESS);
 }
 
 void SetupGL()
@@ -602,7 +603,7 @@ int main(string[] args)
     cpEnableSegmentToSegmentCollisions();
 
     ChipmunkDemo[] demo_list = [
-        //~ LogoSmash,
+        LogoSmash,
         //~ PyramidStack,
         //~ Plink,
         //~ BouncyHexagons,
@@ -636,7 +637,7 @@ int main(string[] args)
     {
         if (arg == "-bench")
         {
-            demos      = bench_list;
+            demos      = cast(ChipmunkDemo*)bench_list.ptr;
             demo_count = bench_count;
         }
         else
@@ -667,6 +668,8 @@ int main(string[] args)
         while (1)
         {
             Display();
+            if (glfwWindowShouldClose(window))
+                break;
         }
     }
 

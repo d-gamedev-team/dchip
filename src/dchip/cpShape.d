@@ -176,7 +176,7 @@ mixin template CP_DefineShapeStructGetter(type, string member, string name)
 mixin template CP_DefineShapeStructSetter(type, string member, string name, bool activates)
 {
     mixin(q{
-        void cpArbiterSet%s(cpShape * shape, type value)
+        void cpShapeSet%s(cpShape * shape, type value)
         {
             %s
 

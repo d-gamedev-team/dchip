@@ -21,7 +21,11 @@
  */
 module demo.Bench;
 
-alias BENCH_SPACE_NEW  = cpSpaceNew;
+import dchip;
+
+import demo.ChipmunkDemo;
+
+alias BENCH_SPACE_NEW = cpSpaceNew;
 alias BENCH_SPACE_FREE = cpSpaceFree;
 alias BENCH_SPACE_STEP = cpSpaceStep;
 
@@ -83,10 +87,10 @@ void add_hexagon(cpSpace* space, int index, cpFloat radius)
     }
 
     cpFloat mass = radius * radius;
-    cpBody* body_ = cpSpaceAddBody(space, cpBodyNew(mass, cpMomentForPoly(mass, 6, hexagon, cpvzero)));
+    cpBody* body_ = cpSpaceAddBody(space, cpBodyNew(mass, cpMomentForPoly(mass, 6, hexagon.ptr, cpvzero)));
     body_.p = cpvmult(frand_unit_circle(), 180.0f);
 
-    cpShape* shape = cpSpaceAddShape(space, cpPolyShapeNew2(body_, 6, hexagon, cpvzero, bevel));
+    cpShape* shape = cpSpaceAddShape(space, cpPolyShapeNew2(body_, 6, hexagon.ptr, cpvzero, bevel));
     shape.e = 0.0f;
     shape.u = 0.9f;
 }
@@ -112,7 +116,8 @@ cpSpace* SetupSpace_simpleTerrain()
 // SimpleTerrain constant sized objects
 cpSpace* init_SimpleTerrainCircles_1000()
 {
-    cpSpace* space = SetupSpace_simpleTerrain();
+    cpSpace* space;
+    space = SetupSpace_simpleTerrain();
 
     for (int i = 0; i < 1000; i++)
         add_circle(space, i, 5.0f);
@@ -321,10 +326,10 @@ cpSpace* init_ComplexTerrainHexagons_1000()
     for (int i = 0; i < 1000; i++)
     {
         cpFloat mass = radius * radius;
-        cpBody* body_ = cpSpaceAddBody(space, cpBodyNew(mass, cpMomentForPoly(mass, 6, hexagon, cpvzero)));
+        cpBody* body_ = cpSpaceAddBody(space, cpBodyNew(mass, cpMomentForPoly(mass, 6, hexagon.ptr, cpvzero)));
         body_.p = cpvadd(cpvmult(frand_unit_circle(), 180.0f), cpv(0.0f, 300.0f));
 
-        cpShape* shape = cpSpaceAddShape(space, cpPolyShapeNew2(body_, 6, hexagon, cpvzero, bevel));
+        cpShape* shape = cpSpaceAddShape(space, cpPolyShapeNew2(body_, 6, hexagon.ptr, cpvzero, bevel));
         shape.e = 0.0f;
         shape.u = 0.0f;
     }
@@ -436,11 +441,11 @@ cpSpace* init_BouncyTerrainHexagons_500()
     for (int i = 0; i < 500; i++)
     {
         cpFloat mass = radius * radius;
-        cpBody* body_ = cpSpaceAddBody(space, cpBodyNew(mass, cpMomentForPoly(mass, 6, hexagon, cpvzero)));
+        cpBody* body_ = cpSpaceAddBody(space, cpBodyNew(mass, cpMomentForPoly(mass, 6, hexagon.ptr, cpvzero)));
         body_.p = cpvadd(cpvmult(frand_unit_circle(), 130.0f), cpvzero);
         body_.v = cpvmult(frand_unit_circle(), 50.0f);
 
-        cpShape* shape = cpSpaceAddShape(space, cpPolyShapeNew2(body_, 6, hexagon, cpvzero, bevel));
+        cpShape* shape = cpSpaceAddShape(space, cpPolyShapeNew2(body_, 6, hexagon.ptr, cpvzero, bevel));
         shape.e = 1.0f;
     }
 
@@ -451,8 +456,8 @@ cpSpace* init_BouncyTerrainHexagons_500()
 
 cpBool NoCollide_begin(cpArbiter* arb, cpSpace* space, void* data)
 {
-    abort();
-
+    int x;
+    assert(x);
     return cpTrue;
 }
 
@@ -461,7 +466,7 @@ cpSpace* init_NoCollide()
     cpSpace* space = BENCH_SPACE_NEW();
     space.iterations = 10;
 
-    cpSpaceAddCollisionHandler(space, 2, 2, NoCollide_begin, NULL, NULL, NULL, NULL);
+    cpSpaceAddCollisionHandler(space, 2, 2, &NoCollide_begin, null, null, null, null);
 
     float radius = 4.5f;
 
@@ -526,32 +531,30 @@ void destroy(cpSpace* space)
 ChipmunkDemo BouncyHexagons = {
     "Bouncy Hexagons",
     1.0 / 60.0,
-    init_BouncyTerrainHexagons_500,
-    update,
-    ChipmunkDemoDefaultDrawImpl,
-    destroy,
+    &init_BouncyTerrainHexagons_500,
+    &update,
+    &ChipmunkDemoDefaultDrawImpl,
+    &destroy,
 };
 
-#define BENCH(n) { "benchmark - " #n, 1.0 / 60.0, init_ ## n, update, ChipmunkDemoDefaultDrawImpl, destroy }
+immutable ChipmunkDemo[] bench_list = [
+	{"benchmark - " "SimpleTerrainCircles_1000", 1.0/60.0, &init_SimpleTerrainCircles_1000, &update, &ChipmunkDemoDefaultDrawImpl, &destroy},
+	{"benchmark - " "SimpleTerrainCircles_500", 1.0/60.0, &init_SimpleTerrainCircles_500, &update, &ChipmunkDemoDefaultDrawImpl, &destroy},
+	{"benchmark - " "SimpleTerrainCircles_100", 1.0/60.0, &init_SimpleTerrainCircles_100, &update, &ChipmunkDemoDefaultDrawImpl, &destroy},
+	{"benchmark - " "SimpleTerrainBoxes_1000", 1.0/60.0, &init_SimpleTerrainBoxes_1000, &update, &ChipmunkDemoDefaultDrawImpl, &destroy},
+	{"benchmark - " "SimpleTerrainBoxes_500", 1.0/60.0, &init_SimpleTerrainBoxes_500, &update, &ChipmunkDemoDefaultDrawImpl, &destroy},
+	{"benchmark - " "SimpleTerrainBoxes_100", 1.0/60.0, &init_SimpleTerrainBoxes_100, &update, &ChipmunkDemoDefaultDrawImpl, &destroy},
+	{"benchmark - " "SimpleTerrainHexagons_1000", 1.0/60.0, &init_SimpleTerrainHexagons_1000, &update, &ChipmunkDemoDefaultDrawImpl, &destroy},
+	{"benchmark - " "SimpleTerrainHexagons_500", 1.0/60.0, &init_SimpleTerrainHexagons_500, &update, &ChipmunkDemoDefaultDrawImpl, &destroy},
+	{"benchmark - " "SimpleTerrainHexagons_100", 1.0/60.0, &init_SimpleTerrainHexagons_100, &update, &ChipmunkDemoDefaultDrawImpl, &destroy},
+	{"benchmark - " "SimpleTerrainVCircles_200", 1.0/60.0, &init_SimpleTerrainVCircles_200, &update, &ChipmunkDemoDefaultDrawImpl, &destroy},
+	{"benchmark - " "SimpleTerrainVBoxes_200", 1.0/60.0, &init_SimpleTerrainVBoxes_200, &update, &ChipmunkDemoDefaultDrawImpl, &destroy},
+	{"benchmark - " "SimpleTerrainVHexagons_200", 1.0/60.0, &init_SimpleTerrainVHexagons_200, &update, &ChipmunkDemoDefaultDrawImpl, &destroy},
+	{"benchmark - " "ComplexTerrainCircles_1000", 1.0/60.0, &init_ComplexTerrainCircles_1000, &update, &ChipmunkDemoDefaultDrawImpl, &destroy},
+	{"benchmark - " "ComplexTerrainHexagons_1000", 1.0/60.0, &init_ComplexTerrainHexagons_1000, &update, &ChipmunkDemoDefaultDrawImpl, &destroy},
+	{"benchmark - " "BouncyTerrainCircles_500", 1.0/60.0, &init_BouncyTerrainCircles_500, &update, &ChipmunkDemoDefaultDrawImpl, &destroy},
+	{"benchmark - " "BouncyTerrainHexagons_500", 1.0/60.0, &init_BouncyTerrainHexagons_500, &update, &ChipmunkDemoDefaultDrawImpl, &destroy},
+	{"benchmark - " "NoCollide", 1.0/60.0, &init_NoCollide, &update, &ChipmunkDemoDefaultDrawImpl, &destroy},
+];
 
-ChipmunkDemo bench_list[] = {
-    BENCH(SimpleTerrainCircles_1000),
-    BENCH(SimpleTerrainCircles_500),
-    BENCH(SimpleTerrainCircles_100),
-    BENCH(SimpleTerrainBoxes_1000),
-    BENCH(SimpleTerrainBoxes_500),
-    BENCH(SimpleTerrainBoxes_100),
-    BENCH(SimpleTerrainHexagons_1000),
-    BENCH(SimpleTerrainHexagons_500),
-    BENCH(SimpleTerrainHexagons_100),
-    BENCH(SimpleTerrainVCircles_200),
-    BENCH(SimpleTerrainVBoxes_200),
-    BENCH(SimpleTerrainVHexagons_200),
-    BENCH(ComplexTerrainCircles_1000),
-    BENCH(ComplexTerrainHexagons_1000),
-    BENCH(BouncyTerrainCircles_500),
-    BENCH(BouncyTerrainHexagons_500),
-    BENCH(NoCollide),
-};
-
-int bench_count = bench_list.length;
+immutable bench_count = bench_list.length;

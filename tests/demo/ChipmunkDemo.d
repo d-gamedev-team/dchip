@@ -36,6 +36,7 @@ import deimos.glfw.glfw3;
 
 import dchip;
 
+import demo.Bench;
 import demo.ChipmunkDebugDraw;
 import demo.ChipmunkDemoTextSupport;
 import demo.glu;
@@ -601,33 +602,33 @@ int main(string[] args)
     cpEnableSegmentToSegmentCollisions();
 
     ChipmunkDemo[] demo_list = [
-        LogoSmash,
-        PyramidStack,
-        Plink,
-        BouncyHexagons,
-        Tumble,
-        PyramidTopple,
-        Planet,
-        Springies,
-        Pump,
-        TheoJansen,
-        Query,
-        OneWay,
-        Joints,
-        Tank,
-        Chains,
-        Crane,
-        ContactGraph,
-        Buoyancy,
-        Player,
-        Slice,
-        Convex,
-        Unicycle,
-        Sticky,
-        Shatter,
+        //~ LogoSmash,
+        //~ PyramidStack,
+        //~ Plink,
+        //~ BouncyHexagons,
+        //~ Tumble,
+        //~ PyramidTopple,
+        //~ Planet,
+        //~ Springies,
+        //~ Pump,
+        //~ TheoJansen,
+        //~ Query,
+        //~ OneWay,
+        //~ Joints,
+        //~ Tank,
+        //~ Chains,
+        //~ Crane,
+        //~ ContactGraph,
+        //~ Buoyancy,
+        //~ Player,
+        //~ Slice,
+        //~ Convex,
+        //~ Unicycle,
+        //~ Sticky,
+        //~ Shatter,
     ];
 
-    demos      = demo_list;
+    demos      = demo_list.ptr;
     demo_count = demo_list.length;
     int trial = 0;
 

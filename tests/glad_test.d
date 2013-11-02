@@ -35,28 +35,28 @@ void main()
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
-        ratio = cast(float)width / cast(float)height;
-        glViewport(0, 0, width, height);
-        glClear(GL_COLOR_BUFFER_BIT);
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(-ratio, ratio, -1.0, 1.0, 1.0, -1.0);
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-        glRotatef(cast(float) glfwGetTime() * 50.0, 0.0, 0.0, 1.0);
-        glBegin(GL_TRIANGLES);
-        glColor3f(1.0, 0.0, 0.0);
-        glVertex3f(-0.6f, -0.4f, 0.0);
-        glColor3f(0.0, 1.0, 0.0);
-        glVertex3f(0.6f, -0.4f, 0.0);
-        glColor3f(0.0, 0.0, 1.0);
-        glVertex3f(0.0, 0.6f, 0.0);
-        glEnd();
+        //~ ratio = cast(float)width / cast(float)height;
+        //~ glViewport(0, 0, width, height);
+        //~ glClear(GL_COLOR_BUFFER_BIT);
+        //~ glMatrixMode(GL_PROJECTION);
+        //~ glLoadIdentity();
+        //~ glOrtho(-ratio, ratio, -1.0, 1.0, 1.0, -1.0);
+        //~ glMatrixMode(GL_MODELVIEW);
+        //~ glLoadIdentity();
+        //~ glRotatef(cast(float) glfwGetTime() * 50.0, 0.0, 0.0, 1.0);
+        //~ glBegin(GL_TRIANGLES);
+        //~ glColor3f(1.0, 0.0, 0.0);
+        //~ glVertex3f(-0.6f, -0.4f, 0.0);
+        //~ glColor3f(0.0, 1.0, 0.0);
+        //~ glVertex3f(0.6f, -0.4f, 0.0);
+        //~ glColor3f(0.0, 0.0, 1.0);
+        //~ glVertex3f(0.0, 0.6f, 0.0);
+        //~ glEnd();
 
-        /* Swap front and back buffers */
-        glfwSwapBuffers(window);
+        //~ /* Swap front and back buffers */
+        //~ glfwSwapBuffers(window);
 
-        /* Poll for and process events */
+        //~ /* Poll for and process events */
         glfwPollEvents();
     }
 }

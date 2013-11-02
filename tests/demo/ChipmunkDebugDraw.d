@@ -611,11 +611,16 @@ void ChipmunkDebugDrawCollisionPoints(cpSpace* space)
 
 void ChipmunkDebugDrawFlushRenderer()
 {
+    CHECK_GL_ERRORS();
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, Triangle.sizeof * triangle_count, triangle_buffer, GL_STREAM_DRAW);
 
+    CHECK_GL_ERRORS();
+
     glUseProgram(program);
     glUniform1f(glGetUniformLocation(program, "u_outline_coef"), ChipmunkDebugDrawPointLineScale);
+
+    CHECK_GL_ERRORS();
 
     version (OSX)
     {
@@ -625,6 +630,8 @@ void ChipmunkDebugDrawFlushRenderer()
     {
         glBindVertexArray(vao);
     }
+
+    CHECK_GL_ERRORS();
 
     glDrawArrays(GL_TRIANGLES, 0, triangle_count * 3);
 

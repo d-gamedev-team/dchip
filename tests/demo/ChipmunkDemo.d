@@ -47,7 +47,7 @@ alias ChipmunkDemoUpdateFunc = void function(cpSpace* space, double dt);
 alias ChipmunkDemoDrawFunc = void function(cpSpace* space);
 alias ChipmunkDemoDestroyFunc = void function(cpSpace* space);
 
-GLFWwindow* window;
+__gshared GLFWwindow* window;
 
 struct ChipmunkDemo
 {
@@ -183,7 +183,7 @@ void DrawInfo()
     max_points      = points > max_points ? points : max_points;
     max_constraints = constraints > max_constraints ? constraints : max_constraints;
 
-    char[1024] buffer;
+    char[1024] buffer = 0;
     string format =
         "Arbiters: %d (%d) - "
         "Contact Points: %d (%d)\n"
@@ -215,7 +215,7 @@ void DrawInfo()
     ChipmunkDemoTextDrawString(cpv(0, 220), buffer);
 }
 
-char  PrintStringBuffer[1024 * 8];
+char  PrintStringBuffer[1024 * 8] = 0;
 char* PrintStringCursor;
 
 void ChipmunkDemoPrintString(Args...)(Args args)
@@ -338,7 +338,7 @@ extern(C) void Reshape(GLFWwindow* window, int width, int height)
 
 char[] DemoTitle(int index)
 {
-    static char[1024] title;
+    static char[1024] title = 0;
     sformat(title, "Demo(%s): %s", 'a' + index, demos[demo_index].name);
     return title;
 }
@@ -355,12 +355,13 @@ void RunDemo(int index)
     LastTime = glfwGetTime();
 
     mouse_joint = null;
-    ChipmunkDemoMessageString = "".dup;
+    ChipmunkDemoMessageString = "\0".dup;
     max_arbiters    = 0;
     max_points      = 0;
     max_constraints = 0;
     space = demos[demo_index].initFunc();
 
+    enforce(window !is null);
     glfwSetWindowTitle(window, DemoTitle(index).toStringz);
 }
 
@@ -515,15 +516,10 @@ extern(C) void WindowClose(GLFWwindow* window)
 {
     glfwTerminate();
     glfwSetWindowShouldClose(window, true);
-    //~ exit(EXIT_SUCCESS);
 }
 
 void SetupGL()
 {
-    //~ glewExperimental = GL_TRUE;
-    //~ cpAssertHard(glewInit() == GLEW_NO_ERROR, "There was an error initializing GLEW.");
-    //~ cpAssertHard(GLEW_ARB_vertex_array_object, "Requires VAO support.");
-
     ChipmunkDebugDrawInit();
     ChipmunkDemoTextInit();
 
@@ -538,45 +534,6 @@ void SetupGL()
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-}
-
-void SetupGLFW()
-{
-    //~ cpAssertHard(glfwInit(), "Error initializing GLFW.");
-
-    //~ cpAssertHard(glfwOpenWindow(640, 480, 8, 8, 8, 8, 0, 0, GLFW_WINDOW), "Error opening GLFW window.");
-
-    // initialize glwf
-    auto res = glfwInit();
-    enforce(res, format("glfwInit call failed with return code: '%s'", res));
-    scope(exit)
-        glfwTerminate();
-
-    int width = 640;
-    int height = 480;
-
-    // Create a windowed mode window and its OpenGL context
-    window = enforce(glfwCreateWindow(width, height, "Hello World", null, null),
-                          "glfwCreateWindow call failed.");
-
-    // Make the window's context current
-    glfwMakeContextCurrent(window);
-
-    // load all glad function pointers
-    enforce(gladLoadGL());
-
-    glfwSetWindowTitle(window, DemoTitle(demo_index).toStringz);
-    glfwSwapInterval(1);
-
-    SetupGL();
-
-    glfwSetWindowSizeCallback(window, &Reshape);
-    glfwSetWindowCloseCallback(window, &WindowClose);
-
-    glfwSetKeyCallback(window, &Keyboard);
-
-    glfwSetCursorPosCallback(window, &Mouse);
-    glfwSetMouseButtonCallback(window, &Click);
 }
 
 void TimeTrial(int index, int count)
@@ -662,14 +619,47 @@ int main(string[] args)
     {
         mouse_body = cpBodyNew(INFINITY, INFINITY);
 
-        RunDemo(demo_index);
-        SetupGLFW();
+            // initialize glwf
+        auto res = glfwInit();
+        enforce(res, format("glfwInit call failed with return code: '%s'", res));
+        scope(exit)
+            glfwTerminate();
 
-        while (1)
+        int width = 640;
+        int height = 480;
+
+        // Create a windowed mode window and its OpenGL context
+        window = enforce(glfwCreateWindow(width, height, "Hello World", null, null),
+                              "glfwCreateWindow call failed.");
+
+        glfwSwapInterval(1);
+
+        // Make the window's context current
+        glfwMakeContextCurrent(window);
+
+        // load all glad function pointers
+        enforce(gladLoadGL());
+
+        SetupGL();
+
+        Reshape(window, 640, 480);
+
+        glfwSetWindowSizeCallback(window, &Reshape);
+        glfwSetKeyCallback(window, &Keyboard);
+
+        glfwSetCursorPosCallback(window, &Mouse);
+        glfwSetMouseButtonCallback(window, &Click);
+
+        RunDemo(demo_index);
+
+        /* Loop until the user closes the window */
+        while (!glfwWindowShouldClose(window))
         {
+            /* Render here */
             Display();
-            if (glfwWindowShouldClose(window))
-                break;
+
+            /* Poll for and process events */
+            glfwPollEvents();
         }
     }
 

@@ -38,7 +38,7 @@ rem     - Use double-precision floating point internally.
 
 rem set CHIP_ENABLE_UNITTESTS=-version=CHIP_ENABLE_UNITTESTS
 set CHIP_ALLOW_PRIVATE_ACCESS=-version=CHIP_ALLOW_PRIVATE_ACCESS
-set CHIP_ENABLE_WARNINGS=-version=CHIP_ENABLE_WARNINGS
+rem set CHIP_ENABLE_WARNINGS=-version=CHIP_ENABLE_WARNINGS
 rem set CHIP_USE_DOUBLES=-version=CHIP_USE_DOUBLES
 
 set includes=-I..\src -Ilib

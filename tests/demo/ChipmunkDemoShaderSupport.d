@@ -29,7 +29,6 @@ import dchip;
 import glad.gl.all;
 import glad.gl.loader;
 
-void CheckGLErrors();
 auto CHECK_GL_ERRORS() { CheckGLErrors(); }
 
 string SET_ATTRIBUTE(string program, string type, string name, string gltype)
@@ -39,12 +38,44 @@ string SET_ATTRIBUTE(string program, string type, string name, string gltype)
     }.format(name, type, gltype);
 }
 
+/// Converts an OpenGL errorenum to a string
+string toString(GLenum error)
+{
+    switch (error)
+    {
+        case GL_INVALID_ENUM:
+            return "An unacceptable value is specified for an enumerated argument.";
+
+        case GL_INVALID_VALUE:
+            return "A numeric argument is out of range.";
+
+        case GL_INVALID_OPERATION:
+            return "The specified operation is not allowed in the current state.";
+
+        case GL_INVALID_FRAMEBUFFER_OPERATION:
+            return "The framebuffer object is not complete.";
+
+        case GL_OUT_OF_MEMORY:
+            return "There is not enough memory left to execute the command. WARNING: GL operation is undefined.";
+
+        case GL_STACK_UNDERFLOW:
+            return "An attempt has been made to perform an operation that would cause an internal stack to underflow.";
+
+        case GL_STACK_OVERFLOW:
+            return "An attempt has been made to perform an operation that would cause an internal stack to overflow.";
+
+        default:
+            assert(0, format("Unhandled GLenum error state: '%s'", error));
+    }
+}
+
 void CheckGLErrors()
 {
     for (GLenum err = glGetError(); err; err = glGetError())
     {
         if (err)
         {
+            stderr.writefln("Error: - %s", err.toString());
             stderr.writefln("GLError(%s:%d) 0x%04X\n", __FILE__, __LINE__, err);
             assert(0);
         }

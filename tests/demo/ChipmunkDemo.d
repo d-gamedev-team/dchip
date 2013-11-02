@@ -80,7 +80,7 @@ void ChipmunkDemoFreeSpaceChildren(cpSpace* space);
 
 ChipmunkDemo* demos;
 int demo_count = 0;
-int demo_index = 'a' - 'a';
+int demo_index = 0;
 
 cpBool paused = cpFalse;
 cpBool step   = cpFalse;
@@ -89,7 +89,7 @@ cpSpace* space;
 
 double Accumulator = 0.0;
 double LastTime    = 0.0;
-int ChipmunkDemoTicks     = 0;
+int ChipmunkDemoTicks = 0;
 double ChipmunkDemoTime;
 
 cpVect ChipmunkDemoMouse;
@@ -370,7 +370,7 @@ extern(C) void Keyboard(GLFWwindow* window, int key, int scancode, int state, in
     if (state == GLFW_RELEASE)
         return;
 
-    int index = key - 'a';
+    int index = key - GLFW_KEY_A;
 
     if (0 <= index && index < demo_count)
     {
@@ -619,7 +619,7 @@ int main(string[] args)
     {
         mouse_body = cpBodyNew(INFINITY, INFINITY);
 
-            // initialize glwf
+        // initialize glwf
         auto res = glfwInit();
         enforce(res, format("glfwInit call failed with return code: '%s'", res));
         scope(exit)
@@ -642,6 +642,7 @@ int main(string[] args)
 
         SetupGL();
 
+        // glfw3 doesn't want to automatically do this the first time the window is shown
         Reshape(window, 640, 480);
 
         glfwSetWindowSizeCallback(window, &Reshape);

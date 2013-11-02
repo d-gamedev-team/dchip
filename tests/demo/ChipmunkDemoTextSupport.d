@@ -32,12 +32,6 @@ import demo.types;
 void ChipmunkDemoTextInit();
 
 //#define ChipmunkDemoTextDrawString(...)
-void ChipmunkDemoTextDrawString(cpVect pos, string);
-void ChipmunkDemoTextFlushRenderer();
-void ChipmunkDemoTextClearRenderer();
-
-void ChipmunkDemoTextPushRenderer();
-void ChipmunkDemoTextPopRenderer();
 
 //#define Scale 3.0f
 enum Scale = 0.70f;
@@ -229,7 +223,7 @@ GLfloat PushChar(int character, GLfloat x, GLfloat y, Color color)
     return sdf_spacing[i * 8 + 7] * s;
 }
 
-void ChipmunkDemoTextDrawString(cpVect pos, string str)
+void ChipmunkDemoTextDrawString(cpVect pos, in char[] str)
 {
     Color c   = LAColor(1.0f, 1.0f);
     GLfloat x = cast(GLfloat)pos.x, y = cast(GLfloat)pos.y;

@@ -48,14 +48,14 @@ performance demands that you directly manipulate internal fields.
 - `CHIP_ENABLE_WARNINGS`
 
 Enable internal library warnings. When the internal state is in an unexpected state
-turning this switch on will print out warnings to stderr.
+turning this switch on will print out warnings to the standard error stream (`stderr`).
 
 - `CHIP_USE_DOUBLES`
 
 By default all floating-point types are declared as `float`. Enabling this switch will use
 `double` types instead.
 
-**Note:** Regardless of this switch the D compiler will still use `real`'s for floating-point calculations,
+**Note:** Regardless of this switch, the D compiler will still use `real`'s for floating-point calculations,
 meaning that enabling this switch will likely **not** give you a big improvement in accuracy. On the
 other hand, using `double`'s will use twice as much memory and could lead to a performance
 degradation.

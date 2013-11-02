@@ -1,3 +1,5 @@
+module hello_world;
+
 import dchip;
 
 import std.stdio;

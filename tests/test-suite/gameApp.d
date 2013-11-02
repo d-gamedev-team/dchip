@@ -142,8 +142,6 @@ private:
             }
         }
 
-        cpInitChipmunk();
-
         if(trial)
         {
             foreach(i, demo; demos)

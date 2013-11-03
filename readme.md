@@ -71,6 +71,38 @@ degradation.
 
 **Warning:** Don't enable this switch if using DMD, the performance degradation is unreal.
 
+## Usage
+
+Most dchip types have getter and setter functions to access and modify internal fields,
+for example the `cpArbiter`'s internal fields such as the `e` field for elasticity
+can be accessed and manipulated with this code:
+
+```
+cpArbiter * arb
+cpFloat elasticity = cpArbiterGetElasticity(arb);  // get the internal 'e' field
+elasticity += 1.0;
+cpArbiterSetElasticity(arb, elasticity);  // set the internal 'e' field
+```
+
+The getters and setters are auto-generated via a mixin template, such as:
+
+```
+// Inject both 'cpArbiterGetElasticity' and 'cpArbiterSetElasticity' which take or return a `cpFloat` type.
+mixin CP_DefineArbiterStructProperty!(cpFloat, "e", "Elasticity");
+```
+
+Some dchip types only define getters and not setters, via:
+
+```
+// Inject 'cpBodyGetRot', which returns the internal 'rot' field of type 'cpVect'.
+mixin CP_DefineBodyStructGetter!(cpVect, "rot", "Rot");
+```
+
+As mentioned in the `Building` section above, passing the `CHIP_ALLOW_PRIVATE_ACCESS` version flag
+allows you to access all fields directly rather than through getter and setter functions. However,
+using the internal fields directly is not future-proof as these internal fields are not part of the
+public API and may change at any future version release.
+
 ## Running the tests
 
 The tests require the `glfw3.dll` library. See the [glfw] homepage on how to obtain it.

@@ -32,11 +32,12 @@ rem set CHIP_ENABLE_UNITTESTS=-version=CHIP_ENABLE_UNITTESTS
 set CHIP_ALLOW_PRIVATE_ACCESS=-version=CHIP_ALLOW_PRIVATE_ACCESS
 rem set CHIP_ENABLE_WARNINGS=-version=CHIP_ENABLE_WARNINGS
 rem set CHIP_USE_DOUBLES=-version=CHIP_USE_DOUBLES
+set USE_DEIMOS_GLFW=-version=USE_DEIMOS_GLFW
 
 set includes=-I..\src -Ilib
 set implibs=lib\glfw3_implib.lib
 
-set version_flags=%USE_DCHIP% %CHIP_ENABLE_UNITTESTS% %CHIP_ALLOW_PRIVATE_ACCESS% %CHIP_ENABLE_WARNINGS% %CHIP_USE_DOUBLES%
+set version_flags=%USE_DEIMOS_GLFW% %USE_DCHIP% %CHIP_ENABLE_UNITTESTS% %CHIP_ALLOW_PRIVATE_ACCESS% %CHIP_ENABLE_WARNINGS% %CHIP_USE_DOUBLES%
 
 rem Note: 2.063.2 can't use -O (gets stuck),
 rem and can't use -inline (errors about nested functions)

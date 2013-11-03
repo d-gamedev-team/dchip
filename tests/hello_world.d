@@ -1,6 +1,6 @@
 module hello_world;
 
-import dchip;
+import dchip.all;
 
 import std.stdio;
 

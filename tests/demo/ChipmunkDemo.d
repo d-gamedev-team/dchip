@@ -35,7 +35,19 @@ alias stderr = std.stdio.stderr;
 import glad.gl.all;
 import glad.gl.loader;
 
-import deimos.glfw.glfw3;
+version (USE_DEIMOS_GLFW)
+{
+    import deimos.glfw.glfw3;
+}
+else
+{
+    import derelict.glfw3.glfw3;
+
+    shared static this()
+    {
+        DerelictGLFW3.load();
+    }
+}
 
 import demo.dchip;
 

@@ -13,4 +13,72 @@
     "sourcePaths": [
         "src"
     ],
+
+    "configurations": [
+        {
+            "name": "demo",
+            "targetType": "executable",
+            "targetName": "new_demo",
+            "sourcePaths": [
+                "tests/demo",
+                "tests/lib"
+            ],
+            "importPaths": [
+                "tests/lib"
+            ],
+            "versions": [
+                "CHIP_ALLOW_PRIVATE_ACCESS"
+            ],
+            "targetPath" : "tests/bin"
+        },
+
+        {
+            "name": "old_demo",
+            "targetType": "executable",
+            "targetName": "old_demo",
+            "sourcePaths": [
+                "tests/old_demo",
+            ],
+            "importPaths": [
+                "tests/lib"
+            ],
+            "versions": [
+                "CHIP_ALLOW_PRIVATE_ACCESS"
+            ],
+            "targetPath" : "tests/bin"
+        },
+
+        {
+            "name": "hello_world",
+            "targetType": "executable",
+            "targetName": "hello_world",
+            "sourceFiles": [
+                "tests/hello_world.d",
+            ],
+            "importPaths": [
+                "tests/lib"
+            ],
+            "versions": [
+                "CHIP_ALLOW_PRIVATE_ACCESS"
+            ],
+            "targetPath" : "tests/bin"
+        },
+
+        {
+            "name": "simple",
+            "targetType": "executable",
+            "targetName": "simple",
+            "sourceFiles": [
+                "tests/simple.d",
+            ],
+            "importPaths": [
+                "tests/lib"
+            ],
+            "versions": [
+                "CHIP_ALLOW_PRIVATE_ACCESS"
+            ],
+            "targetPath" : "tests/bin"
+        },
+
+    ]
 }

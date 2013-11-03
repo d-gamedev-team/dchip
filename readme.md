@@ -20,9 +20,9 @@ and is being maintained here: https://bitbucket.org/Extrawurst/chipmunkd/wiki/Ho
 
 **Note:** The two ports are **not** compatible with each other.
 
-The older SDL-based samples were created by [Stephan Dilly], and updated to the new API by [Andrej Mitrovic].
+The older [SDL]-based samples were created by [Stephan Dilly], and updated to the new API by [Andrej Mitrovic].
 
-The newer samples use GLFW and were written by [Scott Lembcke] and [Howling Moon Software],
+The newer samples use [GLFW] and were written by [Scott Lembcke] and [Howling Moon Software],
 and ported to D by [Andrej Mitrovic].
 
 [Scott Lembcke]: http://slembcke.net
@@ -30,13 +30,20 @@ and ported to D by [Andrej Mitrovic].
 [Stephan Dilly]: http://www.extrawurst.org
 [Andrej Mitrovic]: https://github.com/AndrejMitrovic
 
+[SDL]: http://www.libsdl.org
+[GLFW]: http://www.glfw.org
+
 ## Building
+
+### Using dub
 
 You can use [dub] to make this library a dependency for your project.
 
-Alternatively if you're on Windows you may use the various `build.bat` scripts.
-
 [dub]: http://code.dlang.org/about
+
+### Using Windows-specific build scripts
+
+You may use the `build.bat` script in the `dchip\build\` folder.
 
 ### Version switches
 
@@ -65,6 +72,62 @@ other hand, using `double`'s will use twice as much memory and could lead to a p
 degradation.
 
 **Warning:** Don't enable this switch if using DMD, the performance degradation is unreal.
+
+## Running the tests
+
+Most tests require the [GLFW] library. See the [GLFW] homepage on how to obtain this library.
+
+### Using dub
+
+Compile and run one of the examples via:
+
+```
+# Just a simple hello world
+dub --config=hello_world
+
+# Showcases a simple iteration of the physics engine without any drawing
+dub --config=simple
+
+# Contains a series of visual and interactive demos, selectable with the keyboard
+# Select each demo by pressing the key such as 'a' or upward (e.g. 'a', 'b', 'c', etc..)
+dub --config=demo
+
+# Similar to above, but demos were based on the older v5.3.5 version and they also
+# use the [SDL] library (which means you'll have to install [SDL] to run it)
+dub --config=old_demo
+```
+
+**Note**: The `old_demo` examples are based on the v5.3.5 version and require [SDL] rather than [GLFW].
+
+**Note**: If you're using Windows you might get dub errors when automatically running the samples.
+The samples should still be built and located in the `dchip\tests\bin` subfolder, so you can
+run them manually.
+
+**Note**: Building with LDC2 on Windows will likely produce crashing applications. Unfortunately
+the LDC2 compiler is still very unstable on Windows.
+
+### Using Windows-specific build scripts
+
+There are `build.bat` scripts you can use to build the samples:
+
+```
+$ cd path\to\dchip\tests
+
+# Showcases a simple iteration of the physics engine without any drawing
+$ build\build.bat simple.d simple.d
+
+# Contains a series of visual and interactive demos, selectable with the keyboard
+# Select each demo by pressing the key such as 'a' or upward (e.g. 'a', 'b', 'c', etc..)
+$ build\build.bat demo_run demo_run.d
+
+# Similar to above, but demos were based on the older v5.3. 5version and they also
+# use the [SDL] library (which means you'll have to get [SDL] to run it)
+$ cd old_demo
+$ build.bat
+```
+
+[SDL]: http://www.libsdl.org
+[GLFW]: http://www.glfw.org
 
 ## Documentation
 
@@ -103,30 +166,6 @@ As mentioned in the `Building` section above, passing the `CHIP_ALLOW_PRIVATE_AC
 allows you to access all fields directly rather than through getter and setter functions. However,
 using the internal fields directly is not future-proof as these internal fields are not part of the
 public API and may change at any future version release.
-
-## Running the tests
-
-The tests require the `glfw3.dll` library. See the [glfw] homepage on how to obtain it.
-
-Examples of building the samples:
-
-```
-$ cd path\to\dchip\tests
-
-# Showcases a simple iteration of the physics engine without any drawing
-$ build\build.bat simple.d simple.d
-
-# Contains a serious of visual and interactive demos, selectable with the keyboard
-# Select each demo by pressing the key such as 'a' or upward (e.g. 'a', 'b', 'c', etc..)
-$ build\build.bat demo_run demo_run.d
-
-# Similar to above, but demos were based on the older v5.3.5. release and they also
-# use the SDL library (which means you'll have to get `SDL.dll` to run it)
-$ cd old_demo
-$ build.bat
-```
-
-[glfw]: http://www.glfw.org/
 
 ## Links
 

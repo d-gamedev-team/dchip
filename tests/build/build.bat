@@ -19,7 +19,6 @@ goto :eof
 
 rem Version options
 rem ---------------
-rem
 rem CHIP_ENABLE_UNITTESTS
 rem     - Enable unittest blocks.
 rem       By default unittest blocks are not compiled-in,
@@ -43,8 +42,9 @@ rem set CHIP_USE_DOUBLES=-version=CHIP_USE_DOUBLES
 
 set includes=-I..\src -Ilib
 set implibs=lib\glfw3_implib.lib
-set version_flags=%CHIP_ENABLE_UNITTESTS% %CHIP_ALLOW_PRIVATE_ACCESS% %CHIP_ENABLE_WARNINGS% %CHIP_USE_DOUBLES%
-rem set optimizations=-release -inline -O -noboundscheck
+
+set version_flags=%USE_DCHIP% %CHIP_ENABLE_UNITTESTS% %CHIP_ALLOW_PRIVATE_ACCESS% %CHIP_ENABLE_WARNINGS% %CHIP_USE_DOUBLES%
+set optimizations=-release -inline -O -noboundscheck
 set flags=%includes% %implibs% %version_flags% %optimizations% -g -w
 
 rem set PATH=C:\ldc\bin;%PATH%

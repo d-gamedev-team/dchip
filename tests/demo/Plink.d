@@ -23,7 +23,7 @@ module demo.Plink;
 
 import core.stdc.stdlib;
 
-import dchip.all;
+import demo.dchip;
 
 import demo.ChipmunkDebugDraw;
 import demo.ChipmunkDemo;

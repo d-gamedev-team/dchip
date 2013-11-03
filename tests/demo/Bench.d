@@ -21,8 +21,7 @@
  */
 module demo.Bench;
 
-import dchip.all;
-
+import demo.dchip;
 import demo.ChipmunkDemo;
 
 alias BENCH_SPACE_NEW = cpSpaceNew;

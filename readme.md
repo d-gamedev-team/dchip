@@ -15,10 +15,15 @@ This D2 port has been created by [Andrej Mitrovic].
 The older v5.3.5 port was created by [Stephan Dilly],
 and is being maintained here: https://bitbucket.org/Extrawurst/chipmunkd/wiki/Home
 
-**Note:** The two ports are **not** backward-compatible with each other.
+**Note:** The two ports are **not** compatible with each other.
 
-Samples were created by [Stephan Dilly], and updated to the new API by [Andrej Mitrovic].
+The older SDL-based samples were created by [Stephan Dilly], and updated to the new API by [Andrej Mitrovic].
 
+The newer samples use GLFW and were written by [Scott Lembcke] and [Howling Moon Software],
+and ported to D by [Andrej Mitrovic].
+
+[Scott Lembcke]: http://slembcke.net
+[Howling Moon Software]: http://howlingmoonsoftware.com
 [Stephan Dilly]: http://www.extrawurst.org
 [Andrej Mitrovic]: https://github.com/AndrejMitrovic
 
@@ -59,6 +64,8 @@ By default all floating-point types are declared as `float`. Enabling this switc
 meaning that enabling this switch will likely **not** give you a big improvement in accuracy. On the
 other hand, using `double`'s will use twice as much memory and could lead to a performance
 degradation.
+
+**Warning:** Don't enable this switch if using DMD, the performance degradation is unreal.
 
 ## Links
 

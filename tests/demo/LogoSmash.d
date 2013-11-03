@@ -21,7 +21,7 @@
  */
 module demo.LogoSmash;
 
-import dchip.all;
+import demo.dchip;
 
 import demo.ChipmunkDebugDraw;
 import demo.ChipmunkDemo;

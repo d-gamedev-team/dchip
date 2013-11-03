@@ -35,7 +35,7 @@ import glad.gl.loader;
 
 import deimos.glfw.glfw3;
 
-import dchip.all;
+import demo.dchip;
 
 import demo.Bench;
 import demo.ChipmunkDebugDraw;

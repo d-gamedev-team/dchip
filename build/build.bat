@@ -45,8 +45,8 @@ set version_flags=%CHIP_ENABLE_UNITTESTS% %CHIP_ALLOW_PRIVATE_ACCESS% %CHIP_ENAB
 set flags=%includes% %version_flags% -g -w
 
 rem set compiler=dmd.exe
-rem set compiler=dmd_msc.exe
-set compiler=ldmd2.exe
+set compiler=dmd_msc.exe
+rem set compiler=ldmd2.exe
 
 set main_file=dchip\package.d
 rem set main_file=dchip\all.d

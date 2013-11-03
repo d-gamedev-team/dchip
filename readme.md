@@ -2,12 +2,11 @@
 
 ![DChip](https://raw.github.com/AndrejMitrovic/dchip/master/screenshots/dchip.png)
 
-This is a D2 port of the [Chipmunk2D](http://chipmunk2d.net/) library.
+This is a D2 port of the [Chipmunk2D](http://chipmunk2d.net/) game physics library.
 Currently it targets version **6.2.1**.
 
 Currently dchip has only been tested on Windows,
-but has no platform-dependent code other than a
-few build scripts for the samples.
+but has no platform-dependent code.
 
 Homepage: https://github.com/AndrejMitrovic/dchip
 
@@ -151,7 +150,7 @@ cpArbiterSetElasticity(arb, elasticity);  // set the internal 'e' field
 The getters and setters are auto-generated via a mixin template, such as:
 
 ```
-// Inject both 'cpArbiterGetElasticity' and 'cpArbiterSetElasticity' which take or return a `cpFloat` type.
+// Inject 'cpArbiterGetElasticity' and 'cpArbiterSetElasticity' which operate on a `cpFloat` type.
 mixin CP_DefineArbiterStructProperty!(cpFloat, "e", "Elasticity");
 ```
 

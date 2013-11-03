@@ -44,6 +44,8 @@ import demo.types;
 import demo.LogoSmash;
 import demo.PyramidStack;
 import demo.Plink;
+import demo.Tumble;
+import demo.PyramidTopple;
 
 alias ChipmunkDemoInitFunc = cpSpace* function();
 alias ChipmunkDemoUpdateFunc = void function(cpSpace* space, double dt);
@@ -83,7 +85,7 @@ void ChipmunkDemoFreeSpaceChildren(cpSpace* space);
 
 ChipmunkDemo* demos;
 int demo_count = 0;
-int demo_index = 0;
+int demo_index = 5;
 
 cpBool paused = cpFalse;
 cpBool step   = cpFalse;
@@ -566,9 +568,9 @@ int main(string[] args)
         LogoSmash,
         PyramidStack,
         Plink,
-        //~ BouncyHexagons,
-        //~ Tumble,
-        //~ PyramidTopple,
+        BouncyHexagons,
+        Tumble,
+        PyramidTopple,
         //~ Planet,
         //~ Springies,
         //~ Pump,

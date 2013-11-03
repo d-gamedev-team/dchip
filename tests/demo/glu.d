@@ -198,40 +198,108 @@ const GLU_TESS_WINDING_POSITIVE = 100132;
 const GLU_TESS_WINDING_NEGATIVE = 100133;
 const GLU_TESS_WINDING_ABS_GEQ_TWO = 100134;
 
-import core.sys.windows.windows;
-import std.exception;
-import std.string;
-
-extern (C)
+version (Posix)
 {
-    alias int GLUnurbs;
-    alias int GLUquadric;
-    alias int GLUtesselator;
-    alias GLUtesselator GLUtriangulatorObj;
-    const GLU_TESS_MAX_COORD = 1.0e150;
-    alias void function() _GLUfuncptr;
+    import std.exception;
+    import std.string;
+
+    extern(C)
+    {
+        void* dlopen(const(char)*, int);
+        char* dlerror();
+        void* dlsym(void*,const(char)*);
+        int   dlclose(void*);
+    }
+
+    enum RTLD
+    {
+        LAZY     = 0x00001,  // Lazy function call binding
+        NOW      = 0x00002,  // Immediate function call binding
+        NOLOAD   = 0x00004,  // No object load
+        DEEPBIND = 0x00008,
+        GLOBAL   = 0x00100   // Make object available to whole program
+    }
+
+    void* LoadLibraryA(string libName, RTLD flag = RTLD.NOW)
+    {
+        void* handle = dlopen(libName.toStringz, flag);
+        dlerror();
+        return handle;
+    }
+
+    void* GetProcAddress(void* libHandle, const(char)* symbol)
+    {
+        void* symbolHandle = dlsym(libHandle, symbol);
+        dlerror();
+        return symbolHandle;
+    }
+
+    int FreeLibrary(void* libHandle)
+    {
+        return dlclose(libHandle);
+    }
+
+    void loadSymbol(alias field)(void* handle)
+    {
+        enum string symbolName = __traits(identifier, field);
+        field = cast(typeof(field))enforce(GetProcAddress(handle, symbolName.toStringz),
+                                           format("Failed to load function pointer: '%s'.", symbolName));
+    }
+
+    void* hGlu;
+
+    shared static this()
+    {
+        enum gluDLL = "glu.so";
+        hGlu = enforce(LoadLibraryA(gluDLL), format("'%s' not found in PATH.", gluDLL));
+
+        foreach (string member; __traits(allMembers, GluProcs))
+            hGlu.loadSymbol!(__traits(getMember, GluProcs, member));
+    }
+
+    shared static ~this()
+    {
+        FreeLibrary(hGlu);
+    }
 }
-
-void loadSymbol(alias field)(HANDLE handle)
+else
+version (Windows)
 {
-    enum string symbolName = __traits(identifier, field);
-    field = cast(typeof(field))enforce(GetProcAddress(handle, symbolName.toStringz),
-                                       format("Failed to load function pointer: '%s'.", symbolName));
-}
+    import core.sys.windows.windows;
+    import std.exception;
+    import std.string;
 
-/**
-    Workaround for odd glu32.dll issue. It seems to use the WINAPI calling convention
-    and yet it's not encoded with "symbol@123", but instead uses cdecl-style "symbol"
-    names for the functions. Implib doesn't want to work on the DLL, and using coffimplib
-    fails with either glu32.lib import lib or the glu32.def file.
-*/
-shared static this()
-{
-    enum gluDLL = "glu32.dll";
-    HMODULE hGlu = enforce(LoadLibraryA(gluDLL), format("'%s' not found in PATH.", gluDLL));
+    extern (C)
+    {
+        alias int GLUnurbs;
+        alias int GLUquadric;
+        alias int GLUtesselator;
+        alias GLUtesselator GLUtriangulatorObj;
+        const GLU_TESS_MAX_COORD = 1.0e150;
+        alias void function() _GLUfuncptr;
+    }
 
-    foreach (string member; __traits(allMembers, GluProcs))
-        hGlu.loadSymbol!(__traits(getMember, GluProcs, member));
+    void loadSymbol(alias field)(HANDLE handle)
+    {
+        enum string symbolName = __traits(identifier, field);
+        field = cast(typeof(field))enforce(GetProcAddress(handle, symbolName.toStringz),
+                                           format("Failed to load function pointer: '%s'.", symbolName));
+    }
+
+    /**
+        Workaround for odd glu32.dll issue. It seems to use the WINAPI calling convention
+        and yet it's not encoded with "symbol@123", but instead uses cdecl-style "symbol"
+        names for the functions. Implib doesn't want to work on the DLL, and using coffimplib
+        fails with either glu32.lib import lib or the glu32.def file.
+    */
+    shared static this()
+    {
+        enum gluDLL = "glu32.dll";
+        HMODULE hGlu = enforce(LoadLibraryA(gluDLL), format("'%s' not found in PATH.", gluDLL));
+
+        foreach (string member; __traits(allMembers, GluProcs))
+            hGlu.loadSymbol!(__traits(getMember, GluProcs, member));
+    }
 }
 
 struct GluProcs

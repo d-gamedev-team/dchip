@@ -1,5 +1,7 @@
 # dchip
 
+![DChip](https://raw.github.com/AndrejMitrovic/dchip/master/screenshots/dchip.png)
+
 This is a D2 port of the [Chipmunk2D](http://chipmunk2d.net/) library.
 Currently it targets version **6.2.1**.
 

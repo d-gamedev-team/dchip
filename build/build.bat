@@ -35,12 +35,12 @@ set includes=-I%cd%
 set version_flags=%CHIP_ALLOW_PRIVATE_ACCESS% %CHIP_ENABLE_WARNINGS% %CHIP_USE_DOUBLES%
 set flags=%includes% %version_flags% -g -w
 
-rem set compiler=dmd.exe
-set compiler=dmd_msc.exe
+set compiler=dmd.exe
+rem set compiler=dmd_msc.exe
 rem set compiler=ldmd2.exe
 
-set main_file=dchip\package.d
-rem set main_file=dchip\all.d
+set main_file=dchip\all.d
+rem set main_file=dchip\package.d
 
 set "build_tests=rdmd --force --build-only -of%bin_path%\dchip_test.exe --main -unittest --compiler=%compiler% %flags% %main_file%"
 

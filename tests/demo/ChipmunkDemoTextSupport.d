@@ -239,6 +239,11 @@ void ChipmunkDemoTextDrawString(cpVect pos, in char[] str)
             //			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, 'A' + demoCount - 1);
         }
         else
+        if (str[i] == '\0')
+        {
+            break;
+        }
+        else
         {
             x += cast(GLfloat)PushChar(str[i], x, y, c);
         }

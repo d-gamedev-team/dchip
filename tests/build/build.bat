@@ -44,7 +44,8 @@ rem set CHIP_USE_DOUBLES=-version=CHIP_USE_DOUBLES
 set includes=-I..\src -Ilib
 set implibs=lib\glfw3_implib.lib
 set version_flags=%CHIP_ENABLE_UNITTESTS% %CHIP_ALLOW_PRIVATE_ACCESS% %CHIP_ENABLE_WARNINGS% %CHIP_USE_DOUBLES%
-set flags=%includes% %implibs% %version_flags% -g -w
+rem set optimizations=-release -inline -O -noboundscheck
+set flags=%includes% %implibs% %version_flags% %optimizations% -g -w
 
 rem set compiler=dmd.exe
 set compiler=dmd_msc.exe

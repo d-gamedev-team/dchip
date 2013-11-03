@@ -21,6 +21,7 @@
  */
 module demo.ChipmunkDemo;
 
+import core.stdc.stdio;
 import core.stdc.stdlib;
 
 import std.exception;
@@ -41,6 +42,8 @@ import demo.glu;
 import demo.types;
 
 import demo.LogoSmash;
+import demo.PyramidStack;
+import demo.Plink;
 
 alias ChipmunkDemoInitFunc = cpSpace* function();
 alias ChipmunkDemoUpdateFunc = void function(cpSpace* space, double dt);
@@ -189,7 +192,7 @@ void DrawInfo()
         "Contact Points: %d (%d)\n"
         "Other Constraints: %d, Iterations: %d\n"
         "Constraints x Iterations: %d (%d)\n"
-        "Time:% 5.2fs, KE:% 5.2e";
+        "Time:% 5.2fs, KE:% 5.2e\0";
 
     cpArray* bodies = space.bodies;
     cpFloat  ke     = 0.0f;
@@ -204,7 +207,7 @@ void DrawInfo()
         ke += body_.m * cpvdot(body_.v, body_.v) + body_.i * body_.w * body_.w;
     }
 
-    sformat(buffer, format,
+    sprintf(buffer.ptr, format.ptr,
             arbiters, max_arbiters,
             points, max_points,
             space.constraints.num, space.iterations,
@@ -561,8 +564,8 @@ int main(string[] args)
 
     ChipmunkDemo[] demo_list = [
         LogoSmash,
-        //~ PyramidStack,
-        //~ Plink,
+        PyramidStack,
+        Plink,
         //~ BouncyHexagons,
         //~ Tumble,
         //~ PyramidTopple,
@@ -632,7 +635,7 @@ int main(string[] args)
         window = enforce(glfwCreateWindow(width, height, "Hello World", null, null),
                               "glfwCreateWindow call failed.");
 
-        glfwSwapInterval(1);
+        glfwSwapInterval(0);
 
         // Make the window's context current
         glfwMakeContextCurrent(window);
@@ -656,11 +659,11 @@ int main(string[] args)
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
-            /* Render here */
-            Display();
-
             /* Poll for and process events */
             glfwPollEvents();
+
+            /* Render here */
+            Display();
         }
     }
 

@@ -232,7 +232,7 @@ auto MAX(T)(T a, T b)
 }
 
 size_t triangle_capacity = 0;
-size_t triangle_count     = 0;
+size_t triangle_count    = 0;
 Triangle* triangle_buffer = null;
 
 Triangle* PushTriangles(size_t count)
@@ -312,8 +312,6 @@ void ChipmunkDebugDrawFatSegment(cpVect a, cpVect b, cpFloat radius, Color outli
     triangles[5] = t5;
 }
 
-extern cpVect ChipmunkDemoMouse;
-
 void ChipmunkDebugDrawPolygon(int count, cpVect* verts, cpFloat radius, Color outlineColor, Color fillColor)
 {
     struct ExtrudeVerts
@@ -347,7 +345,7 @@ void ChipmunkDebugDrawPolygon(int count, cpVect* verts, cpFloat radius, Color ou
 
     for (int i = 0; i < count - 2; i++)
     {
-        v2f v0 = v2f(cpvsub(verts[  0], cpvmult(extrude[  0].offset, inset)));
+        v2f v0 = v2f(cpvsub(verts[0], cpvmult(extrude[0].offset, inset)));
         v2f v1 = v2f(cpvsub(verts[i + 1], cpvmult(extrude[i + 1].offset, inset)));
         v2f v2 = v2f(cpvsub(verts[i + 2], cpvmult(extrude[i + 2].offset, inset)));
 
@@ -417,7 +415,6 @@ void ChipmunkDebugDrawBB(cpBB bb, Color color)
     verts[1] = cpv(bb.l, bb.t);
     verts[2] = cpv(bb.r, bb.t);
     verts[3] = cpv(bb.r, bb.b);
-
     ChipmunkDebugDrawPolygon(4, verts.ptr, 0.0f, color, LAColor(0, 0));
 }
 

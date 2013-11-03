@@ -3,8 +3,9 @@
 This is a D2 port of the [Chipmunk2D](http://chipmunk2d.net/) library.
 Currently it targets version 6.2.1.
 
-**Note:** Currently dchip is in a pre-alpha state.
-Once it's tested on multiple platforms a `dub` package will be added.
+Currently dchip has only been tested on Windows,
+but has no platform-dependent code other than a
+few build scripts for the samples.
 
 Homepage: https://github.com/AndrejMitrovic/dchip
 
@@ -29,12 +30,13 @@ and ported to D by [Andrej Mitrovic].
 
 ## Building
 
-Currently only the `build.bat` files are provided. A dub package will be added later
-which will allow building in a cross-platform way.
+You can use [dub] to make this library a dependency for your project.
+
+Alternatively if you're on Windows you may use the various `build.bat` scripts.
 
 ### Version switches
 
-The following `-version=VERSION` switches are supported:
+The following `-version=NAME` switches are supported:
 
 - `CHIP_ENABLE_UNITTESTS`
 

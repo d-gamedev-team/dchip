@@ -1,0 +1,16 @@
+{
+    "description": "dchip",
+    "targetName": "dchip",
+    "authors": [
+        "Andrej Mitrovic"
+    ],
+    "license": "MIT",
+    "version": "~master",
+    "homepage": "https://github.com/AndrejMitrovic/dchip",
+    "name": "dchip",
+    "copyright": "Copyright © 2013, Andrej Mitrovic",
+    "targetType": "staticLibrary",
+    "sourcePaths": [
+        "src"
+    ],
+}

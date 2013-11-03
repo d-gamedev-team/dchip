@@ -136,6 +136,10 @@ Since `dchip` is a straight port of the C library to D, all existing C-based doc
 
 ## Usage
 
+You can import the `dchip.all` module to bring in the entire library at your disposal.
+Alternatively if you're using the latest compiler (e.g. 2.064+ or git-head) you may
+use the new package module feature and import `dchip`.
+
 Most dchip types have getter and setter functions to access and modify internal fields,
 for example the `cpArbiter`'s internal fields such as the `e` field for elasticity
 can be accessed and manipulated with this code:

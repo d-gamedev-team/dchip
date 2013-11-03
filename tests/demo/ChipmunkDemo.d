@@ -21,6 +21,8 @@
  */
 module demo.ChipmunkDemo;
 
+import core.memory;
+
 import core.stdc.stdio;
 import core.stdc.stdlib;
 
@@ -33,7 +35,7 @@ import glad.gl.loader;
 
 import deimos.glfw.glfw3;
 
-import dchip;
+import dchip.all;
 
 import demo.Bench;
 import demo.ChipmunkDebugDraw;
@@ -516,7 +518,6 @@ extern(C) void Click(GLFWwindow* window, int button, int state, int mods)
     }
 }
 
-
 extern(C) void WindowClose(GLFWwindow* window)
 {
     glfwTerminate();
@@ -560,6 +561,10 @@ void TimeTrial(int index, int count)
 
 int main(string[] args)
 {
+    //~ GC.disable();
+    //~ scope (exit)
+        //~ GC.enable();
+
     // Segment/segment collisions need to be explicitly enabled currently.
     // This will becoume enabled by default in future versions of Chipmunk.
     cpEnableSegmentToSegmentCollisions();

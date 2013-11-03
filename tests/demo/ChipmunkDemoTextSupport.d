@@ -23,7 +23,7 @@ module demo.ChipmunkDemoTextSupport;
 
 import glad.gl.all;
 
-import dchip;
+import dchip.all;
 
 import demo.ChipmunkDemoShaderSupport;
 import demo.VeraMoBd_ttf_sdf;

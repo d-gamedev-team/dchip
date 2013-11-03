@@ -21,7 +21,7 @@
  */
 module demo.Bench;
 
-import dchip;
+import dchip.all;
 
 import demo.ChipmunkDemo;
 

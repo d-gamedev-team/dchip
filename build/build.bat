@@ -3,8 +3,8 @@ setlocal EnableDelayedExpansion
 
 rem Build options
 rem -------------
-set do_build_tests=1
-set do_run_tests=1
+rem set do_build_tests=1
+rem set do_run_tests=1
 set do_build_lib=1
 
 set this_path=%~dp0
@@ -13,9 +13,6 @@ set build_path=%this_path%
 set bin_path=%dchip_root%\bin
 set lib_path=%dchip_root%\lib
 cd %this_path%\..\src
-
-set "files="
-for /r %%i in (*.d) do set files=!files! %%i
 
 rem Version options
 rem ---------------
@@ -48,8 +45,8 @@ set version_flags=%CHIP_ENABLE_UNITTESTS% %CHIP_ALLOW_PRIVATE_ACCESS% %CHIP_ENAB
 set flags=%includes% %version_flags% -g -w
 
 rem set compiler=dmd.exe
-set compiler=dmd_msc.exe
-rem set compiler=ldmd2.exe
+rem set compiler=dmd_msc.exe
+set compiler=ldmd2.exe
 
 set main_file=dchip\package.d
 rem set main_file=dchip\all.d
@@ -87,6 +84,11 @@ type NUL > %stdout_log%
 :BUILD
 
 if [%do_build_lib%]==[] goto :eof
+
+set "files="
+for /r %%i in (*.d) do (
+    if [%%i] neq [C:\dev\projects\dchip\src\dchip\package.d] set files=!files! %%i
+)
 
 %compiler% -of%bin_path%\dchip.lib -lib %flags% %files%
 if errorlevel 1 GOTO :eof

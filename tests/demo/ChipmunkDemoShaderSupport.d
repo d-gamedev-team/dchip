@@ -24,7 +24,7 @@ module demo.ChipmunkDemoShaderSupport;
 import std.stdio;
 import std.string;
 
-import dchip;
+import dchip.all;
 
 import glad.gl.all;
 import glad.gl.loader;

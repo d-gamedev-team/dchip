@@ -19,53 +19,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module demo.types;
+module dchip.all;
 
-import glad.gl.all;
-
-import dchip.all;
-
-/**
-    This module contains all the types which the various drawing modules use.
-    In the C source the types were duplicated across source files,
-    probably to avoid too many #include's.
-*/
-
-struct Color
+public
 {
-    float r, g, b, a;
-}
-
-Color RGBAColor(float r, float g, float b, float a)
-{
-    Color color = { r, g, b, a };
-    return color;
-}
-
-Color LAColor(float l, float a)
-{
-    Color color = { l, l, l, a };
-    return color;
-}
-
-struct v2f
-{
-    static v2f opCall(cpVect v)
-    {
-        v2f v2 = { cast(GLfloat)v.x, cast(GLfloat)v.y };
-        return v2;
-    }
-
-    GLfloat x, y;
-}
-
-struct Vertex
-{
-    v2f vertex, aa_coord;
-    Color fill_color, outline_color;
-}
-
-struct Triangle
-{
-    Vertex a, b, c;
+    import dchip.chipmunk;
+    import dchip.chipmunk_private;
+    import dchip.chipmunk_types;
+    import dchip.constraints_util;
+    import dchip.cpArbiter;
+    import dchip.cpArray;
+    import dchip.cpBB;
+    import dchip.cpBBTree;
+    import dchip.cpBody;
+    import dchip.cpCollision;
+    import dchip.cpConstraint;
+    import dchip.cpDampedRotarySpring;
+    import dchip.cpDampedSpring;
+    import dchip.cpGearJoint;
+    import dchip.cpGrooveJoint;
+    import dchip.cpHashSet;
+    import dchip.cpPinJoint;
+    import dchip.cpPivotJoint;
+    import dchip.cpPolyShape;
+    import dchip.cpRatchetJoint;
+    import dchip.cpRotaryLimitJoint;
+    import dchip.cpShape;
+    import dchip.cpSimpleMotor;
+    import dchip.cpSlideJoint;
+    import dchip.cpSpace;
+    import dchip.cpSpaceComponent;
+    import dchip.cpSpaceHash;
+    import dchip.cpSpaceQuery;
+    import dchip.cpSpaceStep;
+    import dchip.cpSpatialIndex;
+    import dchip.cpSweep1D;
+    import dchip.cpVect;
+    import dchip.prime;
+    import dchip.util;
 }

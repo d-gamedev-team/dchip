@@ -23,7 +23,7 @@ module demo.Tumble;
 
 import core.stdc.stdlib;
 
-import dchip;
+import dchip.all;
 
 import demo.ChipmunkDebugDraw;
 import demo.ChipmunkDemo;

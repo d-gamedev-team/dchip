@@ -21,7 +21,7 @@
  */
 module demo.PyramidStack;
 
-import dchip;
+import dchip.all;
 
 import demo.ChipmunkDebugDraw;
 import demo.ChipmunkDemo;

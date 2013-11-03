@@ -44,18 +44,23 @@ rem set CHIP_USE_DOUBLES=-version=CHIP_USE_DOUBLES
 set includes=-I..\src -Ilib
 set implibs=lib\glfw3_implib.lib
 set version_flags=%CHIP_ENABLE_UNITTESTS% %CHIP_ALLOW_PRIVATE_ACCESS% %CHIP_ENABLE_WARNINGS% %CHIP_USE_DOUBLES%
-set optimizations=-release -inline -O -noboundscheck
+rem set optimizations=-release -inline -O -noboundscheck
 set flags=%includes% %implibs% %version_flags% %optimizations% -g -w
 
-rem set compiler=dmd.exe
-set compiler=dmd_msc.exe
-rem set compiler=ldmd2.exe
+rem set PATH=C:\ldc\bin;%PATH%
+rem set PATH=C:\GDC\bin;C:\dev\projects\GDMD;%PATH%
+
+rem Note: You might have to pass --force to pick this up due to some RDMD bug
+rem set compiler=--compiler=gdmd
+rem set compiler=--compiler=dmd.exe
+set compiler=--compiler=dmd_msc.exe
+rem set compiler=--compiler=ldmd2.exe
 
 set FileName=%1
 set SourceFile=%2
 
 set main_file=%SourceFile%
 
-set "build_app=rdmd -of%bin_path%\%FileName%.exe --compiler=%compiler% %flags% %main_file%"
+set "build_app=rdmd --force -m32 -of%bin_path%\%FileName%.exe %compiler% %flags% %main_file%"
 
 %build_app%

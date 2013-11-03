@@ -38,7 +38,7 @@ import core.stdc.string;
 
 import glad.gl.all;
 
-import dchip;
+import dchip.all;
 
 import demo.ChipmunkDemoShaderSupport;
 import demo.types;

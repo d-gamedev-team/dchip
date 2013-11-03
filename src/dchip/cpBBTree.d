@@ -487,7 +487,7 @@ Node* SubtreeRemove(Node* subtree, Node* leaf, cpBBTree* tree)
 
 //MARK: Marking Functions
 
-typedef struct MarkContext
+struct MarkContext
 {
     cpBBTree* tree;
     Node* staticRoot;

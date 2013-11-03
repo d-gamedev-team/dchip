@@ -37,6 +37,9 @@ set includes=-I..\src -Ilib
 set implibs=lib\glfw3_implib.lib
 
 set version_flags=%USE_DCHIP% %CHIP_ENABLE_UNITTESTS% %CHIP_ALLOW_PRIVATE_ACCESS% %CHIP_ENABLE_WARNINGS% %CHIP_USE_DOUBLES%
+
+rem Note: 2.063.2 can't use -O (gets stuck),
+rem and can't use -inline (errors about nested functions)
 set optimizations=-release -noboundscheck
 set flags=%includes% %implibs% %version_flags% %optimizations% -g -w
 

@@ -59,6 +59,15 @@ import demo.OneWay;
 import demo.Joints;
 import demo.Tank;
 import demo.Chains;
+import demo.Crane;
+import demo.ContactGraph;
+import demo.Buoyancy;
+import demo.Player;
+import demo.Slice;
+import demo.Convex;
+import demo.Unicycle;
+import demo.Sticky;
+import demo.Shatter;
 
 ChipmunkDemo[] demo_list;
 shared static this()
@@ -79,15 +88,15 @@ shared static this()
         Joints,
         Tank,
         Chains,
-        //~ Crane,
-        //~ ContactGraph,
-        //~ Buoyancy,
-        //~ Player,
-        //~ Slice,
-        //~ Convex,
-        //~ Unicycle,
-        //~ Sticky,
-        //~ Shatter,
+        Crane,
+        ContactGraph,
+        Buoyancy,
+        Player,
+        Slice,
+        Convex,
+        Unicycle,
+        Sticky,
+        Shatter,
     ];
 }
 
@@ -265,18 +274,12 @@ void DrawInfo()
 }
 
 char  PrintStringBuffer[1024 * 8] = 0;
-char* PrintStringCursor;
+size_t PrintStringCursor;
 
-void ChipmunkDemoPrintString(Args...)(Args args)
+void ChipmunkDemoPrintString(Args...)(string fmt, Args args)
 {
-    //~ ChipmunkDemoMessageString = PrintStringBuffer;
-
-    //~ va_list args;
-    //~ va_start(args, fmt);
-
-    //~ // TODO should use vsnprintf herep
-    //~ PrintStringCursor += vsprintf(PrintStringCursor, fmt, args);
-    //~ va_end(args);
+    ChipmunkDemoMessageString = PrintStringBuffer;
+    PrintStringCursor += sformat(PrintStringBuffer[PrintStringCursor .. $], fmt, args).length;
 }
 
 void Tick(double dt)
@@ -284,7 +287,7 @@ void Tick(double dt)
     if (!paused || step)
     {
         PrintStringBuffer[0] = 0;
-        PrintStringCursor = PrintStringBuffer.ptr;
+        PrintStringCursor = 0;
 
         // Completely reset the renderer only at the beginning of a tick.
         // That way it can always display at least the last ticks' debug drawing.

@@ -53,12 +53,12 @@ void startup(string _title,int _width,int _height,bool useVsync=true)
     }
 
     /** Enable anti-aliasing by default. */
-    glEnable(GL_LINE_SMOOTH);
-    glEnable(GL_POINT_SMOOTH);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-    glHint(GL_POINT_SMOOTH_HINT, GL_DONT_CARE);
+    //~ glEnable(GL_LINE_SMOOTH);
+    //~ glEnable(GL_POINT_SMOOTH);
+    //~ glEnable(GL_BLEND);
+    //~ glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //~ glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+    //~ glHint(GL_POINT_SMOOTH_HINT, GL_DONT_CARE);
 }
 
 alias void delegate(int,int,bool) MouseButton;

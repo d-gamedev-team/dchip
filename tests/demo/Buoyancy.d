@@ -112,7 +112,7 @@ static cpBool waterPreSolve(cpArbiter* arb, cpSpace* space, void* ptr)
 
 static cpSpace* init()
 {
-    ChipmunkDemoMessageString = messageBuffer;
+    ChipmunkDemoMessageString = messageBuffer[];
 
     cpSpace* space = cpSpaceNew();
     cpSpaceSetIterations(space, 30);

@@ -278,7 +278,7 @@ size_t PrintStringCursor;
 
 void ChipmunkDemoPrintString(Args...)(string fmt, Args args)
 {
-    ChipmunkDemoMessageString = PrintStringBuffer;
+    ChipmunkDemoMessageString = PrintStringBuffer[];
     PrintStringCursor += sformat(PrintStringBuffer[PrintStringCursor .. $], fmt, args).length;
 }
 
@@ -391,7 +391,7 @@ extern(C) void Reshape(GLFWwindow* window, int width, int height)
 char[] DemoTitle(int index)
 {
     static char[1024] title;
-    title = 0;
+    title[] = 0;
     sformat(title, "Demo(%s): %s", cast(char)('a' + index), demos[demo_index].name);
     return title;
 }

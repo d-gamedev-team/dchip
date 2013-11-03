@@ -197,7 +197,7 @@ struct cpVect
 }
 
 /// Chipmunk's 2D matrix type.
-typedef struct cpMat2x2
+struct cpMat2x2
 {
     /// Row major [[a, b][c d]]
     cpFloat a, b, c, d;

@@ -57,26 +57,34 @@ cpConstraint* cpConstraintNext(cpConstraint* node, cpBody* bdy)
     return (node.a == bdy ? node.next_a : node.next_b);
 }
 
-enum CP_BODY_FOREACH_CONSTRAINT(string bdy, string var, string code)
-    = format("for (cpConstraint* %2$s = %1$s.constraintList; %2$s; %2$s = cpConstraintNext(%2$s, %1$s)) { %3$s }",
+template CP_BODY_FOREACH_CONSTRAINT(string bdy, string var, string code)
+{
+    enum CP_BODY_FOREACH_CONSTRAINT = format("for (cpConstraint* %2$s = %1$s.constraintList; %2$s; %2$s = cpConstraintNext(%2$s, %1$s)) { %3$s }",
              bdy, var, code);
+}
 
 cpArbiter* cpArbiterNext(cpArbiter* node, cpBody* bdy)
 {
     return (node.body_a == bdy ? node.thread_a.next : node.thread_b.next);
 }
 
-enum CP_BODY_FOREACH_ARBITER(string bdy, string var, string code)
-    = format("for (cpArbiter* %2$s = %1$s.arbiterList; %2$s; %2$s = cpArbiterNext(%2$s, %1$s)) { %3$s }",
+template CP_BODY_FOREACH_ARBITER(string bdy, string var, string code)
+{
+    enum CP_BODY_FOREACH_ARBITER = format("for (cpArbiter* %2$s = %1$s.arbiterList; %2$s; %2$s = cpArbiterNext(%2$s, %1$s)) { %3$s }",
              bdy, var, code);
+}
 
-enum CP_BODY_FOREACH_SHAPE(string bdy, string var, string code)
-    = format("for (cpShape* %2$s = %1$s.shapeList; %2$s; %2$s = %2$s.next) { %3$s }",
+template CP_BODY_FOREACH_SHAPE(string bdy, string var, string code)
+{
+    enum CP_BODY_FOREACH_SHAPE = format("for (cpShape* %2$s = %1$s.shapeList; %2$s; %2$s = %2$s.next) { %3$s }",
             bdy, var, code);
+}
 
-enum CP_BODY_FOREACH_COMPONENT(string root, string var, string code)
-    = format("for (cpBody* %2$s = %1$s; %2$s; %2$s = %2$s.node.next) { %3$s }",
+template CP_BODY_FOREACH_COMPONENT(string root, string var, string code)
+{
+    enum CP_BODY_FOREACH_COMPONENT = format("for (cpBody* %2$s = %1$s; %2$s; %2$s = %2$s.node.next) { %3$s }",
              root, var, code);
+}
 
 alias cpHashSetEqlFunc = cpBool function(void* ptr, void* elt);
 alias cpHashSetTransFunc = void* function(void* ptr, void* data);

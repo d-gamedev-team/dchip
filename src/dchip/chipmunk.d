@@ -61,7 +61,7 @@ class DChipError : Error
     If the $(D CHIP_ENABLE_WARNINGS) version is set,
     print a warning to stderr if condition is false.
 */
-package void cpAssertWarn(string file = __FILE__, size_t line = __LINE__, E, Args...)
+void cpAssertWarn(string file = __FILE__, size_t line = __LINE__, E, Args...)
                          (lazy E condition, lazy string expr, lazy Args args)
 {
     version (CHIP_ENABLE_WARNINGS)
@@ -112,7 +112,7 @@ unittest
     If the $(D CHIP_ENABLE_WARNINGS) version is set,
     throw a $(D DChipError) if condition is false.
 */
-package void cpAssertSoft(string file = __FILE__, size_t line = __LINE__, E, Args...)
+void cpAssertSoft(string file = __FILE__, size_t line = __LINE__, E, Args...)
                          (lazy E condition, lazy string expr, lazy Args args)
 {
     version (CHIP_ENABLE_WARNINGS)
@@ -147,7 +147,7 @@ unittest
 }
 
 /** Throw a $(D DChipError) if condition is false. */
-package void cpAssertHard(string file = __FILE__, size_t line = __LINE__, E, Args...)
+void cpAssertHard(string file = __FILE__, size_t line = __LINE__, E, Args...)
                          (lazy E condition, lazy string expr, lazy Args args)
 {
     import std.string : format;

@@ -239,7 +239,14 @@ void cpArbiterGetBodies(const cpArbiter* arb, cpBody** a, cpBody** b)
 }
 
 /// A macro shortcut for defining and retrieving the bodies from an arbiter.
-// #define CP_ARBITER_GET_BODIES(__arb__, __a__, __b__) cpBody * __a__, *__b__; cpArbiterGetBodies(__arb__, &__a__, &__b__);
+template CP_ARBITER_GET_BODIES(string arb, string a, string b)
+{
+    enum CP_ARBITER_GET_BODIES = q{
+        cpBody * %2$s;
+        cpBody * %3$s;
+        cpArbiterGetBodies(%1$s, &%2$s, &%3$s);
+    }.format(arb, a, b);
+}
 
 /// A struct that wraps up the important collision data for an arbiter.
 struct cpContactPointSet

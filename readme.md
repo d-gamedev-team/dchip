@@ -42,13 +42,6 @@ Alternatively if you're on Windows you may use the various `build.bat` scripts.
 
 The following `-version=NAME` switches are supported:
 
-- `CHIP_ENABLE_UNITTESTS`
-
-Enable unittest blocks.
-By default unittest blocks are not compiled-in, leading to huge savings in compilation time.
-
-**Note:** The `-unittest` flag still needs to be passed to run the tests.
-
 - `CHIP_ALLOW_PRIVATE_ACCESS`
 
 Make private or package fields public. This switch will enable you to directly

@@ -44,7 +44,7 @@ set includes=-I..\src -Ilib
 set implibs=lib\glfw3_implib.lib
 
 set version_flags=%USE_DCHIP% %CHIP_ENABLE_UNITTESTS% %CHIP_ALLOW_PRIVATE_ACCESS% %CHIP_ENABLE_WARNINGS% %CHIP_USE_DOUBLES%
-rem set optimizations=-release -inline -O -noboundscheck
+set optimizations=-release -inline -O -noboundscheck
 set flags=%includes% %implibs% %version_flags% %optimizations% -g -w
 
 rem set PATH=C:\ldc\bin;%PATH%
@@ -52,8 +52,8 @@ rem set PATH=C:\GDC\bin;C:\dev\projects\GDMD;%PATH%
 
 rem Note: You might have to pass --force to pick this up due to some RDMD bug
 rem set compiler=--compiler=gdmd
-rem set compiler=--compiler=dmd.exe
-set compiler=--compiler=dmd_msc.exe
+set compiler=--compiler=dmd.exe
+rem set compiler=--compiler=dmd_msc.exe
 rem set compiler=--compiler=ldmd2.exe
 
 set FileName=%1

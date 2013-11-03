@@ -67,6 +67,30 @@ degradation.
 
 **Warning:** Don't enable this switch if using DMD, the performance degradation is unreal.
 
+## Running the tests
+
+The tests require the `glfw3.dll` library. See the [glfw] homepage on how to obtain it.
+
+Examples of building the samples:
+
+```
+$ cd path\to\dchip\tests
+
+# Showcases a simple iteration of the physics engine without any drawing
+$ build\build.bat simple.d simple.d
+
+# Contains a serious of visual and interactive demos, selectable with the keyboard
+# Select each demo by pressing the key such as 'a' or upward (e.g. 'a', 'b', 'c', etc..)
+$ build\build.bat demo_run demo_run.d
+
+# Similar to above, but demos were based on the older v5.3.5. release and they also
+# use the SDL library (which means you'll have to get `SDL.dll` to run it)
+$ cd old_demo
+$ build.bat
+```
+
+[glfw]: http://www.glfw.org/
+
 ## Links
 
 - Chipmunk2D [homepage](http://chipmunk2d.net/).

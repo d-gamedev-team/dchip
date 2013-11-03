@@ -319,8 +319,8 @@ cpSpace* cpSpaceInit(cpSpace* space)
         if (!done)
         {
             import std.stdio;
-            stderr.writefln("Initializing cpSpace - Chipmunk v%s (Debug Enabled)\n", cpVersionString);
-            stderr.writefln("Compile without the CHIP_ENABLE_WARNINGS to disable debug mode and runtime assertion checks\n");
+            stderr.writefln("Initializing cpSpace - Chipmunk v%s (Debug Enabled)", cpVersionString);
+            stderr.writefln("Compile without the CHIP_ENABLE_WARNINGS to disable debug mode and runtime assertion checks");
             done = cpTrue;
         }
     }

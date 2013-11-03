@@ -19,6 +19,7 @@
             "name": "demo",
             "targetType": "executable",
             "targetName": "new_demo",
+            "excludedSourceFiles": ["src/dchip/package.d"],
             "sourcePaths": [
                 "tests/demo",
                 "tests/lib"
@@ -36,6 +37,7 @@
             "name": "old_demo",
             "targetType": "executable",
             "targetName": "old_demo",
+            "excludedSourceFiles": ["src/dchip/package.d"],
             "sourcePaths": [
                 "tests/old_demo",
             ],
@@ -52,6 +54,7 @@
             "name": "hello_world",
             "targetType": "executable",
             "targetName": "hello_world",
+            "excludedSourceFiles": ["src/dchip/package.d"],
             "sourceFiles": [
                 "tests/hello_world.d",
             ],
@@ -68,6 +71,7 @@
             "name": "simple",
             "targetType": "executable",
             "targetName": "simple",
+            "excludedSourceFiles": ["src/dchip/package.d"],
             "sourceFiles": [
                 "tests/simple.d",
             ],

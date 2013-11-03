@@ -30,6 +30,8 @@ import std.exception;
 import std.stdio;
 import std.string;
 
+alias stderr = std.stdio.stderr;
+
 import glad.gl.all;
 import glad.gl.loader;
 
@@ -48,6 +50,46 @@ import demo.PyramidStack;
 import demo.Plink;
 import demo.Tumble;
 import demo.PyramidTopple;
+import demo.Planet;
+import demo.Springies;
+import demo.Pump;
+import demo.TheoJansen;
+import demo.Query;
+import demo.OneWay;
+import demo.Joints;
+import demo.Tank;
+import demo.Chains;
+
+ChipmunkDemo[] demo_list;
+shared static this()
+{
+    demo_list = [
+        LogoSmash,
+        PyramidStack,
+        Plink,
+        BouncyHexagons,
+        Tumble,
+        PyramidTopple,
+        Planet,
+        Springies,
+        Pump,
+        TheoJansen,
+        Query,
+        OneWay,
+        Joints,
+        Tank,
+        Chains,
+        //~ Crane,
+        //~ ContactGraph,
+        //~ Buoyancy,
+        //~ Player,
+        //~ Slice,
+        //~ Convex,
+        //~ Unicycle,
+        //~ Sticky,
+        //~ Shatter,
+    ];
+}
 
 alias ChipmunkDemoInitFunc = cpSpace* function();
 alias ChipmunkDemoUpdateFunc = void function(cpSpace* space, double dt);
@@ -87,7 +129,7 @@ void ChipmunkDemoFreeSpaceChildren(cpSpace* space);
 
 ChipmunkDemo* demos;
 int demo_count = 0;
-int demo_index = 5;
+int demo_index = 0;
 
 cpBool paused = cpFalse;
 cpBool step   = cpFalse;
@@ -102,7 +144,7 @@ double ChipmunkDemoTime;
 cpVect ChipmunkDemoMouse;
 cpBool ChipmunkDemoRightClick = cpFalse;
 cpBool ChipmunkDemoRightDown  = cpFalse;
-cpVect ChipmunkDemoKeyboard   = {};
+cpVect ChipmunkDemoKeyboard;
 
 cpBody* mouse_body        = null;
 cpConstraint* mouse_joint = null;
@@ -345,8 +387,9 @@ extern(C) void Reshape(GLFWwindow* window, int width, int height)
 
 char[] DemoTitle(int index)
 {
-    static char[1024] title = 0;
-    sformat(title, "Demo(%s): %s", 'a' + index, demos[demo_index].name);
+    static char[1024] title;
+    title = 0;
+    sformat(title, "Demo(%s): %s", cast(char)('a' + index), demos[demo_index].name);
     return title;
 }
 
@@ -561,40 +604,13 @@ void TimeTrial(int index, int count)
 
 int main(string[] args)
 {
-    //~ GC.disable();
-    //~ scope (exit)
-        //~ GC.enable();
+    GC.disable();
+    scope (exit)
+        GC.enable();
 
     // Segment/segment collisions need to be explicitly enabled currently.
     // This will becoume enabled by default in future versions of Chipmunk.
     cpEnableSegmentToSegmentCollisions();
-
-    ChipmunkDemo[] demo_list = [
-        LogoSmash,
-        PyramidStack,
-        Plink,
-        BouncyHexagons,
-        Tumble,
-        PyramidTopple,
-        //~ Planet,
-        //~ Springies,
-        //~ Pump,
-        //~ TheoJansen,
-        //~ Query,
-        //~ OneWay,
-        //~ Joints,
-        //~ Tank,
-        //~ Chains,
-        //~ Crane,
-        //~ ContactGraph,
-        //~ Buoyancy,
-        //~ Player,
-        //~ Slice,
-        //~ Convex,
-        //~ Unicycle,
-        //~ Sticky,
-        //~ Shatter,
-    ];
 
     demos      = demo_list.ptr;
     demo_count = demo_list.length;

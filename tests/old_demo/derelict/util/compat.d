@@ -46,46 +46,46 @@ else
     alias char* ICPTR;
 }
 
-version(D_Version2)
+version(D_Version2) 
 {
-        public import core.stdc.config : c_long, c_ulong;
+	public import core.stdc.config : c_long, c_ulong; 
 }
 else version(Tango)
 {
-        version (Windows)
-        {
-                alias int c_long;
-                alias uint c_ulong;
-        }
-        else
-        {
-                static if((void*).sizeof > (int).sizeof)
-                {
-                        alias long c_long;
-                        alias ulong c_ulong;
-                }
-                else
-                {
-                        alias int c_long;
-                        alias uint c_ulong;
-                }
-        }
+	version (Windows)
+	{
+		alias int c_long;
+		alias uint c_ulong;
+	}
+	else
+	{
+		static if((void*).sizeof > (int).sizeof)
+		{
+			alias long c_long;
+			alias ulong c_ulong;
+		}
+		else
+		{
+			alias int c_long;
+			alias uint c_ulong;
+		}
+	}
 }
 
 version(D_Version2)
 {
-        version(Posix)
-        {
-                public import core.sys.posix.sys.types : off_t;
-        }
-        else
-        {
-                alias c_long off_t;
-        }
+	version(Posix)
+	{
+		public import core.sys.posix.sys.types : off_t;
+	}
+	else
+	{
+		alias c_long off_t;
+	}
 }
 else
 {
-        alias c_long off_t;
+	alias c_long off_t;
 }
 
 version(Tango)
@@ -117,7 +117,7 @@ else
         import std.string;
         import std.c.string;
     }
-
+ 
 }
 
 template gsharedString ()

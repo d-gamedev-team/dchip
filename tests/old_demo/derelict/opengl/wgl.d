@@ -88,24 +88,26 @@ version(Windows)
     {
         void loadPlatformGL(void delegate(void**, string, bool doThrow = true) bindFunc)
         {
-            bindFunc(cast(void**)&wglCopyContext, "wglCopyContext");
-            bindFunc(cast(void**)&wglCreateContext, "wglCreateContext");
-            bindFunc(cast(void**)&wglCreateLayerContext, "wglCreateLayerContext");
-            bindFunc(cast(void**)&wglDeleteContext, "wglDeleteContext");
-            bindFunc(cast(void**)&wglDescribeLayerPlane, "wglDescribeLayerPlane");
-            bindFunc(cast(void**)&wglGetCurrentContext, "wglGetCurrentContext");
-            bindFunc(cast(void**)&wglGetCurrentDC, "wglGetCurrentDC");
-            bindFunc(cast(void**)&wglGetLayerPaletteEntries, "wglGetLayerPaletteEntries");
-            bindFunc(cast(void**)&wglGetProcAddress, "wglGetProcAddress");
-            bindFunc(cast(void**)&wglMakeCurrent, "wglMakeCurrent");
-            bindFunc(cast(void**)&wglRealizeLayerPalette, "wglRealizeLayerPalette");
-            bindFunc(cast(void**)&wglSetLayerPaletteEntries, "wglSetLayerPaletteEntries");
-            bindFunc(cast(void**)&wglShareLists, "wglShareLists");
-            bindFunc(cast(void**)&wglSwapLayerBuffers, "wglSwapLayerBuffers");
-            bindFunc(cast(void**)&wglUseFontBitmapsA, "wglUseFontBitmapsA");
-            bindFunc(cast(void**)&wglUseFontOutlinesA, "wglUseFontOutlinesA");
-            bindFunc(cast(void**)&wglUseFontBitmapsW, "wglUseFontBitmapsW");
-            bindFunc(cast(void**)&wglUseFontOutlinesW, "wglUseFontOutlinesW");
+			auto localBind = (void** _a, string _b) { bindFunc(_a, _b, true); };
+
+            localBind(cast(void**)&wglCopyContext, "wglCopyContext");
+            localBind(cast(void**)&wglCreateContext, "wglCreateContext");
+            localBind(cast(void**)&wglCreateLayerContext, "wglCreateLayerContext");
+            localBind(cast(void**)&wglDeleteContext, "wglDeleteContext");
+            localBind(cast(void**)&wglDescribeLayerPlane, "wglDescribeLayerPlane");
+            localBind(cast(void**)&wglGetCurrentContext, "wglGetCurrentContext");
+            localBind(cast(void**)&wglGetCurrentDC, "wglGetCurrentDC");
+            localBind(cast(void**)&wglGetLayerPaletteEntries, "wglGetLayerPaletteEntries");
+            localBind(cast(void**)&wglGetProcAddress, "wglGetProcAddress");
+            localBind(cast(void**)&wglMakeCurrent, "wglMakeCurrent");
+            localBind(cast(void**)&wglRealizeLayerPalette, "wglRealizeLayerPalette");
+            localBind(cast(void**)&wglSetLayerPaletteEntries, "wglSetLayerPaletteEntries");
+            localBind(cast(void**)&wglShareLists, "wglShareLists");
+            localBind(cast(void**)&wglSwapLayerBuffers, "wglSwapLayerBuffers");
+            localBind(cast(void**)&wglUseFontBitmapsA, "wglUseFontBitmapsA");
+            localBind(cast(void**)&wglUseFontOutlinesA, "wglUseFontOutlinesA");
+            localBind(cast(void**)&wglUseFontBitmapsW, "wglUseFontBitmapsW");
+            localBind(cast(void**)&wglUseFontOutlinesW, "wglUseFontOutlinesW");
         }
 
         void* loadGLSymbol(string symName)

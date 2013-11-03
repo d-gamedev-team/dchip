@@ -3,7 +3,7 @@
 
 module samples.UnsafeOps;
 
-import dchip;
+import dchip.all;
 
 import samples.ChipmunkDemo;
 

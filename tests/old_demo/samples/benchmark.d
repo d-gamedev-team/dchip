@@ -2,7 +2,7 @@ module samples.benchmark;
 //#include <stdlib.h>
 //#include <math.h>
 //
-import dchip;
+import dchip.all;
 
 import samples.ChipmunkDemo;
 

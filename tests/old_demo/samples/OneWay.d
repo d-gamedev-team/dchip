@@ -3,7 +3,7 @@
 
 module samples.OneWay;
 
-import dchip;
+import dchip.all;
 
 import samples.ChipmunkDemo;
 

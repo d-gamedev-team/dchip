@@ -3,7 +3,7 @@
 
 module samples.Query;
 
-import dchip;
+import dchip.all;
 
 import samples.ChipmunkDemo;
 import gameApp;

@@ -3,7 +3,7 @@
 
 module samples.LogoSmash;
 
-import dchip;
+import dchip.all;
 
 import samples.ChipmunkDemo;
 

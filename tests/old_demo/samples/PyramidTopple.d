@@ -3,7 +3,7 @@
 
 module samples.PyramidTopple;
 
-import dchip;
+import dchip.all;
 
 import samples.ChipmunkDemo;
 

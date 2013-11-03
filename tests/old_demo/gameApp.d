@@ -11,7 +11,7 @@ import framework;
 
 import drawSpace;
 
-import dchip;
+import dchip.all;
 
 import samples.benchmark;
 import samples.LogoSmash;

@@ -3,7 +3,7 @@
 
 module samples.MagnetsElectric;
 
-import dchip;
+import dchip.all;
 
 import samples.ChipmunkDemo;
 

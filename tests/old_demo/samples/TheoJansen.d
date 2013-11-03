@@ -3,7 +3,7 @@
 
 module samples.TheoJansen;
 
-import dchip;
+import dchip.all;
 
 import samples.ChipmunkDemo;
 

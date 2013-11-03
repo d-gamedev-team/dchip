@@ -3,7 +3,7 @@
 
 module samples.PyramidStack;
 
-import dchip;
+import dchip.all;
 
 import samples.ChipmunkDemo;
 

@@ -3,7 +3,7 @@
 
 module samples.ChipmunkDemo;
 
-import dchip;
+import dchip.all;
 
 import drawSpace;
 

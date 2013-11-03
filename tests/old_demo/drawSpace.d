@@ -5,7 +5,7 @@ module drawSpace;
 
 import derelict.opengl.gl;
 
-import dchip;
+import dchip.all;
 
 import std.math:PI;
 import std.stdio;

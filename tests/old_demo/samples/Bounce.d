@@ -3,7 +3,7 @@
 
 module samples.Bounce;
 
-import dchip;
+import dchip.all;
 
 import samples.ChipmunkDemo;
 

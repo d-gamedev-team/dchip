@@ -3,7 +3,7 @@
 
 module samples.Tumble;
 
-import dchip;
+import dchip.all;
 
 import samples.ChipmunkDemo;
 

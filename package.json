@@ -1,5 +1,5 @@
 {
-    "description": "dchip",
+    "description": "dchip is a D2 port of the Chipmunk2D physics library.",
     "targetName": "dchip",
     "authors": [
         "Andrej Mitrovic"

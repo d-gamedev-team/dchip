@@ -76,6 +76,10 @@ degradation.
 
 Most tests require the [GLFW] library. See the [GLFW] homepage on how to obtain this library.
 
+**Note**: The `demo` test requires the `glu` library. On Windows this isn't an issue.
+If you know how to load this on a Posix system, please consider making a pull request
+that fixes the build process so `glu` can be loaded properly. Thanks!
+
 ### Using dub
 
 Compile and run one of the examples via:

@@ -66,6 +66,12 @@ degradation.
 
 **Warning:** Don't enable this switch if using DMD, the performance degradation is unreal.
 
+## Documentation
+
+Since `dchip` is a straight port of the C library to D, all existing C-based documentation should be applicable and easily transferable to D, with very little to no code modification. In particular, the Chipmunk2D documentation will come in handy:
+
+- Chipmunk2D [v6.2.1 documentation](http://chipmunk-physics.net/release/Chipmunk-6.x/Chipmunk-6.2.1-Docs/).
+
 ## Usage
 
 Most dchip types have getter and setter functions to access and modify internal fields,

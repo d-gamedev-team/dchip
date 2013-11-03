@@ -225,29 +225,29 @@ GLfloat PushChar(int character, GLfloat x, GLfloat y, Color color)
 
 void ChipmunkDemoTextDrawString(cpVect pos, in char[] str)
 {
-    //~ Color c   = LAColor(1.0f, 1.0f);
-    //~ GLfloat x = cast(GLfloat)pos.x, y = cast(GLfloat)pos.y;
+    Color c   = LAColor(1.0f, 1.0f);
+    GLfloat x = cast(GLfloat)pos.x, y = cast(GLfloat)pos.y;
 
-    //~ for (int i = 0, len = str.length; i < len; i++)
-    //~ {
-        //~ if (str[i] == '\n')
-        //~ {
-            //~ y -= LineHeight;
-            //~ x  = cast(GLfloat)pos.x;
+    for (int i = 0, len = str.length; i < len; i++)
+    {
+        if (str[i] == '\n')
+        {
+            y -= LineHeight;
+            x  = cast(GLfloat)pos.x;
 
-            //~ //		} else if(str[i] == '*'){ // print out the last demo key
-            //~ //			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, 'A' + demoCount - 1);
-        //~ }
-        //~ else
-        //~ if (str[i] == '\0')
-        //~ {
-            //~ break;
-        //~ }
-        //~ else
-        //~ {
-            //~ x += cast(GLfloat)PushChar(str[i], x, y, c);
-        //~ }
-    //~ }
+            //		} else if(str[i] == '*'){ // print out the last demo key
+            //			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, 'A' + demoCount - 1);
+        }
+        else
+        if (str[i] == '\0')
+        {
+            break;
+        }
+        else
+        {
+            x += cast(GLfloat)PushChar(str[i], x, y, c);
+        }
+    }
 }
 
 void ChipmunkDemoTextFlushRenderer()

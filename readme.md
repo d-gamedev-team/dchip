@@ -1,7 +1,7 @@
 # dchip
 
 This is a D2 port of the [Chipmunk2D](http://chipmunk2d.net/) library.
-Currently it targets version 6.2.1.
+Currently it targets version **6.2.1**.
 
 Currently dchip has only been tested on Windows,
 but has no platform-dependent code other than a
@@ -33,6 +33,8 @@ and ported to D by [Andrej Mitrovic].
 You can use [dub] to make this library a dependency for your project.
 
 Alternatively if you're on Windows you may use the various `build.bat` scripts.
+
+[dub]: http://code.dlang.org/about
 
 ### Version switches
 

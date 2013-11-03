@@ -117,7 +117,10 @@ shared static this()
     );
 }
 
-mixin CP_DefineClassGetter!("cpPinJoint");
+const cpConstraintClass * cpPinJointGetClass()
+{
+    return cast(cpConstraintClass*)&klass;
+}
 
 cpPinJoint *
 cpPinJointAlloc()

@@ -133,7 +133,10 @@ shared static this()
     );
 }
 
-mixin CP_DefineClassGetter!("cpRatchetJoint");
+const cpConstraintClass * cpRatchetJointGetClass()
+{
+    return cast(cpConstraintClass*)&klass;
+}
 
 cpRatchetJoint *
 cpRatchetJointAlloc()

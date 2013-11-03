@@ -134,7 +134,10 @@ shared static this()
     );
 }
 
-mixin CP_DefineClassGetter!("cpRotaryLimitJoint");
+const cpConstraintClass * cpRotaryLimitJointGetClass()
+{
+    return cast(cpConstraintClass*)&klass;
+}
 
 cpRotaryLimitJoint *
 cpRotaryLimitJointAlloc()

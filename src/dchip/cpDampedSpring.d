@@ -133,7 +133,10 @@ shared static this()
     );
 };
 
-mixin CP_DefineClassGetter!("cpDampedSpring");
+const cpConstraintClass * cpDampedSpringGetClass()
+{
+    return cast(cpConstraintClass*)&klass;
+}
 
 cpDampedSpring *
 cpDampedSpringAlloc()

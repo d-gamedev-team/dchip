@@ -153,7 +153,10 @@ shared static this()
     );
 }
 
-mixin CP_DefineClassGetter!("cpGrooveJoint");
+const cpConstraintClass * cpGrooveJointGetClass()
+{
+    return cast(cpConstraintClass*)&klass;
+}
 
 cpGrooveJoint *
 cpGrooveJointAlloc()

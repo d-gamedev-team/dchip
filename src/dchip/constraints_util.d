@@ -31,11 +31,6 @@ import dchip.cpVect;
 // I'm not sure if this should be part of the private API or not.
 // I should probably clean up the naming conventions if it is...
 
-mixin template CP_DefineClassGetter(string t)
-{
-    mixin("const cpConstraintClass * %sGetClass() { return cast(cpConstraintClass*)&klass; }".format(t));
-}
-
 cpVect relative_velocity(cpBody* a, cpBody* b, cpVect r1, cpVect r2)
 {
     cpVect v1_sum = cpvadd(a.v, cpvmult(cpvperp(r1), a.w));

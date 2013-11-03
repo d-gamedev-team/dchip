@@ -101,7 +101,10 @@ shared static this()
     );
 }
 
-mixin CP_DefineClassGetter!("cpSimpleMotor");
+const cpConstraintClass * cpSimpleMotorGetClass()
+{
+    return cast(cpConstraintClass*)&klass;
+}
 
 cpSimpleMotor *
 cpSimpleMotorAlloc()

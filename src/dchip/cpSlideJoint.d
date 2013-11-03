@@ -139,7 +139,10 @@ shared static this()
     );
 }
 
-mixin CP_DefineClassGetter!("cpSlideJoint");
+const cpConstraintClass * cpSlideJointGetClass()
+{
+    return cast(cpConstraintClass*)&klass;
+}
 
 cpSlideJoint *
 cpSlideJointAlloc()

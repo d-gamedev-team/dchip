@@ -109,7 +109,10 @@ shared static this()
     );
 };
 
-mixin CP_DefineClassGetter!("cpPivotJoint");
+const cpConstraintClass * cpPivotJointGetClass()
+{
+    return cast(cpConstraintClass*)&klass;
+}
 
 cpPivotJoint *
 cpPivotJointAlloc()

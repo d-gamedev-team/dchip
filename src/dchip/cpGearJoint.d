@@ -107,7 +107,10 @@ shared static this()
     );
 }
 
-mixin CP_DefineClassGetter!("cpGearJoint");
+const cpConstraintClass * cpGearJointGetClass()
+{
+    return cast(cpConstraintClass*)&klass;
+}
 
 cpGearJoint *
 cpGearJointAlloc()

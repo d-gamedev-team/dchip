@@ -497,26 +497,26 @@ extern(C) void Keyboard(GLFWwindow* window, int key, int scancode, int state, in
     switch (key)
     {
         case GLFW_KEY_UP:
-            ChipmunkDemoKeyboard.y += (state == GLFW_PRESS ?  1.0 : -1.0);
+            ChipmunkDemoKeyboard.y += ((state == GLFW_PRESS || state == GLFW_REPEAT) ?  1.0 : -1.0);
             break;
 
         case GLFW_KEY_DOWN:
-            ChipmunkDemoKeyboard.y += (state == GLFW_PRESS ? -1.0 :  1.0);
+            ChipmunkDemoKeyboard.y += ((state == GLFW_PRESS || state == GLFW_REPEAT) ? -1.0 :  1.0);
             break;
 
         case GLFW_KEY_RIGHT:
-            ChipmunkDemoKeyboard.x += (state == GLFW_PRESS ?  1.0 : -1.0);
+            ChipmunkDemoKeyboard.x += ((state == GLFW_PRESS || state == GLFW_REPEAT) ?  1.0 : -1.0);
             break;
 
         case GLFW_KEY_LEFT:
-            ChipmunkDemoKeyboard.x += (state == GLFW_PRESS ? -1.0 :  1.0);
+            ChipmunkDemoKeyboard.x += ((state == GLFW_PRESS || state == GLFW_REPEAT) ? -1.0 :  1.0);
             break;
 
         default:
             break;
     }
 
-    if (key == GLFW_KEY_ESCAPE && state == GLFW_PRESS)
+    if (key == GLFW_KEY_ESCAPE && (state == GLFW_PRESS || state == GLFW_REPEAT))
         glfwSetWindowShouldClose(window, true);
 }
 

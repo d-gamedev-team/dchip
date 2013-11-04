@@ -555,7 +555,7 @@ extern(C) void Click(GLFWwindow* window, int button, int state, int mods)
         {
             cpShape* shape = cpSpacePointQueryFirst(space, ChipmunkDemoMouse, GRABABLE_MASK_BIT, CP_NO_GROUP);
 
-            if (shape)
+            if (shape && !cpBodyIsStatic(shape.body_))
             {
                 cpBody* body_ = shape.body_;
                 mouse_joint = cpPivotJointNew2(mouse_body, body_, cpvzero, cpBodyWorld2Local(body_, ChipmunkDemoMouse));

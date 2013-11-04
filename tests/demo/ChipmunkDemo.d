@@ -222,7 +222,6 @@ void ChipmunkDemoDefaultDrawImpl(cpSpace* space)
 {
     ChipmunkDebugDrawShapes(space);
     ChipmunkDebugDrawConstraints(space);
-
     ChipmunkDebugDrawCollisionPoints(space);
 }
 

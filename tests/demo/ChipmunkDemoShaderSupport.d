@@ -21,6 +21,7 @@
  */
 module demo.ChipmunkDemoShaderSupport;
 
+import std.conv;
 import std.stdio;
 import std.string;
 
@@ -101,7 +102,7 @@ static cpBool CheckError(GLint obj, GLenum status, PFNGLGETSHADERIVPROC getiv, P
         char* log = cast(char*)alloca(length);
         getInfoLog(obj, length, null, log);
 
-        stderr.writefln("Shader compile error for 0x%04X: %s\n", status, log);
+        stderr.writefln("Shader compile error for 0x%04X: %s\n", status, log.to!string);
         return cpFalse;
     }
     else

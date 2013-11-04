@@ -431,6 +431,33 @@ void RunDemo(int index)
 
 extern(C) void Keyboard(GLFWwindow* window, int key, int scancode, int state, int modifier)
 {
+    if (state != GLFW_REPEAT)  // we ignore repeat
+    switch (key)
+    {
+        case GLFW_KEY_UP:
+            ChipmunkDemoKeyboard.y += (state == GLFW_PRESS ?  1.0 : -1.0);
+            break;
+
+        case GLFW_KEY_DOWN:
+            ChipmunkDemoKeyboard.y += (state == GLFW_PRESS ? -1.0 :  1.0);
+            break;
+
+        case GLFW_KEY_RIGHT:
+            ChipmunkDemoKeyboard.x += (state == GLFW_PRESS ?  1.0 : -1.0);
+            break;
+
+        case GLFW_KEY_LEFT:
+            ChipmunkDemoKeyboard.x += (state == GLFW_PRESS ? -1.0 :  1.0);
+            break;
+
+        default:
+            break;
+    }
+
+    if (key == GLFW_KEY_ESCAPE && (state == GLFW_PRESS || state == GLFW_REPEAT))
+        glfwSetWindowShouldClose(window, true);
+
+    // We ignore release for these next keys.
     if (state == GLFW_RELEASE)
         return;
 
@@ -493,31 +520,6 @@ extern(C) void Keyboard(GLFWwindow* window, int key, int scancode, int state, in
     {
         scale *= scale_increment;
     }
-
-    switch (key)
-    {
-        case GLFW_KEY_UP:
-            ChipmunkDemoKeyboard.y += ((state == GLFW_PRESS || state == GLFW_REPEAT) ?  1.0 : -1.0);
-            break;
-
-        case GLFW_KEY_DOWN:
-            ChipmunkDemoKeyboard.y += ((state == GLFW_PRESS || state == GLFW_REPEAT) ? -1.0 :  1.0);
-            break;
-
-        case GLFW_KEY_RIGHT:
-            ChipmunkDemoKeyboard.x += ((state == GLFW_PRESS || state == GLFW_REPEAT) ?  1.0 : -1.0);
-            break;
-
-        case GLFW_KEY_LEFT:
-            ChipmunkDemoKeyboard.x += ((state == GLFW_PRESS || state == GLFW_REPEAT) ? -1.0 :  1.0);
-            break;
-
-        default:
-            break;
-    }
-
-    if (key == GLFW_KEY_ESCAPE && (state == GLFW_PRESS || state == GLFW_REPEAT))
-        glfwSetWindowShouldClose(window, true);
 }
 
 cpVect MouseToSpace(double x, double y)

@@ -80,6 +80,7 @@ import demo.Convex;
 import demo.Unicycle;
 import demo.Sticky;
 import demo.Shatter;
+import demo.RollBall;
 
 ChipmunkDemo[] demo_list;
 shared static this()
@@ -109,6 +110,7 @@ shared static this()
         Unicycle,
         Sticky,
         Shatter,
+        RollBall,
     ];
 }
 

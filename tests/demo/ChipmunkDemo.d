@@ -151,8 +151,8 @@ void ChipmunkDemoDefaultDrawImpl(cpSpace* space);
 void ChipmunkDemoFreeSpaceChildren(cpSpace* space);
 
 ChipmunkDemo* demos;
-int demo_count = 0;
-int demo_index = 0;
+size_t demo_count = 0;
+size_t demo_index = 0;
 
 cpBool paused = cpFalse;
 cpBool step   = cpFalse;
@@ -401,7 +401,7 @@ extern(C) void Reshape(GLFWwindow* window, int width, int height)
     gluOrtho2D(-hw, hw, -hh, hh);
 }
 
-char[] DemoTitle(int index)
+char[] DemoTitle(size_t index)
 {
     static char[1024] title;
     title[] = 0;
@@ -409,7 +409,7 @@ char[] DemoTitle(int index)
     return title;
 }
 
-void RunDemo(int index)
+void RunDemo(size_t index)
 {
     srand(45073);
 

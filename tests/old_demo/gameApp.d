@@ -84,7 +84,7 @@ private:
     enum width = 1024;
     enum height = 780;
 
-    void time_trial(int index, int count)
+    void time_trial(size_t index, int count)
     {
         currentDemo = &demos[index];
         space = currentDemo.initFunc();

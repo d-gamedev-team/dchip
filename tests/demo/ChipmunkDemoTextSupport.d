@@ -173,7 +173,7 @@ auto MAX(T)(T a, T b)
 }
 
 size_t triangle_capacity = 0;
-size_t triangle_count     = 0;
+GLsizei triangle_count     = 0;
 Triangle* triangle_buffer = null;
 
 Triangle* PushTriangles(size_t count)
@@ -228,7 +228,7 @@ void ChipmunkDemoTextDrawString(cpVect pos, in char[] str)
     Color c   = LAColor(1.0f, 1.0f);
     GLfloat x = cast(GLfloat)pos.x, y = cast(GLfloat)pos.y;
 
-    for (int i = 0, len = str.length; i < len; i++)
+    for (size_t i = 0, len = str.length; i < len; i++)
     {
         if (str[i] == '\n')
         {
@@ -269,7 +269,7 @@ void ChipmunkDemoTextFlushRenderer()
         glBindVertexArray(vao);
     }
 
-    glDrawArrays(GL_TRIANGLES, 0, triangle_count * 3);
+    glDrawArrays(GL_TRIANGLES, 0, cast(GLsizei)(triangle_count * 3));
 
     CHECK_GL_ERRORS();
 }
@@ -279,7 +279,7 @@ void ChipmunkDemoTextClearRenderer()
     triangle_count = 0;
 }
 
-int pushed_triangle_count = 0;
+GLsizei pushed_triangle_count = 0;
 
 void ChipmunkDemoTextPushRenderer()
 {

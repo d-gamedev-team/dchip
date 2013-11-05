@@ -101,7 +101,7 @@ void shutdown()
     SDL_Quit();
 }
 
-version (Win32)
+version (Windows)
 {
     import std.c.windows.windows;
 

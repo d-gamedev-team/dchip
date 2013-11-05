@@ -232,7 +232,7 @@ auto MAX(T)(T a, T b)
 }
 
 size_t triangle_capacity = 0;
-size_t triangle_count    = 0;
+GLsizei triangle_count    = 0;
 Triangle* triangle_buffer = null;
 
 Triangle* PushTriangles(size_t count)
@@ -640,7 +640,7 @@ void ChipmunkDebugDrawClearRenderer()
     triangle_count = 0;
 }
 
-int pushed_triangle_count = 0;
+GLsizei pushed_triangle_count = 0;
 
 void ChipmunkDebugDrawPushRenderer()
 {

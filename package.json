@@ -18,6 +18,7 @@
     "configurations": [
         {
             "name": "demo",
+            "libs-posix": ["dl"],
             "targetType": "executable",
             "targetName": "new_demo",
             "excludedSourceFiles": ["src/dchip/package.d"],

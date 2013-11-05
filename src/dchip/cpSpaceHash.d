@@ -601,8 +601,7 @@ int cpSpaceHashContains(cpSpaceHash* hash, void* obj, cpHashValue hashid)
 }
 
 cpSpatialIndexClass klass;
-
-shared static this()
+void _initModuleCtor_cpSpaceHash()
 {
     klass = cpSpatialIndexClass(
         cast(cpSpatialIndexDestroyImpl)&cpSpaceHashDestroy,

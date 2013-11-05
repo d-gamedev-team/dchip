@@ -240,8 +240,7 @@ void cpSweep1DReindexQuery(cpSweep1D* sweep, cpSpatialIndexQueryFunc func, void*
 }
 
 cpSpatialIndexClass klass;
-
-shared static this()
+void _initModuleCtor_cpSweep1D()
 {
     klass = cpSpatialIndexClass(
         cast(cpSpatialIndexDestroyImpl)&cpSweep1DDestroy,

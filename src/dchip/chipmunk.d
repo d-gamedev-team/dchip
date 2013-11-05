@@ -34,6 +34,45 @@ import dchip.cpVect;
 import dchip.cpSpatialIndex;
 import dchip.util;
 
+/** Workaround for cycles between module constructors. */
+shared static this()
+{
+    import dchip.cpBBTree;
+    import dchip.cpCollision;
+    import dchip.cpCollision;
+    import dchip.cpDampedRotarySpring;
+    import dchip.cpDampedSpring;
+    import dchip.cpGearJoint;
+    import dchip.cpGrooveJoint;
+    import dchip.cpPinJoint;
+    import dchip.cpPivotJoint;
+    import dchip.cpPolyShape;
+    import dchip.cpRatchetJoint;
+    import dchip.cpRotaryLimitJoint;
+    import dchip.cpShape;
+    import dchip.cpSimpleMotor;
+    import dchip.cpSlideJoint;
+    import dchip.cpSpaceHash;
+    import dchip.cpSweep1D;
+
+    _initModuleCtor_cpBBTree();
+    _initModuleCtor_cpCollision();
+    _initModuleCtor_cpDampedRotarySpring();
+    _initModuleCtor_cpDampedSpring();
+    _initModuleCtor_cpGearJoint();
+    _initModuleCtor_cpGrooveJoint();
+    _initModuleCtor_cpPinJoint();
+    _initModuleCtor_cpPivotJoint();
+    _initModuleCtor_cpPolyShape();
+    _initModuleCtor_cpRatchetJoint();
+    _initModuleCtor_cpRotaryLimitJoint();
+    _initModuleCtor_cpShape();
+    _initModuleCtor_cpSimpleMotor();
+    _initModuleCtor_cpSlideJoint();
+    _initModuleCtor_cpSpaceHash();
+    _initModuleCtor_cpSweep1D();
+}
+
 /**
     Workaround for a linker bug with RDMD local imports:
     http://d.puremagic.com/issues/show_bug.cgi?id=7016

@@ -811,7 +811,7 @@ void cpBBTreeEach(cpBBTree* tree, cpSpatialIndexIteratorFunc func, void* data)
 
 cpSpatialIndexClass klass;
 
-shared static this()
+void _initModuleCtor_cpBBTree()
 {
     klass = cpSpatialIndexClass(
         safeCast!cpSpatialIndexDestroyImpl(&cpBBTreeDestroy),

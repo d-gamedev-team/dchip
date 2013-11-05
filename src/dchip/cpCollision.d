@@ -785,7 +785,10 @@ static int CircleToPoly(const cpCircleShape* circle, const cpPolyShape* poly, cp
 }
 
 /* const */ CollisionFunc[9] builtinCollisionFuncs;
-shared static this()
+/* const */ CollisionFunc* colfuncs;
+/* const */ CollisionFunc[9] segmentCollisions;
+
+void _initModuleCtor_cpCollision()
 {
     builtinCollisionFuncs = [
         cast(CollisionFunc)&CircleToCircle,
@@ -798,18 +801,9 @@ shared static this()
         cast(CollisionFunc)&SegmentToPoly,
         cast(CollisionFunc)&PolyToPoly,
     ];
-}
 
-/* const */ CollisionFunc* colfuncs;
-shared static this()
-{
     colfuncs = builtinCollisionFuncs.ptr;
-}
 
-/* const */ CollisionFunc[9] segmentCollisions;
-
-shared static this()
-{
     segmentCollisions = [
         cast(CollisionFunc)&CircleToCircle,
         null,

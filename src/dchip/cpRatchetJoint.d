@@ -122,8 +122,8 @@ static cpFloat getImpulse(cpRatchetJoint* joint)
     return cpfabs(joint.jAcc);
 }
 
-const cpConstraintClass klass;
-shared static this()
+cpConstraintClass klass;
+void _initModuleCtor_cpRatchetJoint()
 {
     klass = cpConstraintClass(
         cast(cpConstraintPreStepImpl)&preStep,

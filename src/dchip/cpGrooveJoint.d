@@ -142,8 +142,8 @@ cpFloat getImpulse(cpGrooveJoint* joint)
     return cpvlength(joint.jAcc);
 }
 
-const cpConstraintClass klass;
-shared static this()
+cpConstraintClass klass;
+void _initModuleCtor_cpGrooveJoint()
 {
     klass = cpConstraintClass(
         cast(cpConstraintPreStepImpl)&preStep,

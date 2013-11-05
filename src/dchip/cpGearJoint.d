@@ -96,8 +96,8 @@ cpFloat getImpulse(cpGearJoint* joint)
     return cpfabs(joint.jAcc);
 }
 
-const cpConstraintClass klass;
-shared static this()
+cpConstraintClass klass;
+void _initModuleCtor_cpGearJoint()
 {
     klass = cpConstraintClass(
         cast(cpConstraintPreStepImpl)&preStep,

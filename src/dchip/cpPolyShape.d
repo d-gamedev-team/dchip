@@ -198,8 +198,8 @@ static void cpPolyShapeSegmentQuery(cpPolyShape* poly, cpVect a, cpVect b, cpSeg
     }
 }
 
-const cpShapeClass polyClass;
-shared static this()
+cpShapeClass polyClass;
+void _initModuleCtor_cpPolyShape()
 {
     polyClass = cpShapeClass(
         CP_POLY_SHAPE,

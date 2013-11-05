@@ -385,19 +385,6 @@ static void cpCircleShapeSegmentQuery(cpCircleShape* circle, cpVect a, cpVect b,
     CircleSegmentQuery(cast(cpShape*)circle, circle.tc, circle.r, a, b, info);
 }
 
-static const cpShapeClass cpCircleShapeClass;
-
-shared static this()
-{
-    cpCircleShapeClass = cpShapeClass(
-        CP_CIRCLE_SHAPE,
-        cast(cpShapeCacheDataImpl)&cpCircleShapeCacheData,
-        null,
-        cast(cpShapeNearestPointQueryImpl)&cpCicleShapeNearestPointQuery,
-        cast(cpShapeSegmentQueryImpl)&cpCircleShapeSegmentQuery,
-    );
-}
-
 cpCircleShape* cpCircleShapeInit(cpCircleShape* circle, cpBody* body_, cpFloat radius, cpVect offset)
 {
     circle.c = offset;
@@ -515,9 +502,10 @@ static void cpSegmentShapeSegmentQuery(cpSegmentShape* seg, cpVect a, cpVect b, 
     }
 }
 
-static const cpShapeClass cpSegmentShapeClass;
+cpShapeClass cpSegmentShapeClass;
+cpShapeClass cpCircleShapeClass;
 
-shared static this()
+void _initModuleCtor_cpShape()
 {
     cpSegmentShapeClass = cpShapeClass(
         CP_SEGMENT_SHAPE,
@@ -525,6 +513,14 @@ shared static this()
         null,
         cast(cpShapeNearestPointQueryImpl)&cpSegmentShapeNearestPointQuery,
         cast(cpShapeSegmentQueryImpl)&cpSegmentShapeSegmentQuery,
+    );
+
+    cpCircleShapeClass = cpShapeClass(
+        CP_CIRCLE_SHAPE,
+        cast(cpShapeCacheDataImpl)&cpCircleShapeCacheData,
+        null,
+        cast(cpShapeNearestPointQueryImpl)&cpCicleShapeNearestPointQuery,
+        cast(cpShapeSegmentQueryImpl)&cpCircleShapeSegmentQuery,
     );
 }
 

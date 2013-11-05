@@ -122,8 +122,8 @@ cpFloat getImpulse(cpDampedSpring* spring)
     return spring.jAcc;
 }
 
-const cpConstraintClass klass;
-shared static this()
+cpConstraintClass klass;
+void _initModuleCtor_cpDampedSpring()
 {
     klass = cpConstraintClass(
         cast(cpConstraintPreStepImpl)&preStep,

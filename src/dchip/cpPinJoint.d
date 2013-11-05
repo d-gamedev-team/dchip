@@ -106,8 +106,8 @@ static cpFloat getImpulse(cpPinJoint* joint)
     return cpfabs(joint.jnAcc);
 }
 
-const cpConstraintClass klass;
-shared static this()
+cpConstraintClass klass;
+void _initModuleCtor_cpPinJoint()
 {
     klass = cpConstraintClass(
         cast(cpConstraintPreStepImpl)&preStep,

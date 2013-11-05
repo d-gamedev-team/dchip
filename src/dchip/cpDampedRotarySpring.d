@@ -118,8 +118,8 @@ cpFloat getImpulse(cpDampedRotarySpring* spring)
     return spring.jAcc;
 }
 
-const cpConstraintClass klass;
-shared static this()
+cpConstraintClass klass;
+void _initModuleCtor_cpDampedRotarySpring()
 {
     klass = cpConstraintClass(
         cast(cpConstraintPreStepImpl)&preStep,

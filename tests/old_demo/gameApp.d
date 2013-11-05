@@ -155,7 +155,7 @@ private:
         }
 
         //setup framework
-        bool useVsync = false;
+        bool useVsync = true;
         framework.startup("chipmunk'd by Stephan Dilly",width,height,useVsync);
 
         reshape(width,height);

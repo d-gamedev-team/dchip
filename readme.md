@@ -174,6 +174,12 @@ allows you to access all fields directly rather than through getter and setter f
 using the internal fields directly is not future-proof as these internal fields are not part of the
 public API and may change at any future version release.
 
+Additionally, the setter functions typically perform additional actions, such as e.g.
+in `cpBody` setter functions calling `cpBodyActivate` before settings the internal field,
+followed by a post-operation `cpBodyAssertSane` check. If you ever have bodies that seem to
+"hang in the air", they might be sleeping, so make sure you call `cpBodyActivate` or otherwise
+simply use the setter functions.
+
 ## Links
 
 - Chipmunk2D [homepage](http://chipmunk2d.net/).

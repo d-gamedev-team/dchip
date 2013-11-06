@@ -54,7 +54,7 @@ The following `-version=NAME` switches are supported:
 
 - `CHIP_ALLOW_PRIVATE_ACCESS`
 
-Make private or package fields public. This switch will enable you to directly
+Make private and package fields public. This switch will enable you to directly
 manipulate internal fields. However this is not future-compatible since these fields might
 be reordered or changed in the future. You should prefer to use accessor methods unless
 performance demands that you directly manipulate internal fields.
@@ -74,15 +74,11 @@ meaning that enabling this switch will likely **not** give you a big improvement
 other hand, using `double`'s will use twice as much memory and could lead to a performance
 degradation.
 
-**Warning:** Don't enable this switch if using DMD, the performance degradation is unreal.
+**Warning:** There is a large performance hit when enabling this switch and using DMD.
 
 ## Running the tests
 
 Most tests require the [GLFW] library. See the [GLFW] homepage on how to obtain this library.
-
-**Note**: The `demo` test requires the `glu` library. On Windows this isn't an issue.
-If you know how to load this on a Posix system, please consider making a pull request
-that fixes the build process so `glu` can be loaded properly. Thanks!
 
 ### Using dub
 

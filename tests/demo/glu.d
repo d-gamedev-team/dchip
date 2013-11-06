@@ -250,7 +250,7 @@ version (Posix)
 
     shared static this()
     {
-        enum gluDLL = "glu.so";
+        enum gluDLL = "libGLU.so";
         hGlu = enforce(LoadLibraryA(gluDLL), format("'%s' not found in PATH.", gluDLL));
 
         foreach (string member; __traits(allMembers, GluProcs))

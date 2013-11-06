@@ -5,10 +5,14 @@
 This is a D2 port of the [Chipmunk2D](http://chipmunk2d.net/) game physics library.
 Currently it targets version **6.2.1**.
 
-Currently dchip has only been tested on Windows,
-but has no platform-dependent code.
+DChip is a platform-independent library with no dependencies.
+
+The sample projects have dependencies on either [GLFW] or [SDL], and the OpenGL Utility Library (GLU).
 
 Homepage: https://github.com/AndrejMitrovic/dchip
+
+[SDL]: http://www.libsdl.org
+[GLFW]: http://www.glfw.org
 
 ## Authors
 

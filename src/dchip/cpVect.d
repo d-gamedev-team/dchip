@@ -26,7 +26,7 @@ import dchip.chipmunk_types;
 /// Chipmunk's 2D vector type along with a handy 2D vector math lib.
 
 /// Constant for the zero vector.
-const cpVect cpvzero = { 0.0f, 0.0f };
+immutable cpVect cpvzero = { 0.0f, 0.0f };
 
 /// Convenience constructor for cpVect structs.
 cpVect cpv(const cpFloat x, const cpFloat y)

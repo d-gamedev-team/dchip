@@ -360,13 +360,13 @@ cpCircleShape* cpCircleShapeAlloc()
     return cast(cpCircleShape*)cpcalloc(1, cpCircleShape.sizeof);
 }
 
-static cpBB cpCircleShapeCacheData(cpCircleShape* circle, cpVect p, cpVect rot)
+cpBB cpCircleShapeCacheData(cpCircleShape* circle, cpVect p, cpVect rot)
 {
     cpVect c = circle.tc = cpvadd(p, cpvrotate(circle.c, rot));
     return cpBBNewForCircle(c, circle.r);
 }
 
-static void cpCicleShapeNearestPointQuery(cpCircleShape* circle, cpVect p, cpNearestPointQueryInfo* info)
+void cpCicleShapeNearestPointQuery(cpCircleShape* circle, cpVect p, cpNearestPointQueryInfo* info)
 {
     cpVect  delta = cpvsub(p, circle.tc);
     cpFloat d     = cpvlength(delta);
@@ -380,7 +380,7 @@ static void cpCicleShapeNearestPointQuery(cpCircleShape* circle, cpVect p, cpNea
     info.g = (d > MAGIC_EPSILON ? cpvmult(delta, 1.0f / d) : cpv(0.0f, 1.0f));
 }
 
-static void cpCircleShapeSegmentQuery(cpCircleShape* circle, cpVect a, cpVect b, cpSegmentQueryInfo* info)
+void cpCircleShapeSegmentQuery(cpCircleShape* circle, cpVect a, cpVect b, cpSegmentQueryInfo* info)
 {
     CircleSegmentQuery(cast(cpShape*)circle, circle.tc, circle.r, a, b, info);
 }
@@ -406,7 +406,7 @@ cpSegmentShapeAlloc()
     return cast(cpSegmentShape*)cpcalloc(1, cpSegmentShape.sizeof);
 }
 
-static cpBB cpSegmentShapeCacheData(cpSegmentShape* seg, cpVect p, cpVect rot)
+cpBB cpSegmentShapeCacheData(cpSegmentShape* seg, cpVect p, cpVect rot)
 {
     seg.ta = cpvadd(p, cpvrotate(seg.a, rot));
     seg.tb = cpvadd(p, cpvrotate(seg.b, rot));
@@ -440,7 +440,7 @@ static cpBB cpSegmentShapeCacheData(cpSegmentShape* seg, cpVect p, cpVect rot)
     return cpBBNew(l - rad, b - rad, r + rad, t + rad);
 }
 
-static void cpSegmentShapeNearestPointQuery(cpSegmentShape* seg, cpVect p, cpNearestPointQueryInfo* info)
+void cpSegmentShapeNearestPointQuery(cpSegmentShape* seg, cpVect p, cpNearestPointQueryInfo* info)
 {
     cpVect closest = cpClosetPointOnSegment(p, seg.ta, seg.tb);
 
@@ -457,7 +457,7 @@ static void cpSegmentShapeNearestPointQuery(cpSegmentShape* seg, cpVect p, cpNea
     info.g = (d > MAGIC_EPSILON ? g : seg.n);
 }
 
-static void cpSegmentShapeSegmentQuery(cpSegmentShape* seg, cpVect a, cpVect b, cpSegmentQueryInfo* info)
+void cpSegmentShapeSegmentQuery(cpSegmentShape* seg, cpVect a, cpVect b, cpSegmentQueryInfo* info)
 {
     cpVect  n = seg.tn;
     cpFloat d = cpvdot(cpvsub(seg.ta, a), n);

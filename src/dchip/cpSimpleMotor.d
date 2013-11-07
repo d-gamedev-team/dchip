@@ -45,7 +45,7 @@ struct cpSimpleMotor
 
 mixin CP_DefineConstraintProperty!("cpSimpleMotor", cpFloat, "rate", "Rate");
 
-static void preStep(cpSimpleMotor* joint, cpFloat dt)
+void preStep(cpSimpleMotor* joint, cpFloat dt)
 {
     cpBody* a = joint.constraint.a;
     cpBody* b = joint.constraint.b;
@@ -54,7 +54,7 @@ static void preStep(cpSimpleMotor* joint, cpFloat dt)
     joint.iSum = 1.0f / (a.i_inv + b.i_inv);
 }
 
-static void applyCachedImpulse(cpSimpleMotor* joint, cpFloat dt_coef)
+void applyCachedImpulse(cpSimpleMotor* joint, cpFloat dt_coef)
 {
     cpBody* a = joint.constraint.a;
     cpBody* b = joint.constraint.b;
@@ -64,7 +64,7 @@ static void applyCachedImpulse(cpSimpleMotor* joint, cpFloat dt_coef)
     b.w += j * b.i_inv;
 }
 
-static void applyImpulse(cpSimpleMotor* joint, cpFloat dt)
+void applyImpulse(cpSimpleMotor* joint, cpFloat dt)
 {
     cpBody* a = joint.constraint.a;
     cpBody* b = joint.constraint.b;
@@ -85,7 +85,7 @@ static void applyImpulse(cpSimpleMotor* joint, cpFloat dt)
     b.w += j * b.i_inv;
 }
 
-static cpFloat getImpulse(cpSimpleMotor* joint)
+cpFloat getImpulse(cpSimpleMotor* joint)
 {
     return cpfabs(joint.jAcc);
 }

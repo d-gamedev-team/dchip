@@ -144,7 +144,7 @@ enum CP_CONTACTS_BUFFER_SIZE = (CP_BUFFER_BYTES - cpContactBufferHeader.sizeof) 
 struct cpContactBuffer
 {
     cpContactBufferHeader header;
-    cpContact contacts[CP_CONTACTS_BUFFER_SIZE];
+    cpContact[CP_CONTACTS_BUFFER_SIZE] contacts;
 }
 
 cpContactBufferHeader* cpSpaceAllocContactBuffer(cpSpace* space)

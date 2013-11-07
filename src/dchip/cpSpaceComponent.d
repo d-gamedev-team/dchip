@@ -35,6 +35,7 @@ import dchip.cpSpaceStep;
 import dchip.cpSpaceQuery;
 import dchip.cpSpatialIndex;
 import dchip.cpVect;
+import dchip.util;
 
 void cpSpaceActivateBody(cpSpace* space, cpBody* body_)
 {
@@ -319,6 +320,6 @@ void cpSpaceActivateShapesTouchingShape(cpSpace* space, cpShape* shape)
 {
     if (space.sleepTimeThreshold != INFINITY)
     {
-        cpSpaceShapeQuery(space, shape, cast(cpSpaceShapeQueryFunc)&activateTouchingHelper, shape);
+        cpSpaceShapeQuery(space, shape, safeCast!cpSpaceShapeQueryFunc(&activateTouchingHelper), shape);
     }
 }

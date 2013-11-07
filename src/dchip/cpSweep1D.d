@@ -27,6 +27,7 @@ import dchip.chipmunk;
 import dchip.chipmunk_types;
 import dchip.cpBB;
 import dchip.cpSpatialIndex;
+import dchip.util;
 
 struct Bounds
 {
@@ -221,7 +222,7 @@ void cpSweep1DReindexQuery(cpSweep1D* sweep, cpSpatialIndexQueryFunc func, void*
 
     alias extern(C) int function(const void*, const void*) TableSortFunc;
 
-    qsort(table, count, TableCell.sizeof, cast(TableSortFunc)&TableSort);       // TODO use insertion sort instead
+    qsort(table, count, TableCell.sizeof, safeCast!TableSortFunc(&TableSort));       // TODO use insertion sort instead
 
     for (int i = 0; i < count; i++)
     {

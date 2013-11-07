@@ -52,7 +52,7 @@ mixin CP_DefineConstraintProperty!("cpSlideJoint", cpVect, "anchr2", "Anchr2");
 mixin CP_DefineConstraintProperty!("cpSlideJoint", cpFloat, "min", "Min");
 mixin CP_DefineConstraintProperty!("cpSlideJoint", cpFloat, "max", "Max");
 
-static void preStep(cpSlideJoint* joint, cpFloat dt)
+void preStep(cpSlideJoint* joint, cpFloat dt)
 {
     cpBody* a = joint.constraint.a;
     cpBody* b = joint.constraint.b;
@@ -88,7 +88,7 @@ static void preStep(cpSlideJoint* joint, cpFloat dt)
     joint.bias = cpfclamp(-bias_coef(joint.constraint.errorBias, dt) * pdist / dt, -maxBias, maxBias);
 }
 
-static void applyCachedImpulse(cpSlideJoint* joint, cpFloat dt_coef)
+void applyCachedImpulse(cpSlideJoint* joint, cpFloat dt_coef)
 {
     cpBody* a = joint.constraint.a;
     cpBody* b = joint.constraint.b;
@@ -97,7 +97,7 @@ static void applyCachedImpulse(cpSlideJoint* joint, cpFloat dt_coef)
     apply_impulses(a, b, joint.r1, joint.r2, j);
 }
 
-static void applyImpulse(cpSlideJoint* joint, cpFloat dt)
+void applyImpulse(cpSlideJoint* joint, cpFloat dt)
 {
     if (cpveql(joint.n, cpvzero))
         return;                                // early exit
@@ -123,7 +123,7 @@ static void applyImpulse(cpSlideJoint* joint, cpFloat dt)
     apply_impulses(a, b, joint.r1, joint.r2, cpvmult(n, jn));
 }
 
-static cpFloat getImpulse(cpConstraint* joint)
+cpFloat getImpulse(cpConstraint* joint)
 {
     return cpfabs((cast(cpSlideJoint*)joint).jnAcc);
 }

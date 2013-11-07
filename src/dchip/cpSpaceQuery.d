@@ -78,7 +78,7 @@ void PointQueryFirst(cpShape* shape, cpShape** outShape)
 cpShape* cpSpacePointQueryFirst(cpSpace* space, cpVect point, cpLayers layers, cpGroup group)
 {
     cpShape* shape = null;
-    cpSpacePointQuery(space, point, layers, group, cast(cpSpacePointQueryFunc)&PointQueryFirst, &shape);
+    cpSpacePointQuery(space, point, layers, group, safeCast!cpSpacePointQueryFunc(&PointQueryFirst), &shape);
 
     return shape;
 }

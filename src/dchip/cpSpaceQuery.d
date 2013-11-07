@@ -92,7 +92,7 @@ struct NearestPointQueryContext
     cpLayers layers;
     cpGroup group;
     cpSpaceNearestPointQueryFunc func;
-};
+}
 
 cpCollisionID NearestPointQuery(NearestPointQueryContext* context, cpShape* shape, cpCollisionID id, void* data)
 {

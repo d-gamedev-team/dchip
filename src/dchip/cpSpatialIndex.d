@@ -104,7 +104,7 @@ struct cpSpatialIndexClass
 
     cpSpatialIndexQueryImpl query;
     cpSpatialIndexSegmentQueryImpl segmentQuery;
-};
+}
 
 struct dynamicToStaticContext
 {

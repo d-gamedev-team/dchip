@@ -57,7 +57,7 @@ enum WARN_EPA_ITERATIONS = 20;
 // Add contact points for circle to circle collisions.
 // Used by several collision tests.
 // TODO should accept hash parameter
-static int CircleToCircleQuery(const cpVect p1, const cpVect p2, const cpFloat r1, const cpFloat r2, cpHashValue hash, cpContact* con)
+int CircleToCircleQuery(const cpVect p1, const cpVect p2, const cpFloat r1, const cpFloat r2, cpHashValue hash, cpContact* con)
 {
     cpFloat mindist = r1 + r2;
     cpVect  delta   = cpvsub(p2, p1);
@@ -183,7 +183,7 @@ Edge EdgeNew(cpVect va, cpVect vb, cpHashValue ha, cpHashValue hb, cpFloat r)
     return edge;
 }
 
-static Edge SupportEdgeForPoly(const cpPolyShape* poly, const cpVect n)
+Edge SupportEdgeForPoly(const cpPolyShape* poly, const cpVect n)
 {
     int numVerts = poly.numVerts;
     int i1       = PolySupportPointIndex(poly.numVerts, poly.tVerts, n);
@@ -206,7 +206,7 @@ static Edge SupportEdgeForPoly(const cpPolyShape* poly, const cpVect n)
     }
 }
 
-static Edge SupportEdgeForSegment(const cpSegmentShape* seg, const cpVect n)
+Edge SupportEdgeForSegment(const cpSegmentShape* seg, const cpVect n)
 {
     if (cpvdot(seg.tn, n) > 0.0)
     {
@@ -275,7 +275,7 @@ cpFloat ClosestDist(const cpVect v0, const cpVect v1)
     return cpvlengthsq(LerpT(v0, v1, ClosestT(v0, v1)));
 }
 
-static ClosestPoints EPARecurse(const SupportContext* ctx, const int count, const MinkowskiPoint* hull, const int iteration)
+ClosestPoints EPARecurse(const SupportContext* ctx, const int count, const MinkowskiPoint* hull, const int iteration)
 {
     int mini        = 0;
     cpFloat minDist = INFINITY;
@@ -343,7 +343,7 @@ static ClosestPoints EPARecurse(const SupportContext* ctx, const int count, cons
     }
 }
 
-static ClosestPoints EPA(const SupportContext* ctx, const MinkowskiPoint v0, const MinkowskiPoint v1, const MinkowskiPoint v2)
+ClosestPoints EPA(const SupportContext* ctx, const MinkowskiPoint v0, const MinkowskiPoint v1, const MinkowskiPoint v2)
 {
     // TODO: allocate a NxM array here and do an in place convex hull reduction in EPARecurse
     MinkowskiPoint hull[3];
@@ -417,7 +417,7 @@ ClosestPoints GJKRecurse(const SupportContext* ctx, const MinkowskiPoint v0, con
     }
 }
 
-static SupportPoint ShapePoint(const cpShape* shape, const int i)
+SupportPoint ShapePoint(const cpShape* shape, const int i)
 {
     switch (shape.klass.type)
     {
@@ -448,7 +448,7 @@ static SupportPoint ShapePoint(const cpShape* shape, const int i)
     }
 }
 
-static ClosestPoints GJK(const SupportContext* ctx, cpCollisionID* id)
+ClosestPoints GJK(const SupportContext* ctx, cpCollisionID* id)
 {
 /+ #if DRAW_GJK || DRAW_EPA
 
@@ -621,12 +621,12 @@ int ContactPoints(const Edge e1, const Edge e2, const ClosestPoints points, cpCo
 alias CollisionFunc = int function(const cpShape* a, const cpShape* b, cpCollisionID* id, cpContact* arr);
 
 // Collide circle shapes.
-static int CircleToCircle(const cpCircleShape* c1, const cpCircleShape* c2, cpCollisionID* id, cpContact* arr)
+int CircleToCircle(const cpCircleShape* c1, const cpCircleShape* c2, cpCollisionID* id, cpContact* arr)
 {
     return CircleToCircleQuery(c1.tc, c2.tc, c1.r, c2.r, 0, arr);
 }
 
-static int CircleToSegment(const cpCircleShape* circleShape, const cpSegmentShape* segmentShape, cpCollisionID* id, cpContact* con)
+int CircleToSegment(const cpCircleShape* circleShape, const cpSegmentShape* segmentShape, cpCollisionID* id, cpContact* con)
 {
     cpVect seg_a  = segmentShape.ta;
     cpVect seg_b  = segmentShape.tb;
@@ -653,7 +653,7 @@ static int CircleToSegment(const cpCircleShape* circleShape, const cpSegmentShap
     return 0;
 }
 
-static int SegmentToSegment(const cpSegmentShape* seg1, const cpSegmentShape* seg2, cpCollisionID* id, cpContact* arr)
+int SegmentToSegment(const cpSegmentShape* seg1, const cpSegmentShape* seg2, cpCollisionID* id, cpContact* arr)
 {
     SupportContext context = { cast(cpShape*)seg1, cast(cpShape*)seg2, cast(SupportPointFunc)&SegmentSupportPoint, cast(SupportPointFunc)&SegmentSupportPoint };
     ClosestPoints  points  = GJK(&context, id);
@@ -692,7 +692,7 @@ static int SegmentToSegment(const cpSegmentShape* seg1, const cpSegmentShape* se
     }
 }
 
-static int PolyToPoly(const cpPolyShape* poly1, const cpPolyShape* poly2, cpCollisionID* id, cpContact* arr)
+int PolyToPoly(const cpPolyShape* poly1, const cpPolyShape* poly2, cpCollisionID* id, cpContact* arr)
 {
     SupportContext context = { cast(cpShape*)poly1, cast(cpShape*)poly2, cast(SupportPointFunc)&PolySupportPoint, cast(SupportPointFunc)&PolySupportPoint };
     ClosestPoints  points  = GJK(&context, id);
@@ -719,7 +719,7 @@ static int PolyToPoly(const cpPolyShape* poly1, const cpPolyShape* poly2, cpColl
     }
 }
 
-static int SegmentToPoly(const cpSegmentShape* seg, const cpPolyShape* poly, cpCollisionID* id, cpContact* arr)
+int SegmentToPoly(const cpSegmentShape* seg, const cpPolyShape* poly, cpCollisionID* id, cpContact* arr)
 {
     SupportContext context = { cast(cpShape*)seg, cast(cpShape*)poly, cast(SupportPointFunc)&SegmentSupportPoint, cast(SupportPointFunc)&PolySupportPoint };
     ClosestPoints  points  = GJK(&context, id);
@@ -758,7 +758,7 @@ static int SegmentToPoly(const cpSegmentShape* seg, const cpPolyShape* poly, cpC
 
 // This one is less gross, but still gross.
 // TODO: Comment me!
-static int CircleToPoly(const cpCircleShape* circle, const cpPolyShape* poly, cpCollisionID* id, cpContact* con)
+int CircleToPoly(const cpCircleShape* circle, const cpPolyShape* poly, cpCollisionID* id, cpContact* con)
 {
     SupportContext context = { cast(cpShape*)circle, cast(cpShape*)poly, cast(SupportPointFunc)&CircleSupportPoint, cast(SupportPointFunc)&PolySupportPoint };
     ClosestPoints  points  = GJK(&context, id);

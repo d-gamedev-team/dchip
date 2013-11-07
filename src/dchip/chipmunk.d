@@ -350,7 +350,7 @@ void SWAP(ref cpVect a, ref cpVect b)
     b = tmp;
 }
 
-static int QHullPartition(cpVect* verts, int count, cpVect a, cpVect b, cpFloat tol)
+int QHullPartition(cpVect* verts, int count, cpVect a, cpVect b, cpFloat tol)
 {
     if (count == 0)
         return 0;
@@ -390,7 +390,7 @@ static int QHullPartition(cpVect* verts, int count, cpVect a, cpVect b, cpFloat 
     return head;
 }
 
-static int QHullReduce(cpFloat tol, cpVect* verts, int count, cpVect a, cpVect pivot, cpVect b, cpVect* result)
+int QHullReduce(cpFloat tol, cpVect* verts, int count, cpVect a, cpVect pivot, cpVect b, cpVect* result)
 {
     if (count < 0)
     {

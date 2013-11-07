@@ -617,7 +617,7 @@ void cpSpaceFilterArbiters(cpSpace* space, cpBody* body_, cpShape* filter)
     cpSpaceLock(space);
     {
         arbiterFilterContext context = { space, body_, filter };
-        cpHashSetFilter(space.cachedArbiters, cast(cpHashSetFilterFunc)&cachedArbitersFilter, &context);
+        cpHashSetFilter(space.cachedArbiters, safeCast!cpHashSetFilterFunc(&cachedArbitersFilter), &context);
     }
     cpSpaceUnlock(space, cpTrue);
 }

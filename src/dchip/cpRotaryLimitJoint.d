@@ -47,7 +47,7 @@ struct cpRotaryLimitJoint
 mixin CP_DefineConstraintProperty!("cpRotaryLimitJoint", cpFloat, "min", "Min");
 mixin CP_DefineConstraintProperty!("cpRotaryLimitJoint", cpFloat, "max", "Max");
 
-static void preStep(cpRotaryLimitJoint* joint, cpFloat dt)
+void preStep(cpRotaryLimitJoint* joint, cpFloat dt)
 {
     cpBody* a = joint.constraint.a;
     cpBody* b = joint.constraint.b;
@@ -76,7 +76,7 @@ static void preStep(cpRotaryLimitJoint* joint, cpFloat dt)
         joint.jAcc = 0.0f;
 }
 
-static void applyCachedImpulse(cpRotaryLimitJoint* joint, cpFloat dt_coef)
+void applyCachedImpulse(cpRotaryLimitJoint* joint, cpFloat dt_coef)
 {
     cpBody* a = joint.constraint.a;
     cpBody* b = joint.constraint.b;
@@ -86,7 +86,7 @@ static void applyCachedImpulse(cpRotaryLimitJoint* joint, cpFloat dt_coef)
     b.w += j * b.i_inv;
 }
 
-static void applyImpulse(cpRotaryLimitJoint* joint, cpFloat dt)
+void applyImpulse(cpRotaryLimitJoint* joint, cpFloat dt)
 {
     if (!joint.bias)
         return;                  // early exit
@@ -118,7 +118,7 @@ static void applyImpulse(cpRotaryLimitJoint* joint, cpFloat dt)
     b.w += j * b.i_inv;
 }
 
-static cpFloat getImpulse(cpRotaryLimitJoint* joint)
+cpFloat getImpulse(cpRotaryLimitJoint* joint)
 {
     return cpfabs(joint.jAcc);
 }

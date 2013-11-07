@@ -35,6 +35,7 @@ import dchip.cpPolyShape;
 import dchip.cpShape;
 import dchip.cpSpace;
 import dchip.cpVect;
+import dchip.util;
 
 /+ #if DEBUG && 0
 #include "ChipmunkDemo.h"
@@ -103,7 +104,7 @@ struct SupportPoint
 {
     cpVect p;
     cpCollisionID id;
-};
+}
 
 SupportPoint SupportPointNew(cpVect p, cpCollisionID id)
 {
@@ -142,7 +143,7 @@ struct MinkowskiPoint
     cpVect a, b;
     cpVect ab;
     cpCollisionID id;
-};
+}
 
 MinkowskiPoint MinkowskiPointNew(const SupportPoint a, const SupportPoint b)
 {
@@ -155,7 +156,7 @@ struct SupportContext
     const cpShape* shape1;
     const cpShape* shape2;
     SupportPointFunc func1, func2;
-};
+}
 
 MinkowskiPoint Support(const SupportContext* ctx, const cpVect n)
 {
@@ -168,14 +169,14 @@ struct EdgePoint
 {
     cpVect p;
     cpHashValue hash;
-};
+}
 
 struct Edge
 {
     EdgePoint a, b;
     cpFloat r;
     cpVect n;
-};
+}
 
 Edge EdgeNew(cpVect va, cpVect vb, cpHashValue ha, cpHashValue hb, cpFloat r)
 {
@@ -238,7 +239,7 @@ struct ClosestPoints
     cpVect n;
     cpFloat d;
     cpCollisionID id;
-};
+}
 
 ClosestPoints ClosestPointsNew(const MinkowskiPoint v0, const MinkowskiPoint v1)
 {
@@ -655,7 +656,7 @@ int CircleToSegment(const cpCircleShape* circleShape, const cpSegmentShape* segm
 
 int SegmentToSegment(const cpSegmentShape* seg1, const cpSegmentShape* seg2, cpCollisionID* id, cpContact* arr)
 {
-    SupportContext context = { cast(cpShape*)seg1, cast(cpShape*)seg2, cast(SupportPointFunc)&SegmentSupportPoint, cast(SupportPointFunc)&SegmentSupportPoint };
+    SupportContext context = { cast(cpShape*)seg1, cast(cpShape*)seg2, safeCast!SupportPointFunc(&SegmentSupportPoint), safeCast!SupportPointFunc(&SegmentSupportPoint) };
     ClosestPoints  points  = GJK(&context, id);
 
 /+ #if DRAW_CLOSEST
@@ -694,7 +695,7 @@ int SegmentToSegment(const cpSegmentShape* seg1, const cpSegmentShape* seg2, cpC
 
 int PolyToPoly(const cpPolyShape* poly1, const cpPolyShape* poly2, cpCollisionID* id, cpContact* arr)
 {
-    SupportContext context = { cast(cpShape*)poly1, cast(cpShape*)poly2, cast(SupportPointFunc)&PolySupportPoint, cast(SupportPointFunc)&PolySupportPoint };
+    SupportContext context = { cast(cpShape*)poly1, cast(cpShape*)poly2, safeCast!SupportPointFunc(&PolySupportPoint), safeCast!SupportPointFunc(&PolySupportPoint) };
     ClosestPoints  points  = GJK(&context, id);
 
 /+ #if DRAW_CLOSEST
@@ -721,7 +722,7 @@ int PolyToPoly(const cpPolyShape* poly1, const cpPolyShape* poly2, cpCollisionID
 
 int SegmentToPoly(const cpSegmentShape* seg, const cpPolyShape* poly, cpCollisionID* id, cpContact* arr)
 {
-    SupportContext context = { cast(cpShape*)seg, cast(cpShape*)poly, cast(SupportPointFunc)&SegmentSupportPoint, cast(SupportPointFunc)&PolySupportPoint };
+    SupportContext context = { cast(cpShape*)seg, cast(cpShape*)poly, safeCast!SupportPointFunc(&SegmentSupportPoint), safeCast!SupportPointFunc(&PolySupportPoint) };
     ClosestPoints  points  = GJK(&context, id);
 
 /+ #if DRAW_CLOSEST
@@ -760,7 +761,7 @@ int SegmentToPoly(const cpSegmentShape* seg, const cpPolyShape* poly, cpCollisio
 // TODO: Comment me!
 int CircleToPoly(const cpCircleShape* circle, const cpPolyShape* poly, cpCollisionID* id, cpContact* con)
 {
-    SupportContext context = { cast(cpShape*)circle, cast(cpShape*)poly, cast(SupportPointFunc)&CircleSupportPoint, cast(SupportPointFunc)&PolySupportPoint };
+    SupportContext context = { cast(cpShape*)circle, cast(cpShape*)poly, safeCast!SupportPointFunc(&CircleSupportPoint), safeCast!SupportPointFunc(&PolySupportPoint) };
     ClosestPoints  points  = GJK(&context, id);
 
 /+ #if DRAW_CLOSEST
@@ -791,29 +792,29 @@ int CircleToPoly(const cpCircleShape* circle, const cpPolyShape* poly, cpCollisi
 void _initModuleCtor_cpCollision()
 {
     builtinCollisionFuncs = [
-        cast(CollisionFunc)&CircleToCircle,
+        safeCast!CollisionFunc(&CircleToCircle),
         null,
         null,
-        cast(CollisionFunc)&CircleToSegment,
+        safeCast!CollisionFunc(&CircleToSegment),
         null,
         null,
-        cast(CollisionFunc)&CircleToPoly,
-        cast(CollisionFunc)&SegmentToPoly,
-        cast(CollisionFunc)&PolyToPoly,
+        safeCast!CollisionFunc(&CircleToPoly),
+        safeCast!CollisionFunc(&SegmentToPoly),
+        safeCast!CollisionFunc(&PolyToPoly),
     ];
 
     colfuncs = builtinCollisionFuncs.ptr;
 
     segmentCollisions = [
-        cast(CollisionFunc)&CircleToCircle,
+        safeCast!CollisionFunc(&CircleToCircle),
         null,
         null,
-        cast(CollisionFunc)&CircleToSegment,
-        cast(CollisionFunc)&SegmentToSegment,
+        safeCast!CollisionFunc(&CircleToSegment),
+        safeCast!CollisionFunc(&SegmentToSegment),
         null,
-        cast(CollisionFunc)&CircleToPoly,
-        cast(CollisionFunc)&SegmentToPoly,
-        cast(CollisionFunc)&PolyToPoly,
+        safeCast!CollisionFunc(&CircleToPoly),
+        safeCast!CollisionFunc(&SegmentToPoly),
+        safeCast!CollisionFunc(&PolyToPoly),
     ];
 }
 

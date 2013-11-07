@@ -32,6 +32,7 @@ import dchip.cpSpaceStep;
 import dchip.cpSpatialIndex;
 import dchip.cpShape;
 import dchip.cpVect;
+import dchip.util;
 
 struct PointQueryContext
 {
@@ -62,8 +63,8 @@ void cpSpacePointQuery(cpSpace* space, cpVect point, cpLayers layers, cpGroup gr
 
     cpSpaceLock(space);
     {
-        cpSpatialIndexQuery(space.activeShapes, &context, bb, cast(cpSpatialIndexQueryFunc)&PointQuery, data);
-        cpSpatialIndexQuery(space.staticShapes, &context, bb, cast(cpSpatialIndexQueryFunc)&PointQuery, data);
+        cpSpatialIndexQuery(space.activeShapes, &context, bb, safeCast!cpSpatialIndexQueryFunc(&PointQuery), data);
+        cpSpatialIndexQuery(space.staticShapes, &context, bb, safeCast!cpSpatialIndexQueryFunc(&PointQuery), data);
     }
     cpSpaceUnlock(space, cpTrue);
 }

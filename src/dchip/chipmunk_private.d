@@ -151,7 +151,7 @@ struct cpPostStepCallback
 
 cpCollisionHandler* cpSpaceLookupHandler(cpSpace* space, cpCollisionType a, cpCollisionType b)
 {
-    cpCollisionType[2] types;
+    cpCollisionType[2] types = void;
     types[0] = a;
     types[1] = b;
     return cast(cpCollisionHandler*)cpHashSetFind(space.collisionHandlers, CP_HASH_PAIR(a, b), types.ptr);
@@ -160,7 +160,7 @@ cpCollisionHandler* cpSpaceLookupHandler(cpSpace* space, cpCollisionType a, cpCo
 void cpSpaceUncacheArbiter(cpSpace* space, cpArbiter* arb)
 {
     cpShape* a = arb.a, b = arb.b;
-    cpShape*[2] shape_pair;
+    cpShape*[2] shape_pair = void;
     shape_pair[0] = a;
     shape_pair[1] = b;
     cpHashValue arbHashID = CP_HASH_PAIR(cast(cpHashValue)a, cast(cpHashValue)b);
@@ -180,7 +180,7 @@ struct cpContact
     cpFloat bias;
 
     cpHashValue hash;
-};
+}
 
 void cpArbiterCallSeparate(cpArbiter* arb, cpSpace* space)
 {

@@ -40,7 +40,7 @@ struct PointQueryContext
     cpGroup group;
     cpSpacePointQueryFunc func;
     void* data;
-};
+}
 
 cpCollisionID PointQuery(PointQueryContext* context, cpShape* shape, cpCollisionID id, void* data)
 {

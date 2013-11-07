@@ -159,8 +159,8 @@ cpShape* cpSpaceNearestPointQueryNearest(cpSpace* space, cpVect point, cpFloat m
     };
 
     cpBB bb = cpBBNewForCircle(point, cpfmax(maxDistance, 0.0f));
-    cpSpatialIndexQuery(space.activeShapes, &context, bb, cast(cpSpatialIndexQueryFunc)&NearestPointQueryNearest, out_);
-    cpSpatialIndexQuery(space.staticShapes, &context, bb, cast(cpSpatialIndexQueryFunc)&NearestPointQueryNearest, out_);
+    cpSpatialIndexQuery(space.activeShapes, &context, bb, safeCast!cpSpatialIndexQueryFunc(&NearestPointQueryNearest), out_);
+    cpSpatialIndexQuery(space.staticShapes, &context, bb, safeCast!cpSpatialIndexQueryFunc(&NearestPointQueryNearest), out_);
 
     return out_.shape;
 }
@@ -173,7 +173,7 @@ struct SegmentQueryContext
     cpLayers layers;
     cpGroup group;
     cpSpaceSegmentQueryFunc func;
-};
+}
 
 cpFloat SegmentQuery(SegmentQueryContext* context, cpShape* shape, void* data)
 {
@@ -200,8 +200,8 @@ void cpSpaceSegmentQuery(cpSpace* space, cpVect start, cpVect end, cpLayers laye
 
     cpSpaceLock(space);
     {
-        cpSpatialIndexSegmentQuery(space.staticShapes, &context, start, end, 1.0f, cast(cpSpatialIndexSegmentQueryFunc)&SegmentQuery, data);
-        cpSpatialIndexSegmentQuery(space.activeShapes, &context, start, end, 1.0f, cast(cpSpatialIndexSegmentQueryFunc)&SegmentQuery, data);
+        cpSpatialIndexSegmentQuery(space.staticShapes, &context, start, end, 1.0f, safeCast!cpSpatialIndexSegmentQueryFunc(&SegmentQuery), data);
+        cpSpatialIndexSegmentQuery(space.activeShapes, &context, start, end, 1.0f, safeCast!cpSpatialIndexSegmentQueryFunc(&SegmentQuery), data);
     }
     cpSpaceUnlock(space, cpTrue);
 }
@@ -242,8 +242,8 @@ cpShape* cpSpaceSegmentQueryFirst(cpSpace* space, cpVect start, cpVect end, cpLa
         null
     };
 
-    cpSpatialIndexSegmentQuery(space.staticShapes, &context, start, end, 1.0f, cast(cpSpatialIndexSegmentQueryFunc)&SegmentQueryFirst, out_);
-    cpSpatialIndexSegmentQuery(space.activeShapes, &context, start, end, out_.t, cast(cpSpatialIndexSegmentQueryFunc)&SegmentQueryFirst, out_);
+    cpSpatialIndexSegmentQuery(space.staticShapes, &context, start, end, 1.0f, safeCast!cpSpatialIndexSegmentQueryFunc(&SegmentQueryFirst), out_);
+    cpSpatialIndexSegmentQuery(space.activeShapes, &context, start, end, out_.t, safeCast!cpSpatialIndexSegmentQueryFunc(&SegmentQueryFirst), out_);
 
     return out_.shape;
 }
@@ -256,7 +256,7 @@ struct BBQueryContext
     cpLayers layers;
     cpGroup group;
     cpSpaceBBQueryFunc func;
-};
+}
 
 cpCollisionID BBQuery(BBQueryContext* context, cpShape* shape, cpCollisionID id, void* data)
 {
@@ -277,8 +277,8 @@ void cpSpaceBBQuery(cpSpace* space, cpBB bb, cpLayers layers, cpGroup group, cpS
 
     cpSpaceLock(space);
     {
-        cpSpatialIndexQuery(space.activeShapes, &context, bb, cast(cpSpatialIndexQueryFunc)&BBQuery, data);
-        cpSpatialIndexQuery(space.staticShapes, &context, bb, cast(cpSpatialIndexQueryFunc)&BBQuery, data);
+        cpSpatialIndexQuery(space.activeShapes, &context, bb, safeCast!cpSpatialIndexQueryFunc(&BBQuery), data);
+        cpSpatialIndexQuery(space.staticShapes, &context, bb, safeCast!cpSpatialIndexQueryFunc(&BBQuery), data);
     }
     cpSpaceUnlock(space, cpTrue);
 }
@@ -290,7 +290,7 @@ struct ShapeQueryContext
     cpSpaceShapeQueryFunc func;
     void* data;
     cpBool anyCollision;
-};
+}
 
 // Callback from the spatial hash.
 cpCollisionID ShapeQuery(cpShape* a, cpShape* b, cpCollisionID id, ShapeQueryContext* context)
@@ -350,8 +350,8 @@ cpBool cpSpaceShapeQuery(cpSpace* space, cpShape* shape, cpSpaceShapeQueryFunc f
 
     cpSpaceLock(space);
     {
-        cpSpatialIndexQuery(space.activeShapes, shape, bb, cast(cpSpatialIndexQueryFunc)&ShapeQuery, &context);
-        cpSpatialIndexQuery(space.staticShapes, shape, bb, cast(cpSpatialIndexQueryFunc)&ShapeQuery, &context);
+        cpSpatialIndexQuery(space.activeShapes, shape, bb, safeCast!cpSpatialIndexQueryFunc(&ShapeQuery), &context);
+        cpSpatialIndexQuery(space.staticShapes, shape, bb, safeCast!cpSpatialIndexQueryFunc(&ShapeQuery), &context);
     }
     cpSpaceUnlock(space, cpTrue);
 

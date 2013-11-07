@@ -26,7 +26,7 @@ import dchip.chipmunk;
 // Used for resizing hash tables.
 // Values approximately double.
 // http://planetmath.org/encyclopedia/GoodHashTablePrimes.html
-int primes[] = [
+immutable primes = [
     5,
     13,
     23,

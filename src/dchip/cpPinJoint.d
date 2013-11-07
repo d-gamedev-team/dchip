@@ -51,7 +51,7 @@ mixin CP_DefineConstraintProperty!("cpPinJoint", cpVect, "anchr1", "Anchr1");
 mixin CP_DefineConstraintProperty!("cpPinJoint", cpVect, "anchr2", "Anchr2");
 mixin CP_DefineConstraintProperty!("cpPinJoint", cpFloat, "dist", "Dist");
 
-static void preStep(cpPinJoint* joint, cpFloat dt)
+void preStep(cpPinJoint* joint, cpFloat dt)
 {
     cpBody* a = joint.constraint.a;
     cpBody* b = joint.constraint.b;
@@ -71,7 +71,7 @@ static void preStep(cpPinJoint* joint, cpFloat dt)
     joint.bias = cpfclamp(-bias_coef(joint.constraint.errorBias, dt) * (dist - joint.dist) / dt, -maxBias, maxBias);
 }
 
-static void applyCachedImpulse(cpPinJoint* joint, cpFloat dt_coef)
+void applyCachedImpulse(cpPinJoint* joint, cpFloat dt_coef)
 {
     cpBody* a = joint.constraint.a;
     cpBody* b = joint.constraint.b;
@@ -80,7 +80,7 @@ static void applyCachedImpulse(cpPinJoint* joint, cpFloat dt_coef)
     apply_impulses(a, b, joint.r1, joint.r2, j);
 }
 
-static void applyImpulse(cpPinJoint* joint, cpFloat dt)
+void applyImpulse(cpPinJoint* joint, cpFloat dt)
 {
     cpBody* a = joint.constraint.a;
     cpBody* b = joint.constraint.b;
@@ -101,7 +101,7 @@ static void applyImpulse(cpPinJoint* joint, cpFloat dt)
     apply_impulses(a, b, joint.r1, joint.r2, cpvmult(n, jn));
 }
 
-static cpFloat getImpulse(cpPinJoint* joint)
+cpFloat getImpulse(cpPinJoint* joint)
 {
     return cpfabs(joint.jnAcc);
 }

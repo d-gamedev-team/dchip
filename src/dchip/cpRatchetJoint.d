@@ -48,7 +48,7 @@ mixin CP_DefineConstraintProperty!("cpRatchetJoint", cpFloat, "angle", "Angle");
 mixin CP_DefineConstraintProperty!("cpRatchetJoint", cpFloat, "phase", "Phase");
 mixin CP_DefineConstraintProperty!("cpRatchetJoint", cpFloat, "ratchet", "Ratchet");
 
-static void preStep(cpRatchetJoint* joint, cpFloat dt)
+void preStep(cpRatchetJoint* joint, cpFloat dt)
 {
     cpBody* a = joint.constraint.a;
     cpBody* b = joint.constraint.b;
@@ -82,7 +82,7 @@ static void preStep(cpRatchetJoint* joint, cpFloat dt)
         joint.jAcc = 0.0f;
 }
 
-static void applyCachedImpulse(cpRatchetJoint* joint, cpFloat dt_coef)
+void applyCachedImpulse(cpRatchetJoint* joint, cpFloat dt_coef)
 {
     cpBody* a = joint.constraint.a;
     cpBody* b = joint.constraint.b;
@@ -92,7 +92,7 @@ static void applyCachedImpulse(cpRatchetJoint* joint, cpFloat dt_coef)
     b.w += j * b.i_inv;
 }
 
-static void applyImpulse(cpRatchetJoint* joint, cpFloat dt)
+void applyImpulse(cpRatchetJoint* joint, cpFloat dt)
 {
     if (!joint.bias)
         return;                  // early exit
@@ -117,7 +117,7 @@ static void applyImpulse(cpRatchetJoint* joint, cpFloat dt)
     b.w += j * b.i_inv;
 }
 
-static cpFloat getImpulse(cpRatchetJoint* joint)
+cpFloat getImpulse(cpRatchetJoint* joint)
 {
     return cpfabs(joint.jAcc);
 }

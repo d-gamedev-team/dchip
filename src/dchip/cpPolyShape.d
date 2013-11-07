@@ -55,7 +55,7 @@ cpPolyShape* cpPolyShapeAlloc()
     return cast(cpPolyShape*)cpcalloc(1, cpPolyShape.sizeof);
 }
 
-static cpBB cpPolyShapeTransformVerts(cpPolyShape* poly, cpVect p, cpVect rot)
+cpBB cpPolyShapeTransformVerts(cpPolyShape* poly, cpVect p, cpVect rot)
 {
     cpVect* src = poly.verts;
     cpVect* dst = poly.tVerts;
@@ -78,7 +78,7 @@ static cpBB cpPolyShapeTransformVerts(cpPolyShape* poly, cpVect p, cpVect rot)
     return cpBBNew(l - radius, b - radius, r + radius, t + radius);
 }
 
-static void cpPolyShapeTransformAxes(cpPolyShape* poly, cpVect p, cpVect rot)
+void cpPolyShapeTransformAxes(cpPolyShape* poly, cpVect p, cpVect rot)
 {
     cpSplittingPlane* src = poly.planes;
     cpSplittingPlane* dst = poly.tPlanes;
@@ -91,7 +91,7 @@ static void cpPolyShapeTransformAxes(cpPolyShape* poly, cpVect p, cpVect rot)
     }
 }
 
-static cpBB cpPolyShapeCacheData(cpPolyShape* poly, cpVect p, cpVect rot)
+cpBB cpPolyShapeCacheData(cpPolyShape* poly, cpVect p, cpVect rot)
 {
     cpPolyShapeTransformAxes(poly, p, rot);
     cpBB bb = poly.shape.bb = cpPolyShapeTransformVerts(poly, p, rot);
@@ -99,13 +99,13 @@ static cpBB cpPolyShapeCacheData(cpPolyShape* poly, cpVect p, cpVect rot)
     return bb;
 }
 
-static void cpPolyShapeDestroy(cpPolyShape* poly)
+void cpPolyShapeDestroy(cpPolyShape* poly)
 {
     cpfree(poly.verts);
     cpfree(poly.planes);
 }
 
-static void cpPolyShapeNearestPointQuery(cpPolyShape* poly, cpVect p, cpNearestPointQueryInfo* info)
+void cpPolyShapeNearestPointQuery(cpPolyShape* poly, cpVect p, cpNearestPointQueryInfo* info)
 {
     int count = poly.numVerts;
     cpSplittingPlane* planes = poly.tPlanes;
@@ -149,7 +149,7 @@ static void cpPolyShapeNearestPointQuery(cpPolyShape* poly, cpVect p, cpNearestP
     info.g = (minDist > MAGIC_EPSILON ? g : closestNormal);
 }
 
-static void cpPolyShapeSegmentQuery(cpPolyShape* poly, cpVect a, cpVect b, cpSegmentQueryInfo* info)
+void cpPolyShapeSegmentQuery(cpPolyShape* poly, cpVect a, cpVect b, cpSegmentQueryInfo* info)
 {
     cpSplittingPlane* axes = poly.tPlanes;
     cpVect* verts = poly.tVerts;
@@ -247,7 +247,7 @@ cpFloat cpPolyShapeGetRadius(const cpShape* shape)
     return (cast(cpPolyShape*)shape).r;
 }
 
-static void setUpVerts(cpPolyShape* poly, int numVerts, const cpVect* verts, cpVect offset)
+void setUpVerts(cpPolyShape* poly, int numVerts, const cpVect* verts, cpVect offset)
 {
     // Fail if the user attempts to pass a concave poly, or a bad winding.
     cpAssertHard(cpPolyValidate(verts, numVerts), "Polygon is concave or has a reversed winding. Consider using cpConvexHull().");

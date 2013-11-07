@@ -702,7 +702,7 @@ void cpBBTreeDestroy(cpBBTree* tree)
 
 void cpBBTreeInsert(cpBBTree* tree, void* obj, cpHashValue hashid)
 {
-    Node* leaf = cast(Node*)cpHashSetInsert(tree.leaves, hashid, obj, tree, cast(cpHashSetTransFunc)&leafSetTrans);
+    Node* leaf = cast(Node*)cpHashSetInsert(tree.leaves, hashid, obj, tree, safeCast!cpHashSetTransFunc(&leafSetTrans));
 
     Node* root = tree.root;
     tree.root = SubtreeInsert(root, leaf, tree);
@@ -892,7 +892,7 @@ Node* partitionNodes(cpBBTree* tree, Node** nodes, int count)
 
     alias extern(C) int function(const void*, const void*) CompareFunc;
 
-    qsort(bounds, count * 2, cpFloat.sizeof, cast(CompareFunc)&cpfcompare);
+    qsort(bounds, count * 2, cpFloat.sizeof, safeCast!CompareFunc(&cpfcompare));
     cpFloat split = (bounds[count - 1] + bounds[count]) * 0.5f;   // use the medain as the split
     cpfree(bounds);
 

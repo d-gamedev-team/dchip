@@ -71,7 +71,7 @@ string cpvstr(const cpVect v)
     import std.string : sformat;
 
     static char[256] str;
-    sformat(str, "(% .3f, % .3f)", v.x, v.y);
+    sformat(str, "(% .3s, % .3s)", v.x, v.y);
     return assumeUnique(str);
 }
 

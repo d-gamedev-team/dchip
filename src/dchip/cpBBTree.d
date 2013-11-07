@@ -646,7 +646,7 @@ cpBBTree* cpBBTreeAlloc()
     return cast(cpBBTree*)cpcalloc(1, cpBBTree.sizeof);
 }
 
-int leafSetEql(void* obj, Node* node)
+bool leafSetEql(void* obj, Node* node)
 {
     return (obj == node.obj);
 }
@@ -662,7 +662,7 @@ cpSpatialIndex* cpBBTreeInit(cpBBTree* tree, cpSpatialIndexBBFunc bbfunc, cpSpat
 
     tree.velocityFunc = null;
 
-    tree.leaves = cpHashSetNew(0, cast(cpHashSetEqlFunc)&leafSetEql);
+    tree.leaves = cpHashSetNew(0, safeCast!cpHashSetEqlFunc(&leafSetEql));
     tree.root   = null;
 
     tree.pooledNodes      = null;

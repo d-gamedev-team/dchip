@@ -233,7 +233,7 @@ struct cpSegmentShape
     cpVect a_tangent, b_tangent;
 }
 
-static cpHashValue cpShapeIDCounter = 0;
+cpHashValue cpShapeIDCounter = 0;
 
 void cpResetShapeIdCounter()
 {

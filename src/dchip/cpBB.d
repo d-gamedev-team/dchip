@@ -33,11 +33,7 @@ struct cpBB
 }
 
 /// Convenience constructor for cpBB structs.
-cpBB cpBBNew(const cpFloat l, const cpFloat b, const cpFloat r, const cpFloat t)
-{
-    cpBB bb = { l, b, r, t };
-    return bb;
-}
+alias cpBBNew = cpBB;
 
 /// Constructs a cpBB for a circle with the given position and radius.
 cpBB cpBBNewForCircle(const cpVect p, const cpFloat r)

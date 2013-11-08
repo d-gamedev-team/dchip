@@ -30,8 +30,6 @@ import demo.dchip;
 import glad.gl.all;
 import glad.gl.loader;
 
-auto CHECK_GL_ERRORS() { CheckGLErrors(); }
-
 string SET_ATTRIBUTE(string program, string type, string name, string gltype)
 {
     return q{

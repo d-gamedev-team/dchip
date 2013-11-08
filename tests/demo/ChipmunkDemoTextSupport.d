@@ -110,11 +110,11 @@ void ChipmunkDemoTextInit()
         });
 
     program = LinkProgram(vshader, fshader);
-    CHECK_GL_ERRORS();
+    CheckGLErrors();
 
     //	GLint index = -1;//glGetUniformLocation(program, "u_texture");
     //	glUniform1i(index, 0);
-    //	CHECK_GL_ERRORS();
+    //	CheckGLErrors();
 
     // Setu VBO and VAO.
     version (OSX)
@@ -146,7 +146,7 @@ void ChipmunkDemoTextInit()
         glBindVertexArray(0);
     }
 
-    CHECK_GL_ERRORS();
+    CheckGLErrors();
 
     // Load the SDF font texture.
     glGenTextures(1, &texture);
@@ -157,7 +157,7 @@ void ChipmunkDemoTextInit()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-    CHECK_GL_ERRORS();
+    CheckGLErrors();
 
     // Fill in the glyph index array.
     for (int i = 0; i < sdf_num_chars; i++)
@@ -271,7 +271,7 @@ void ChipmunkDemoTextFlushRenderer()
 
     glDrawArrays(GL_TRIANGLES, 0, cast(GLsizei)(triangle_count * 3));
 
-    CHECK_GL_ERRORS();
+    CheckGLErrors();
 }
 
 void ChipmunkDemoTextClearRenderer()

@@ -29,11 +29,7 @@ import dchip.chipmunk_types;
 immutable cpVect cpvzero = { 0.0f, 0.0f };
 
 /// Convenience constructor for cpVect structs.
-cpVect cpv(const cpFloat x, const cpFloat y)
-{
-    cpVect v = { x, y };
-    return v;
-}
+alias cpv = cpVect;
 
 /// Spherical linearly interpolate between v1 and v2.
 cpVect cpvslerp(const cpVect v1, const cpVect v2, const cpFloat t)

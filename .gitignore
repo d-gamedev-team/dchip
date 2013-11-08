@@ -24,3 +24,7 @@
 *.xml
 *.deps
 *.modTime
+*.exe_cv
+*.gui
+*.pdb
+*.zip

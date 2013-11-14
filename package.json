@@ -2,13 +2,14 @@
     "description": "dchip is a D2 port of the Chipmunk2D physics library.",
     "targetName": "dchip",
     "authors": [
-        "Andrej Mitrovic"
+        "Scott Lembcke and Howling Moon Software",
+        "Andrej Mitrovic",
     ],
     "license": "MIT",
     "version": "~master",
     "homepage": "https://github.com/AndrejMitrovic/dchip",
     "name": "dchip",
-    "copyright": "Copyright © 2013, Andrej Mitrovic",
+    "copyright": "Copyright (c) 2007-2013 Scott Lembcke and Howling Moon Software",
     "targetType": "staticLibrary",
     "excludedSourceFiles": ["src/dchip/package.d"],
     "sourcePaths": [

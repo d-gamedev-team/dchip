@@ -5,7 +5,7 @@ rem Build options
 rem -------------
 set do_build_tests=1
 set do_run_tests=1
-rem set do_build_lib=1
+set do_build_lib=1
 
 set this_path=%~dp0
 set dchip_root=%this_path%\..
@@ -35,8 +35,8 @@ set includes=-I%cd%
 set version_flags=%CHIP_ALLOW_PRIVATE_ACCESS% %CHIP_ENABLE_WARNINGS% %CHIP_USE_DOUBLES%
 set flags=%includes% %version_flags% -g -w
 
-rem set compiler=dmd.exe
-set compiler=dmd_msc.exe
+set compiler=dmd.exe
+rem set compiler=dmd_msc.exe
 rem set compiler=ldmd2.exe
 
 set main_file=dchip\all.d
@@ -78,7 +78,7 @@ if [%do_build_lib%]==[] goto :eof
 
 set "files="
 for /r %%i in (*.d) do (
-    if [%%i] neq [C:\dev\projects\dchip\src\dchip\package.d] set files=!files! %%i
+    if [%%i] neq [%cd%\dchip\package.d] set files=!files! %%i
 )
 
 %compiler% -of%bin_path%\dchip.lib -lib %flags% %files%

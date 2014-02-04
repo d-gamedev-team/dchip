@@ -105,6 +105,9 @@ dub --config=demo
 # Similar to the above, but demos were based on the older v5.3.5 version and they
 # use the [SDL] library (which means you'll have to install [SDL] to run it).
 dub --config=old_demo
+
+# Build with another compiler, in release mode
+dub --compiler=ldc2 --build=release
 ```
 
 **Note**: The `old_demo` examples are based on the v5.3.5 version and require
@@ -114,7 +117,11 @@ dub --config=old_demo
 running the samples. The samples should still be built and located in the
 `dchip\tests\bin` subfolder.
 
-**Note**: Building with LDC2 on Windows might produce crashing applications.
+**Note**: As of 04 February 2014, building with LDC2 from the latest prepackaged
+binary of LDC2 on Windows might produce crashing applications.
+However the latest LDC2 built from source (commit `704ab30001582dc67084e6ea8967e61e8112d595`)
+using the [MinGW instructions](http://wiki.dlang.org/Building_LDC_on_MinGW_x86)
+is known to work.
 
 ### Using Windows-specific build scripts
 

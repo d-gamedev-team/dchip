@@ -106,7 +106,7 @@ dub --config=demo
 # use the [SDL] library (which means you'll have to install [SDL] to run it).
 dub --config=old_demo
 
-# Build with another compiler, in release mode
+# Build with another compiler, in release mode (Run `dub build --help` for more help)
 dub --compiler=ldc2 --build=release
 ```
 

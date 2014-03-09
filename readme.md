@@ -38,6 +38,10 @@ and [Howling Moon Software], and were ported to D by [Andrej Mitrovic].
 [SDL]: http://www.libsdl.org
 [GLFW]: http://www.glfw.org
 
+## Compiler Version Compatibility
+
+Currently DMD v2.065 (or any other compiler based on the same fronted) is required.
+
 ## Building
 
 ### Using dub
@@ -45,10 +49,6 @@ and [Howling Moon Software], and were ported to D by [Andrej Mitrovic].
 You can use [dub] to make this library a dependency for your project.
 
 [dub]: http://code.dlang.org/about
-
-### Using Windows-specific build scripts
-
-You can use the `build.bat` script in the `dchip\build\` folder.
 
 ### Version switches
 
@@ -123,26 +123,6 @@ However the latest LDC2 built from source (commit `704ab30001582dc67084e6ea8967e
 using the [MinGW instructions](http://wiki.dlang.org/Building_LDC_on_MinGW_x86)
 is known to work.
 
-### Using Windows-specific build scripts
-
-There are `build.bat` scripts you can use to build the samples:
-
-```
-$ cd path\to\dchip\tests
-
-# Showcases a simple iteration of the physics engine without any drawing
-$ build\build.bat simple.d simple.d
-
-# Contains a series of visual and interactive demos, selectable with the keyboard.
-# Select each of the demo's by pressing the keys 'a' through 'y'.
-$ build\build.bat demo_run demo_run.d
-
-# Similar to above, but demos were based on the older v5.3. 5version and they also
-# use the [SDL] library (which means you'll have to get [SDL] to run it)
-$ cd old_demo
-$ build.bat
-```
-
 [SDL]: http://www.libsdl.org
 [GLFW]: http://www.glfw.org
 
@@ -158,7 +138,7 @@ come in handy:
 ## Usage
 
 You can import the `dchip.all` module to bring in the entire library at your disposal.
-Alternatively if you're using the latest compiler (e.g. 2.064+ or git-head) you may
+Alternatively if you're using the latest compiler (e.g. 2.065+ or git-head) you may
 use the new package module feature and import `dchip`.
 
 Most dchip types have getter and setter functions to access and modify internal fields,

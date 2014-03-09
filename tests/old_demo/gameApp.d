@@ -170,7 +170,7 @@ private:
     ///
     void runDemo(chipmunkDemo *demo)
     {
-        std.c.stdlib.srand(45073);
+        core.stdc.stdlib.srand(45073);
 
         currentDemo = demo;
 

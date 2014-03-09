@@ -122,7 +122,7 @@ static void
 destroy()
 {
     ChipmunkDemoFreeSpaceChildren(space);
-    cpSpaceFree(space);
+    // cpSpaceFree(space);
 }
 
 static const drawSpaceOptions draw_options = {

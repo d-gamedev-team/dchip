@@ -699,8 +699,8 @@ int main(string[] args)
         // Load all OpenGL function pointers via glad.
         enforce(gladLoadGL());
 
-        // Support only GL 3.3x+
-        enforce((GLVersion.major == 3 && GLVersion.minor == 3) || GLVersion.major > 3);
+        // Support only GL 3x+
+        enforce(GLVersion.major >= 3);
 
         SetupGL();
 

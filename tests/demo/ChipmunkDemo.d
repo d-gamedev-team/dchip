@@ -35,18 +35,14 @@ alias stderr = std.stdio.stderr;
 import glad.gl.all;
 import glad.gl.loader;
 
-version (USE_DEIMOS_GLFW)
-{
-    import deimos.glfw.glfw3;
-}
-else
-{
-    import derelict.glfw3.glfw3;
+import glwtf.input;
+import glwtf.window;
 
-    shared static this()
-    {
-        DerelictGLFW3.load();
-    }
+import derelict.glfw3.glfw3;
+
+shared static this()
+{
+    DerelictGLFW3.load();
 }
 
 import demo.dchip;
@@ -620,6 +616,26 @@ void TimeTrial(int index, int count)
     printf("Time(%c) = %8.2f ms (%s)\n", index + 'a', (end_time - start_time) * 1e3f, demos[index].name.toStringz);
 }
 
+enum WindowMode
+{
+    fullscreen,
+    windowed,
+}
+
+/* Wrapper around the glwtf API. */
+Window createWindow(string windowName, WindowMode windowMode, int width, int height)
+{
+    auto window = new Window();
+    auto monitor = windowMode == WindowMode.fullscreen ? glfwGetPrimaryMonitor() : null;
+    auto cv = window.create_highest_available_context(width, height, windowName, monitor, null, GLFW_OPENGL_COMPAT_PROFILE);
+    return window;
+}
+
+void on_glfw_error(int code, string msg)
+{
+    stderr.writefln("Error (%s): %s", code, msg);
+}
+
 int main(string[] args)
 {
     GC.disable();
@@ -672,17 +688,19 @@ int main(string[] args)
         int width = 640;
         int height = 480;
 
-        // Create a windowed mode window and its OpenGL context
-        window = enforce(glfwCreateWindow(width, height, "Hello World", null, null),
-                              "glfwCreateWindow call failed.");
+        window = enforce(createWindow("Hello World", WindowMode.windowed, width, height).window,
+                         "glfwCreateWindow call failed.");
 
-        glfwSwapInterval(0);
+        register_glfw_error_callback(&on_glfw_error);
 
         // Make the window's context current
         glfwMakeContextCurrent(window);
 
-        // load all glad function pointers
+        // Load all OpenGL function pointers via glad.
         enforce(gladLoadGL());
+
+        // Support only GL 3.3x+
+        enforce((GLVersion.major == 3 && GLVersion.minor == 3) || GLVersion.major > 3);
 
         SetupGL();
 

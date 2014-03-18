@@ -21,6 +21,8 @@
  */
 module dchip.cpSpaceComponent;
 
+import core.stdc.string;
+
 import dchip.chipmunk;
 import dchip.chipmunk_types;
 import dchip.chipmunk_private;

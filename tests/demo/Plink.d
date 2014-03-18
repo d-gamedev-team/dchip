@@ -23,6 +23,8 @@ module demo.Plink;
 
 import core.stdc.stdlib;
 
+import std.math;
+
 import demo.dchip;
 
 import demo.ChipmunkDebugDraw;

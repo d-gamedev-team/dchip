@@ -21,7 +21,9 @@
  */
 module demo.Shatter;
 
+import core.stdc.stdint : uintptr_t, uint32_t;
 import core.stdc.stdlib;
+import core.stdc.string;
 
 import std.math;
 

@@ -21,6 +21,8 @@
  */
 module demo.Bench;
 
+import std.math;
+
 import demo.dchip;
 import demo.ChipmunkDemo;
 

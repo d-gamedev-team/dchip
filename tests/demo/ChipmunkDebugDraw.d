@@ -34,6 +34,7 @@ module demo.ChipmunkDebugDraw;
 */
 
 import core.stdc.config;
+import core.stdc.stdlib;
 import core.stdc.string;
 
 import glad.gl.all;

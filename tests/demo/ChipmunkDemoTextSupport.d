@@ -21,6 +21,8 @@
  */
 module demo.ChipmunkDemoTextSupport;
 
+import core.stdc.stdlib;
+
 import glad.gl.all;
 
 import demo.dchip;

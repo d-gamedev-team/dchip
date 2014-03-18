@@ -21,6 +21,8 @@
  */
 module demo.ChipmunkDemoShaderSupport;
 
+import core.stdc.stdlib;
+
 import std.conv;
 import std.stdio;
 import std.string;

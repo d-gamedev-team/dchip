@@ -7,6 +7,11 @@
 
 module gameApp;
 
+import core.stdc.stdlib;
+import core.thread;
+
+import std.stdio;
+
 import framework;
 
 import drawSpace;
@@ -39,9 +44,6 @@ import samples.UnsafeOps;
 import derelict.opengl.gl;
 import derelict.opengl.glu;
 import derelict.sdl.sdl;
-
-import std.stdio;
-import core.thread;
 
 //version = TIME_TRIAL;
 

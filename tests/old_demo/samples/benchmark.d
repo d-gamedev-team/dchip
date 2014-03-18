@@ -1,7 +1,7 @@
 module samples.benchmark;
-//#include <stdlib.h>
-//#include <math.h>
-//
+
+import core.stdc.stdlib;
+
 import dchip.all;
 
 import samples.ChipmunkDemo;

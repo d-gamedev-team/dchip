@@ -627,7 +627,8 @@ Window createWindow(string windowName, WindowMode windowMode, int width, int hei
 {
     auto window = new Window();
     auto monitor = windowMode == WindowMode.fullscreen ? glfwGetPrimaryMonitor() : null;
-    auto cv = window.create_highest_available_context(width, height, windowName, monitor, null, GLFW_OPENGL_COMPAT_PROFILE);
+    bool forward_compat = false;
+    auto cv = window.create_highest_available_context(width, height, windowName, monitor, null, GLFW_OPENGL_COMPAT_PROFILE, forward_compat);
     return window;
 }
 

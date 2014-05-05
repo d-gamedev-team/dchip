@@ -44,25 +44,27 @@ import demo.dchip;
 import demo.ChipmunkDemoShaderSupport;
 import demo.types;
 
-const Color LINE_COLOR = { 200.0f / 255.0f, 210.0f / 255.0f, 230.0f / 255.0f, 1.0f };
-const Color CONSTRAINT_COLOR = { 0.0f, 0.75f, 0.0f, 1.0f };
-const float SHAPE_ALPHA = 1.0f;
+const __gshared Color LINE_COLOR = { 200.0f / 255.0f, 210.0f / 255.0f, 230.0f / 255.0f, 1.0f };
+const __gshared Color CONSTRAINT_COLOR = { 0.0f, 0.75f, 0.0f, 1.0f };
+const __gshared float SHAPE_ALPHA = 1.0f;
 
-float ChipmunkDebugDrawPointLineScale = 1.0f;
-float ChipmunkDebugDrawOutlineWidth   = 1.0f;
+__gshared float ChipmunkDebugDrawPointLineScale = 1.0f;
+__gshared float ChipmunkDebugDrawOutlineWidth   = 1.0f;
 
-GLuint program;
+__gshared GLuint program;
 
-v2f v2f0 = { 0.0f, 0.0f };
+__gshared v2f v2f0 = { 0.0f, 0.0f };
 
-GLuint vao = 0;
-GLuint vbo = 0;
+__gshared GLuint vao = 0;
+__gshared GLuint vbo = 0;
 
 void ChipmunkDebugDrawInit()
 {
     // Setup the AA shader.
     GLint vshader = CompileShader(GL_VERTEX_SHADER,
         q{
+            #version 110
+
             attribute vec2 vertex;
             attribute vec2 aa_coord;
             attribute vec4 fill_color;
@@ -84,6 +86,8 @@ void ChipmunkDebugDrawInit()
 
     GLint fshader = CompileShader(GL_FRAGMENT_SHADER,
         q{
+            #version 110
+
             uniform float u_outline_coef;
 
             varying vec2 v_aa_coord;
@@ -232,9 +236,9 @@ auto MAX(T)(T a, T b)
     return a > b ? a : b;
 }
 
-size_t triangle_capacity = 0;
-GLsizei triangle_count    = 0;
-Triangle* triangle_buffer = null;
+__gshared size_t triangle_capacity = 0;
+__gshared GLsizei triangle_count    = 0;
+__gshared Triangle* triangle_buffer = null;
 
 Triangle* PushTriangles(size_t count)
 {
@@ -422,7 +426,7 @@ void ChipmunkDebugDrawBB(cpBB bb, Color color)
 struct ShapeColors
 {
     Color outlineColor, fillColor;
-};
+}
 
 void DrawShape(cpShape* shape, ShapeColors* colors)
 {
@@ -634,7 +638,7 @@ void ChipmunkDebugDrawClearRenderer()
     triangle_count = 0;
 }
 
-GLsizei pushed_triangle_count = 0;
+__gshared GLsizei pushed_triangle_count = 0;
 
 void ChipmunkDebugDrawPushRenderer()
 {

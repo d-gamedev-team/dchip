@@ -123,7 +123,8 @@ cpFloat getImpulse(cpRotaryLimitJoint* joint)
     return cpfabs(joint.jAcc);
 }
 
-cpConstraintClass klass;
+__gshared cpConstraintClass klass;
+
 void _initModuleCtor_cpRotaryLimitJoint()
 {
     klass = cpConstraintClass(

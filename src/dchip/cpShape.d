@@ -233,7 +233,7 @@ struct cpSegmentShape
     cpVect a_tangent, b_tangent;
 }
 
-cpHashValue cpShapeIDCounter = 0;
+__gshared cpHashValue cpShapeIDCounter = 0;
 
 void cpResetShapeIdCounter()
 {
@@ -502,8 +502,8 @@ void cpSegmentShapeSegmentQuery(cpSegmentShape* seg, cpVect a, cpVect b, cpSegme
     }
 }
 
-cpShapeClass cpSegmentShapeClass;
-cpShapeClass cpCircleShapeClass;
+__gshared cpShapeClass cpSegmentShapeClass;
+__gshared cpShapeClass cpCircleShapeClass;
 
 void _initModuleCtor_cpShape()
 {

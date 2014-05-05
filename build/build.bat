@@ -31,9 +31,12 @@ rem set CHIP_ALLOW_PRIVATE_ACCESS=-version=CHIP_ALLOW_PRIVATE_ACCESS
 rem set CHIP_ENABLE_WARNINGS=-version=CHIP_ENABLE_WARNINGS
 set CHIP_USE_DOUBLES=-version=CHIP_USE_DOUBLES
 
+rem Enable this to check against thread-local variables
+rem set transition=-transition=tls
+
 set includes=-I%cd%
 set version_flags=%CHIP_ALLOW_PRIVATE_ACCESS% %CHIP_ENABLE_WARNINGS% %CHIP_USE_DOUBLES%
-set flags=%includes% %version_flags% -g -w
+set flags=%transition% %includes% %version_flags% -g -w
 
 set compiler=dmd.exe
 rem set compiler=dmd_msc.exe

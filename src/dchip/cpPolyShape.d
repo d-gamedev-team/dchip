@@ -198,7 +198,8 @@ void cpPolyShapeSegmentQuery(cpPolyShape* poly, cpVect a, cpVect b, cpSegmentQue
     }
 }
 
-cpShapeClass polyClass;
+__gshared cpShapeClass polyClass;
+
 void _initModuleCtor_cpPolyShape()
 {
     polyClass = cpShapeClass(

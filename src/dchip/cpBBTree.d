@@ -809,7 +809,7 @@ void cpBBTreeEach(cpBBTree* tree, cpSpatialIndexIteratorFunc func, void* data)
     cpHashSetEach(tree.leaves, safeCast!cpHashSetIteratorFunc(&each_helper), &context);
 }
 
-cpSpatialIndexClass klass;
+__gshared cpSpatialIndexClass klass;
 
 void _initModuleCtor_cpBBTree()
 {

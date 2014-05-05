@@ -785,9 +785,9 @@ int CircleToPoly(const cpCircleShape* circle, const cpPolyShape* poly, cpCollisi
     }
 }
 
-/* const */ CollisionFunc[9] builtinCollisionFuncs;
-/* const */ CollisionFunc* colfuncs;
-/* const */ CollisionFunc[9] segmentCollisions;
+/* const */ __gshared CollisionFunc[9] builtinCollisionFuncs;
+/* const */ __gshared CollisionFunc* colfuncs;
+/* const */ __gshared CollisionFunc[9] segmentCollisions;
 
 void _initModuleCtor_cpCollision()
 {

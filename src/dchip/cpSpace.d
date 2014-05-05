@@ -308,7 +308,7 @@ cpSpace* cpSpaceAlloc()
     return cast(cpSpace*)cpcalloc(1, cpSpace.sizeof);
 }
 
-cpCollisionHandler cpDefaultCollisionHandler = { 0, 0, &alwaysCollide, &alwaysCollide, &nothing, &nothing, null };
+__gshared cpCollisionHandler cpDefaultCollisionHandler = { 0, 0, &alwaysCollide, &alwaysCollide, &nothing, &nothing, null };
 
 cpSpace* cpSpaceInit(cpSpace* space)
 {

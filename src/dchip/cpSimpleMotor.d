@@ -90,7 +90,8 @@ cpFloat getImpulse(cpSimpleMotor* joint)
     return cpfabs(joint.jAcc);
 }
 
-cpConstraintClass klass;
+__gshared cpConstraintClass klass;
+
 void _initModuleCtor_cpSimpleMotor()
 {
     klass = cpConstraintClass(

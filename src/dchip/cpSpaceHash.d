@@ -600,7 +600,8 @@ int cpSpaceHashContains(cpSpaceHash* hash, void* obj, cpHashValue hashid)
     return cpHashSetFind(hash.handleSet, hashid, obj) != null;
 }
 
-cpSpatialIndexClass klass;
+__gshared cpSpatialIndexClass klass;
+
 void _initModuleCtor_cpSpaceHash()
 {
     klass = cpSpatialIndexClass(

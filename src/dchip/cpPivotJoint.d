@@ -98,7 +98,8 @@ cpFloat getImpulse(cpConstraint* joint)
     return cpvlength((cast(cpPivotJoint*)joint).jAcc);
 }
 
-cpConstraintClass klass;
+__gshared cpConstraintClass klass;
+
 void _initModuleCtor_cpPivotJoint()
 {
     klass = cpConstraintClass(

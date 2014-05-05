@@ -128,7 +128,8 @@ cpFloat getImpulse(cpConstraint* joint)
     return cpfabs((cast(cpSlideJoint*)joint).jnAcc);
 }
 
-cpConstraintClass klass;
+__gshared cpConstraintClass klass;
+
 void _initModuleCtor_cpSlideJoint()
 {
     klass = cpConstraintClass(

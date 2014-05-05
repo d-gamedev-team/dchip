@@ -106,7 +106,9 @@ cpFloat getImpulse(cpPinJoint* joint)
     return cpfabs(joint.jnAcc);
 }
 
-cpConstraintClass klass;
+
+__gshared cpConstraintClass klass;
+
 void _initModuleCtor_cpPinJoint()
 {
     klass = cpConstraintClass(

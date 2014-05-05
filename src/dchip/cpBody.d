@@ -334,7 +334,7 @@ alias cpBodyConstraintIteratorFunc= void function(cpBody* bdy, cpConstraint* con
 alias cpBodyArbiterIteratorFunc = void function(cpBody* bdy, cpArbiter* arbiter, void* data);
 
 // initialized in cpInitChipmunk()
-cpBody cpStaticBodySingleton;
+__gshared cpBody cpStaticBodySingleton;
 
 cpBody* cpBodyAlloc()
 {

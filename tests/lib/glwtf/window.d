@@ -8,7 +8,6 @@ private {
 
     import std.string : toStringz;
     import std.exception : enforceEx;
-    import std.functional : curry;
     import std.typecons : Tuple;
 }
 
@@ -58,7 +57,7 @@ class Window : BaseGLFWEventHandler {
 
     this(GLFWwindow* window) {
         super();
-        
+
         this.window = window;
         register_callbacks(window);
     }
@@ -157,7 +156,7 @@ class Window : BaseGLFWEventHandler {
 //     void show() {
 //         glfwShowWindow(window);
 //     }
-// 
+//
 //     void hide() {
 //         glfwHideWindow(window);
 //     }
@@ -190,7 +189,7 @@ class Window : BaseGLFWEventHandler {
         if(on_close !is null) {
             return on_close();
         }
-        
+
         return true;
     }
 }

@@ -535,7 +535,7 @@ cpVect MouseToSpace(double x, double y)
     glfwGetWindowSize(window, &ww, &wh);
 
     GLdouble mx, my, mz;
-    gluUnProject(x, wh - y, 0.0f, model.ptr, proj.ptr, view.ptr, &mx, &my, &mz);
+    gluUnProject(x, wh - y, 0.0f, model, proj, view, &mx, &my, &mz);
 
     return cpv(mx, my);
 }

@@ -37,14 +37,14 @@ struct cpPinJoint
 {
     cpConstraint constraint;
     cpVect anchr1, anchr2;
-    cpFloat dist;
+    cpFloat dist = 0;
 
     cpVect r1, r2;
     cpVect n;
-    cpFloat nMass;
+    cpFloat nMass = 0;
 
-    cpFloat jnAcc;
-    cpFloat bias;
+    cpFloat jnAcc = 0;
+    cpFloat bias = 0;
 }
 
 mixin CP_DefineConstraintProperty!("cpPinJoint", cpVect, "anchr1", "Anchr1");

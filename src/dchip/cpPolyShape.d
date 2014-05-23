@@ -33,7 +33,7 @@ import dchip.cpVect;
 struct cpSplittingPlane
 {
     cpVect n;
-    cpFloat d;
+    cpFloat d = 0;
 }
 
 /// @private
@@ -47,7 +47,7 @@ struct cpPolyShape
     cpSplittingPlane* planes;
     cpSplittingPlane* tPlanes;
 
-    cpFloat r;
+    cpFloat r = 0;
 }
 
 cpPolyShape* cpPolyShapeAlloc()

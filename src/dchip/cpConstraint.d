@@ -79,16 +79,16 @@ struct cpConstraint
 
     /// The maximum force that this constraint is allowed to use.
     /// Defaults to infinity.
-    cpFloat maxForce;
+    cpFloat maxForce = 0;
 
     /// The rate at which joint error is corrected.
     /// Defaults to pow(1.0 - 0.1, 60.0) meaning that it will
     /// correct 10% of the error every 1/60th of a second.
-    cpFloat errorBias;
+    cpFloat errorBias = 0;
 
     /// The maximum rate at which joint error is corrected.
     /// Defaults to infinity.
-    cpFloat maxBias;
+    cpFloat maxBias = 0;
 
     /// Function called before the solver runs.
     /// Animate your joint anchors, update your motor torque, etc.

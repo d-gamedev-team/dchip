@@ -100,11 +100,11 @@ struct cpArbiter
 {
     /// Calculated value to use for the elasticity coefficient.
     /// Override in a pre-solve collision handler for custom behavior.
-    cpFloat e;
+    cpFloat e = 0;
 
     /// Calculated value to use for the friction coefficient.
     /// Override in a pre-solve collision handler for custom behavior.
-    cpFloat u;
+    cpFloat u = 0;
 
     /// Calculated value to use for applying surface velocities.
     /// Override in a pre-solve collision handler for custom behavior.
@@ -264,7 +264,7 @@ struct cpContactPointSet
         cpVect normal;
 
         /// The depth of the contact point.
-        cpFloat dist;
+        cpFloat dist = 0;
     }
 
     Point[CP_MAX_CONTACTS_PER_ARBITER] points;

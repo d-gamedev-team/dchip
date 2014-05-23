@@ -36,12 +36,12 @@ import dchip.cpVect;
 struct cpRotaryLimitJoint
 {
     cpConstraint constraint;
-    cpFloat min, max;
+    cpFloat min = 0, max = 0;
 
-    cpFloat iSum;
+    cpFloat iSum = 0;
 
-    cpFloat bias;
-    cpFloat jAcc;
+    cpFloat bias = 0;
+    cpFloat jAcc = 0;
 }
 
 mixin CP_DefineConstraintProperty!("cpRotaryLimitJoint", cpFloat, "min", "Min");

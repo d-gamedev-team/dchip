@@ -171,13 +171,13 @@ void cpSpaceUncacheArbiter(cpSpace* space, cpArbiter* arb)
 struct cpContact
 {
     cpVect p, n;
-    cpFloat dist;
+    cpFloat dist = 0;
 
     cpVect r1, r2;
-    cpFloat nMass, tMass, bounce;
+    cpFloat nMass = 0, tMass = 0, bounce = 0;
 
-    cpFloat jnAcc, jtAcc, jBias;
-    cpFloat bias;
+    cpFloat jnAcc = 0, jtAcc = 0, jBias = 0;
+    cpFloat bias = 0;
 
     cpHashValue hash;
 }

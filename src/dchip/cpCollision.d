@@ -174,7 +174,7 @@ struct EdgePoint
 struct Edge
 {
     EdgePoint a, b;
-    cpFloat r;
+    cpFloat r = 0;
     cpVect n;
 }
 
@@ -237,7 +237,7 @@ struct ClosestPoints
 {
     cpVect a, b;
     cpVect n;
-    cpFloat d;
+    cpFloat d = 0;
     cpCollisionID id;
 }
 

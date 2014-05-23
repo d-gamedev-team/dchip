@@ -37,14 +37,14 @@ struct cpSlideJoint
 {
     cpConstraint constraint;
     cpVect anchr1, anchr2;
-    cpFloat min, max;
+    cpFloat min = 0, max = 0;
 
     cpVect r1, r2;
     cpVect n;
-    cpFloat nMass;
+    cpFloat nMass = 0;
 
-    cpFloat jnAcc;
-    cpFloat bias;
+    cpFloat jnAcc = 0;
+    cpFloat bias = 0;
 }
 
 mixin CP_DefineConstraintProperty!("cpSlideJoint", cpVect, "anchr1", "Anchr1");

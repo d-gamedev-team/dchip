@@ -51,7 +51,7 @@ struct cpComponentNode
 {
     cpBody* root;
     cpBody* next;
-    cpFloat idleTime;
+    cpFloat idleTime = 0;
 }
 
 /// Chipmunk's rigid body_ struct.
@@ -65,17 +65,17 @@ struct cpBody
 
     /// Mass of the body_.
     /// Must agree with cpBody.m_inv! Use cpBodySetMass() when changing the mass for this reason.
-    cpFloat m;
+    cpFloat m = 0;
 
     /// Mass inverse.
-    cpFloat m_inv;
+    cpFloat m_inv = 0;
 
     /// Moment of inertia of the body_.
     /// Must agree with cpBody.i_inv! Use cpBodySetMoment() when changing the moment for this reason.
-    cpFloat i;
+    cpFloat i = 0;
 
     /// Moment of inertia inverse.
-    cpFloat i_inv;
+    cpFloat i_inv = 0;
 
     /// Position of the rigid body_'s center of gravity.
     cpVect p;
@@ -88,13 +88,13 @@ struct cpBody
 
     /// Rotation of the body_ around it's center of gravity in radians.
     /// Must agree with cpBody.rot! Use cpBodySetAngle() when changing the angle for this reason.
-    cpFloat a;
+    cpFloat a = 0;
 
     /// Angular velocity of the body_ around it's center of gravity in radians/second.
-    cpFloat w;
+    cpFloat w = 0;
 
     /// Torque applied to the body_ around it's center of gravity.
-    cpFloat t;
+    cpFloat t = 0;
 
     /// Cached unit length vector representing the angle of the body_.
     /// Used for fast rotations using cpvrotate().
@@ -106,10 +106,10 @@ struct cpBody
     cpDataPointer data;
 
     /// Maximum velocity allowed when updating the velocity.
-    cpFloat v_limit;
+    cpFloat v_limit = 0;
 
     /// Maximum rotational rate (in radians/second) allowed when updating the angular velocity.
-    cpFloat w_limit;
+    cpFloat w_limit = 0;
 
     version (CHIP_ALLOW_PRIVATE_ACCESS)
         cpVect v_bias;
@@ -117,9 +117,9 @@ struct cpBody
         package cpVect v_bias;
 
     version (CHIP_ALLOW_PRIVATE_ACCESS)
-        cpFloat w_bias;
+        cpFloat w_bias = 0;
     else
-        package cpFloat w_bias;
+        package cpFloat w_bias = 0;
 
     version (CHIP_ALLOW_PRIVATE_ACCESS)
         cpSpace * space;

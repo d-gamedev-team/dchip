@@ -37,16 +37,16 @@ alias cpDampedRotarySpringTorqueFunc = cpFloat function(cpConstraint* spring, cp
 struct cpDampedRotarySpring
 {
     cpConstraint constraint;
-    cpFloat restAngle;
-    cpFloat stiffness;
-    cpFloat damping;
+    cpFloat restAngle = 0;
+    cpFloat stiffness = 0;
+    cpFloat damping = 0;
     cpDampedRotarySpringTorqueFunc springTorqueFunc;
 
-    cpFloat target_wrn;
-    cpFloat w_coef;
+    cpFloat target_wrn = 0;
+    cpFloat w_coef = 0;
 
-    cpFloat iSum;
-    cpFloat jAcc;
+    cpFloat iSum = 0;
+    cpFloat jAcc = 0;
 }
 
 /// Allocate a damped rotary spring.

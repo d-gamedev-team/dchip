@@ -39,19 +39,19 @@ struct cpDampedSpring
 {
     cpConstraint constraint;
     cpVect anchr1, anchr2;
-    cpFloat restLength;
-    cpFloat stiffness;
-    cpFloat damping;
+    cpFloat restLength = 0;
+    cpFloat stiffness = 0;
+    cpFloat damping = 0;
     cpDampedSpringForceFunc springForceFunc;
 
-    cpFloat target_vrn;
-    cpFloat v_coef;
+    cpFloat target_vrn = 0;
+    cpFloat v_coef = 0;
 
     cpVect r1, r2;
-    cpFloat nMass;
+    cpFloat nMass = 0;
     cpVect n;
 
-    cpFloat jAcc;
+    cpFloat jAcc = 0;
 }
 
 mixin CP_DefineConstraintProperty!("cpDampedSpring", cpVect, "anchr1", "Anchr1");

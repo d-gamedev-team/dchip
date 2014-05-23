@@ -38,7 +38,7 @@ struct cpSpaceHash
     cpSpatialIndex spatialIndex;
 
     int numcells;
-    cpFloat celldim;
+    cpFloat celldim = 0;
 
     cpSpaceHashBin** table;
     cpHashSet* handleSet;
@@ -519,7 +519,7 @@ void cpSpaceHashSegmentQuery(cpSpaceHash* hash, void* obj, cpVect a, cpVect b, c
     cpFloat t = 0;
 
     int x_inc, y_inc;
-    cpFloat temp_v, temp_h;
+    cpFloat temp_v = 0, temp_h = 0;
 
     if (b.x > a.x)
     {

@@ -40,7 +40,7 @@ struct cpGrooveJoint
     cpVect anchr2;
 
     cpVect grv_tn;
-    cpFloat clamp;
+    cpFloat clamp = 0;
     cpVect r1, r2;
     cpMat2x2 k;
 

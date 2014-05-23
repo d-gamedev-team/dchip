@@ -88,7 +88,7 @@ cpShape* cpSpacePointQueryFirst(cpSpace* space, cpVect point, cpLayers layers, c
 struct NearestPointQueryContext
 {
     cpVect point;
-    cpFloat maxDistance;
+    cpFloat maxDistance = 0;
     cpLayers layers;
     cpGroup group;
     cpSpaceNearestPointQueryFunc func;

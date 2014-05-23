@@ -55,27 +55,27 @@ struct cpSpace
     /// A value of 0.9 would mean that each body_'s velocity will drop 10% per second.
     /// The default value is 1.0, meaning no damping is applied.
     /// @note This damping value is different than those of cpDampedSpring and cpDampedRotarySpring.
-    cpFloat damping;
+    cpFloat damping = 0;
 
     /// Speed threshold for a body_ to be considered idle.
     /// The default value of 0 means to let the space guess a good threshold based on gravity.
-    cpFloat idleSpeedThreshold;
+    cpFloat idleSpeedThreshold = 0;
 
     /// Time a group of bodies must remain idle in order to fall asleep.
     /// Enabling sleeping also implicitly enables the the contact graph.
     /// The default value of INFINITY disables the sleeping algorithm.
-    cpFloat sleepTimeThreshold;
+    cpFloat sleepTimeThreshold = 0;
 
     /// Amount of encouraged penetration between colliding shapes.
     /// Used to reduce oscillating contacts and keep the collision cache warm.
     /// Defaults to 0.1. If you have poor simulation quality,
     /// increase this number as much as possible without allowing visible amounts of overlap.
-    cpFloat collisionSlop;
+    cpFloat collisionSlop = 0;
 
     /// Determines how fast overlapping shapes are pushed apart.
     /// Expressed as a fraction of the error remaining after each second.
     /// Defaults to pow(1.0 - 0.1, 60.0) meaning that Chipmunk fixes 10% of overlap each frame at 60Hz.
-    cpFloat collisionBias;
+    cpFloat collisionBias = 0;
 
     /// Number of frames that contact information should persist.
     /// Defaults to 3. There is probably never a reason to change this value.
@@ -101,9 +101,9 @@ struct cpSpace
         package cpTimestamp stamp;
 
     version (CHIP_ALLOW_PRIVATE_ACCESS)
-        cpFloat curr_dt;
+        cpFloat curr_dt = 0;
     else
-        package cpFloat curr_dt;
+        package cpFloat curr_dt = 0;
 
     version (CHIP_ALLOW_PRIVATE_ACCESS)
         cpArray * bodies;
@@ -243,13 +243,13 @@ alias cpSpaceNearestPointQueryFunc = void function(cpShape* shape, cpFloat dista
 alias cpSpaceSegmentQueryFunc = void function(cpShape* shape, cpFloat t, cpVect n, void* data);
 
 /// Rectangle Query callback function type.
-alias cpSpaceBBQueryFunc= void function(cpShape* shape, void* data);
+alias cpSpaceBBQueryFunc = void function(cpShape* shape, void* data);
 
 /// Shape query callback function type.
 alias cpSpaceShapeQueryFunc = void function(cpShape* shape, cpContactPointSet* points, void* data);
 
 /// Space/body_ iterator callback function type.
-alias cpSpaceBodyIteratorFunc= void function(cpBody* bdy, void* data);
+alias cpSpaceBodyIteratorFunc = void function(cpBody* bdy, void* data);
 
 /// Space/body_ iterator callback function type.
 alias cpSpaceShapeIteratorFunc = void function(cpShape* shape, void* data);

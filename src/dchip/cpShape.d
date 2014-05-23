@@ -44,7 +44,7 @@ struct cpNearestPointQueryInfo
     cpVect p;
 
     /// The distance to the point. The distance is negative if the point is inside the shape.
-    cpFloat d;
+    cpFloat d = 0;
 
     /// The gradient of the signed distance function.
     /// The same as info.p/info.d, but accurate even for very small values of info.d.
@@ -58,7 +58,7 @@ struct cpSegmentQueryInfo
     cpShape* shape;
 
     /// The normalized distance along the query segment in the range [0, 1].
-    cpFloat t;
+    cpFloat t = 0;
 
     /// The normal of the surface hit.
     cpVect n;
@@ -111,10 +111,10 @@ struct cpShape
     cpBool sensor;
 
     /// Coefficient of restitution. (elasticity)
-    cpFloat e;
+    cpFloat e = 0;
 
     /// Coefficient of friction.
-    cpFloat u;
+    cpFloat u = 0;
 
     /// Surface velocity used when solving for friction.
     cpVect surface_v;
@@ -218,7 +218,7 @@ struct cpCircleShape
     cpShape shape;
 
     cpVect c, tc;
-    cpFloat r;
+    cpFloat r = 0;
 }
 
 /// @private
@@ -228,7 +228,7 @@ struct cpSegmentShape
 
     cpVect a, b, n;
     cpVect ta, tb, tn;
-    cpFloat r;
+    cpFloat r = 0;
 
     cpVect a_tangent, b_tangent;
 }
@@ -412,7 +412,7 @@ cpBB cpSegmentShapeCacheData(cpSegmentShape* seg, cpVect p, cpVect rot)
     seg.tb = cpvadd(p, cpvrotate(seg.b, rot));
     seg.tn = cpvrotate(seg.n, rot);
 
-    cpFloat l, r, b, t;
+    cpFloat l = 0, r = 0, b = 0, t = 0;
 
     if (seg.ta.x < seg.tb.x)
     {

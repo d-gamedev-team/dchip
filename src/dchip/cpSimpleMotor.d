@@ -36,11 +36,11 @@ import dchip.cpVect;
 struct cpSimpleMotor
 {
     cpConstraint constraint;
-    cpFloat rate;
+    cpFloat rate = 0;
 
-    cpFloat iSum;
+    cpFloat iSum = 0;
 
-    cpFloat jAcc;
+    cpFloat jAcc = 0;
 }
 
 mixin CP_DefineConstraintProperty!("cpSimpleMotor", cpFloat, "rate", "Rate");

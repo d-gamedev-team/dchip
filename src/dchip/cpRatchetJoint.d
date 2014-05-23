@@ -36,12 +36,12 @@ import dchip.cpVect;
 struct cpRatchetJoint
 {
     cpConstraint constraint;
-    cpFloat angle, phase, ratchet;
+    cpFloat angle = 0, phase = 0, ratchet = 0;
 
-    cpFloat iSum;
+    cpFloat iSum = 0;
 
-    cpFloat bias;
-    cpFloat jAcc;
+    cpFloat bias = 0;
+    cpFloat jAcc = 0;
 }
 
 mixin CP_DefineConstraintProperty!("cpRatchetJoint", cpFloat, "angle", "Angle");

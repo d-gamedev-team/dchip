@@ -31,7 +31,7 @@ import dchip.util;
 
 struct Bounds
 {
-    cpFloat min, max;
+    cpFloat min = 0, max = 0;
 }
 
 struct TableCell

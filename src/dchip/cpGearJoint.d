@@ -35,13 +35,13 @@ import dchip.chipmunk_types;
 struct cpGearJoint
 {
     cpConstraint constraint;
-    cpFloat phase, ratio;
-    cpFloat ratio_inv;
+    cpFloat phase = 0, ratio = 0;
+    cpFloat ratio_inv = 0;
 
-    cpFloat iSum;
+    cpFloat iSum = 0;
 
-    cpFloat bias;
-    cpFloat jAcc;
+    cpFloat bias = 0;
+    cpFloat jAcc = 0;
 }
 
 mixin CP_DefineConstraintProperty!("cpGearJoint", cpFloat, "phase", "Phase");

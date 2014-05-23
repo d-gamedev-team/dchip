@@ -29,7 +29,7 @@ import dchip.cpVect;
 /// Chipmunk's axis-aligned 2D bounding box type. (left, bottom, right, top)
 struct cpBB
 {
-    cpFloat l, b, r, t;
+    cpFloat l = 0, b = 0, r = 0, t = 0;
 }
 
 /// Convenience constructor for cpBB structs.

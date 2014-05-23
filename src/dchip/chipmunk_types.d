@@ -200,5 +200,5 @@ struct cpVect
 struct cpMat2x2
 {
     /// Row major [[a, b][c d]]
-    cpFloat a, b, c, d;
+    cpFloat a = 0, b = 0, c = 0, d = 0;
 }

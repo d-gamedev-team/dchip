@@ -1,0 +1,45 @@
+{
+    "name": "demo",
+
+    "description": "dchip demo",
+
+    "authors": [
+        "Scott Lembcke and Howling Moon Software",
+        "Andrej Mitrovic",
+    ],
+
+    "copyright": "Copyright (c) 2007-2013 Scott Lembcke and Howling Moon Software",
+
+    "license": "MIT",
+
+    "homepage": "https://github.com/d-gamedev-team/dchip",
+
+    "targetName" : "demo",
+
+    "targetPath" : "../../bin",
+
+    "targetType": "executable",
+
+    "sourcePaths": [
+        "."
+    ],
+
+    "dependencies": {
+        "dchip": {"path": "../../", "version": "~master"},
+        "glad-drey": ">=0.0.2",
+        "glfw-drey": ">=0.0.2",
+        "glwtf-drey": ">=0.0.1",
+    },
+
+    "versions": [
+        "gl3n",
+        "glad",
+        "CHIP_ALLOW_PRIVATE_ACCESS"
+    ],
+
+    "libs-posix": [
+		"glfw"
+	],
+
+    "mainSourceFile": "demo_run.d",
+}

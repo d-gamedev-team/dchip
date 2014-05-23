@@ -51,8 +51,8 @@ void __gluMakeIdentityd(ref GLdouble[16] m)
 int __gluInvertMatrixd(ref GLdouble[16] src, ref GLdouble[16] inverse)
 {
     int i, j, k, swap;
-    double t;
-    GLdouble[4][4] temp;
+    double t = 0;
+    GLdouble[4][4] temp = 0;
 
     for (i = 0; i < 4; i++)
     {
@@ -168,9 +168,9 @@ GLint gluUnProject(ref GLdouble winx, GLdouble winy, GLdouble winz,
                    ref GLint[4] viewport,
                    GLdouble* objx, GLdouble* objy, GLdouble* objz)
 {
-    double[16] finalMatrix;
-    double[4] in_;
-    double[4] out_;
+    double[16] finalMatrix = 0;
+    double[4] in_ = 0;
+    double[4] out_ = 0;
 
     __gluMultMatricesd(modelMatrix, projMatrix, finalMatrix);
 

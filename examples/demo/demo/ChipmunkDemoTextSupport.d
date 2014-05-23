@@ -42,7 +42,7 @@ __gshared GLuint texture;
 
 struct v2f
 {
-    GLfloat x, y;
+    GLfloat x = 0, y = 0;
 }
 
 struct Vertex

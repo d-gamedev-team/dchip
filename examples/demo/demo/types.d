@@ -33,7 +33,7 @@ import demo.dchip;
 
 struct Color
 {
-    float r, g, b, a;
+    float r = 0, g = 0, b = 0, a = 0;
 }
 
 Color RGBAColor(float r, float g, float b, float a)
@@ -56,7 +56,7 @@ struct v2f
         return v2;
     }
 
-    GLfloat x, y;
+    GLfloat x = 0, y = 0;
 }
 
 struct Vertex

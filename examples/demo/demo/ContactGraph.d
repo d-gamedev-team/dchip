@@ -54,9 +54,9 @@ static void BallIterator(cpBody* body_, cpArbiter* arb, int* count)
 
 struct CrushingContext
 {
-    cpFloat magnitudeSum;
+    cpFloat magnitudeSum = 0;
     cpVect vectorSum;
-};
+}
 
 static void EstimateCrushing(cpBody* body_, cpArbiter* arb, CrushingContext* context)
 {

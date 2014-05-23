@@ -3,7 +3,8 @@
 ![DChip](https://raw.github.com/d-gamedev-team/dchip/master/screenshots/dchip.png)
 
 This is a D2 port of the [Chipmunk2D](http://chipmunk2d.net/) game physics library.
-Currently it targets version **6.2.1**.
+
+Currently DChip targets Chimpunk2D version **6.2.1**.
 
 DChip is a platform-independent library with no dependencies.
 
@@ -82,9 +83,9 @@ performance degradation.
 **Warning:** There is a large performance hit when enabling this switch and
 using DMD.
 
-## Running the tests
+## Running the examples
 
-Most tests require the [GLFW] library. See the [GLFW] homepage on how to
+Most examples require the [GLFW] library. See the [GLFW] homepage on how to
 obtain this library.
 
 ### Using dub
@@ -92,19 +93,16 @@ obtain this library.
 Compile and run one of the examples via:
 
 ```
-# Just a simple hello world.
-dub --config=hello_world
-
 # Showcases a simple iteration of the physics engine without any drawing.
-dub --config=simple
+dub run dchip:simple
 
 # Contains a series of visual and interactive demos, selectable with the keyboard.
 # Select each of the demo's by pressing the keys 'a' through 'y'.
-dub --config=demo
+dub run dchip:demo
 
 # Similar to the above, but demos were based on the older v5.3.5 version and they
 # use the [SDL] library (which means you'll have to install [SDL] to run it).
-dub --config=old_demo
+dub run dchip:old_demo
 
 # Build with another compiler, in release mode (Run `dub build --help` for more help)
 dub --compiler=ldc2 --build=release
@@ -115,7 +113,7 @@ dub --compiler=ldc2 --build=release
 
 **Note**: If you're using Windows you might get dub errors when automatically
 running the samples. The samples should still be built and located in the
-`dchip\tests\bin` subfolder.
+`dchip\bin` subfolder.
 
 **Note**: As of 04 February 2014, building with LDC2 from the latest prepackaged
 binary of LDC2 on Windows might produce crashing applications.

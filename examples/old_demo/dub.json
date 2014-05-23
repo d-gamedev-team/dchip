@@ -1,0 +1,37 @@
+{
+    "name": "old_demo",
+
+    "description": "dchip old_demo",
+
+    "authors": [
+        "Scott Lembcke and Howling Moon Software",
+        "Stephan Dilly",
+        "Andrej Mitrovic",
+    ],
+
+    "copyright": "Copyright (c) 2007-2013 Scott Lembcke and Howling Moon Software",
+
+    "license": "MIT",
+
+    "homepage": "https://github.com/d-gamedev-team/dchip",
+
+    "targetName" : "old_demo",
+
+    "targetPath" : "../../bin",
+
+    "targetType": "executable",
+
+    "sourcePaths": [
+        "."
+    ],
+
+    "dependencies": {
+        "dchip": {"path": "../../", "version": "~master"},
+    },
+
+    "versions": [
+        "CHIP_ALLOW_PRIVATE_ACCESS"
+    ],
+
+    "mainSourceFile": "main.d",
+}

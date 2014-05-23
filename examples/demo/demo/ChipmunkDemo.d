@@ -38,12 +38,7 @@ import glad.gl.loader;
 import glwtf.input;
 import glwtf.window;
 
-import derelict.glfw3.glfw3;
-
-shared static this()
-{
-    DerelictGLFW3.load();
-}
+import deimos.glfw.glfw3;
 
 import demo.dchip;
 
@@ -120,7 +115,7 @@ __gshared GLFWwindow* window;
 struct ChipmunkDemo
 {
     string name;
-    double timestep;
+    double timestep = 0;
 
     ChipmunkDemoInitFunc initFunc;
     ChipmunkDemoUpdateFunc updateFunc;
@@ -158,7 +153,7 @@ cpSpace* space;
 double Accumulator = 0.0;
 double LastTime    = 0.0;
 int ChipmunkDemoTicks = 0;
-double ChipmunkDemoTime;
+double ChipmunkDemoTime = 0;
 
 cpVect ChipmunkDemoMouse;
 cpBool ChipmunkDemoRightClick = cpFalse;
@@ -522,19 +517,19 @@ extern(C) void Keyboard(GLFWwindow* window, int key, int scancode, int state, in
 
 cpVect MouseToSpace(double x, double y)
 {
-    GLdouble model[16];
+    GLdouble model[16] = 0;
     glGetDoublev(GL_MODELVIEW_MATRIX, model.ptr);
 
-    GLdouble proj[16];
+    GLdouble proj[16] = 0;
     glGetDoublev(GL_PROJECTION_MATRIX, proj.ptr);
 
-    GLint view[4];
+    GLint view[4] = 0;
     glGetIntegerv(GL_VIEWPORT, view.ptr);
 
     int ww, wh;
     glfwGetWindowSize(window, &ww, &wh);
 
-    GLdouble mx, my, mz;
+    GLdouble mx = 0, my = 0, mz = 0;
     gluUnProject(x, wh - y, 0.0f, model, proj, view, &mx, &my, &mz);
 
     return cpv(mx, my);

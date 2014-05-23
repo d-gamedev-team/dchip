@@ -41,11 +41,11 @@ enum MAX_VERTEXES_PER_VORONOI = 16;
 struct WorleyContex
 {
     uint32_t seed;
-    cpFloat cellSize;
+    cpFloat cellSize = 0;
     int width, height;
     cpBB bb;
     cpVect focus;
-};
+}
 
 static cpVect HashVect(uint32_t x, uint32_t y, uint32_t seed)
 {

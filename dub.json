@@ -1,91 +1,34 @@
 {
+    "name": "dchip",
+
     "description": "dchip is a D2 port of the Chipmunk2D physics library.",
-    "targetName": "dchip",
+
     "authors": [
         "Scott Lembcke and Howling Moon Software",
         "Andrej Mitrovic",
     ],
-    "license": "MIT",
-    "homepage": "https://github.com/d-gamedev-team/dchip",
-    "name": "dchip",
+
     "copyright": "Copyright (c) 2007-2013 Scott Lembcke and Howling Moon Software",
+
+    "license": "MIT",
+
+    "homepage": "https://github.com/d-gamedev-team/dchip",
+
+    "targetName": "dchip",
+
+    "targetPath" : "bin",
+
     "targetType": "staticLibrary",
-    "excludedSourceFiles": ["src/dchip/package.d"],
+
     "sourcePaths": [
         "src"
     ],
 
-    "configurations": [
-        {
-            "name": "demo",
-            "libs-posix": ["dl"],
-            "targetType": "executable",
-            "targetName": "new_demo",
-            "excludedSourceFiles": ["src/dchip/package.d"],
-            "sourcePaths": [
-                "tests/demo",
-                "tests/lib"
-            ],
-            "importPaths": [
-                "tests/lib"
-            ],
-            "versions": [
-                "DynamicGLFW",
-                "CHIP_ALLOW_PRIVATE_ACCESS"
-            ],
-            "targetPath" : "tests/bin"
-        },
+    "excludedSourceFiles": ["src/dchip/package.d"],
 
-        {
-            "name": "old_demo",
-            "targetType": "executable",
-            "targetName": "old_demo",
-            "excludedSourceFiles": ["src/dchip/package.d"],
-            "sourcePaths": [
-                "tests/old_demo",
-            ],
-            "importPaths": [
-                "tests/lib"
-            ],
-            "versions": [
-                "CHIP_ALLOW_PRIVATE_ACCESS"
-            ],
-            "targetPath" : "tests/bin"
-        },
-
-        {
-            "name": "hello_world",
-            "targetType": "executable",
-            "targetName": "hello_world",
-            "excludedSourceFiles": ["src/dchip/package.d"],
-            "sourceFiles": [
-                "tests/hello_world.d",
-            ],
-            "importPaths": [
-                "tests/lib"
-            ],
-            "versions": [
-                "CHIP_ALLOW_PRIVATE_ACCESS"
-            ],
-            "targetPath" : "tests/bin"
-        },
-
-        {
-            "name": "simple",
-            "targetType": "executable",
-            "targetName": "simple",
-            "excludedSourceFiles": ["src/dchip/package.d"],
-            "sourceFiles": [
-                "tests/simple.d",
-            ],
-            "importPaths": [
-                "tests/lib"
-            ],
-            "versions": [
-                "CHIP_ALLOW_PRIVATE_ACCESS"
-            ],
-            "targetPath" : "tests/bin"
-        },
-
+    "subPackages": [
+        "examples/simple",
+        "examples/demo",
+        "examples/old_demo",
     ]
 }

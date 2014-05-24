@@ -38,8 +38,8 @@
     ],
 
     "libs-posix": [
-		"glfw"
-	],
+        "glfw"
+    ],
 
     "mainSourceFile": "demo_run.d",
 }

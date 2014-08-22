@@ -119,7 +119,7 @@ void _initModuleCtor_cpPinJoint()
     );
 }
 
-const cpConstraintClass * cpPinJointGetClass()
+const(cpConstraintClass *) cpPinJointGetClass()
 {
     return cast(cpConstraintClass*)&klass;
 }

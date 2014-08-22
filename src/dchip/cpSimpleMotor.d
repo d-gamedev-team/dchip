@@ -102,7 +102,7 @@ void _initModuleCtor_cpSimpleMotor()
     );
 }
 
-const cpConstraintClass * cpSimpleMotorGetClass()
+const(cpConstraintClass *) cpSimpleMotorGetClass()
 {
     return cast(cpConstraintClass*)&klass;
 }

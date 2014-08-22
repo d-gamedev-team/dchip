@@ -154,7 +154,7 @@ void _initModuleCtor_cpGrooveJoint()
     );
 }
 
-const cpConstraintClass * cpGrooveJointGetClass()
+const(cpConstraintClass *) cpGrooveJointGetClass()
 {
     return cast(cpConstraintClass*)&klass;
 }

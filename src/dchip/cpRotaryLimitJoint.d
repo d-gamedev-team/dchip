@@ -135,7 +135,7 @@ void _initModuleCtor_cpRotaryLimitJoint()
     );
 }
 
-const cpConstraintClass * cpRotaryLimitJointGetClass()
+const(cpConstraintClass *) cpRotaryLimitJointGetClass()
 {
     return cast(cpConstraintClass*)&klass;
 }

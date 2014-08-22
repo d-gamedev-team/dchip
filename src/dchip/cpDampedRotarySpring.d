@@ -130,7 +130,7 @@ void _initModuleCtor_cpDampedRotarySpring()
     );
 };
 
-const cpConstraintClass * cpDampedRotarySpringGetClass()
+const(cpConstraintClass *) cpDampedRotarySpringGetClass()
 {
     return cast(cpConstraintClass*)&klass;
 }

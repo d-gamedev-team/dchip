@@ -110,7 +110,7 @@ void _initModuleCtor_cpPivotJoint()
     );
 };
 
-const cpConstraintClass * cpPivotJointGetClass()
+const(cpConstraintClass *) cpPivotJointGetClass()
 {
     return cast(cpConstraintClass*)&klass;
 }

@@ -134,7 +134,7 @@ void _initModuleCtor_cpDampedSpring()
     );
 };
 
-const cpConstraintClass * cpDampedSpringGetClass()
+const(cpConstraintClass *) cpDampedSpringGetClass()
 {
     return cast(cpConstraintClass*)&klass;
 }

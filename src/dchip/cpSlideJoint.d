@@ -140,7 +140,7 @@ void _initModuleCtor_cpSlideJoint()
     );
 }
 
-const cpConstraintClass * cpSlideJointGetClass()
+const(cpConstraintClass *) cpSlideJointGetClass()
 {
     return cast(cpConstraintClass*)&klass;
 }

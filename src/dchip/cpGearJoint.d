@@ -108,7 +108,7 @@ void _initModuleCtor_cpGearJoint()
     );
 }
 
-const cpConstraintClass * cpGearJointGetClass()
+const(cpConstraintClass *) cpGearJointGetClass()
 {
     return cast(cpConstraintClass*)&klass;
 }

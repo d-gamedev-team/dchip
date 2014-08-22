@@ -134,7 +134,7 @@ void _initModuleCtor_cpRatchetJoint()
     );
 }
 
-const cpConstraintClass * cpRatchetJointGetClass()
+const(cpConstraintClass *) cpRatchetJointGetClass()
 {
     return cast(cpConstraintClass*)&klass;
 }

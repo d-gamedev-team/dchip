@@ -27,7 +27,7 @@
     "dependencies": {
         "dchip": {"path": "../../", "version": "~master"},
         "glad-drey": ">=0.0.2",
-        "glfw-drey": ">=0.0.2",
+        "glfw-drey": ">=0.0.4",
         "glwtf-drey": ">=0.0.1",
     },
 

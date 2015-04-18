@@ -88,7 +88,7 @@ cpSpace* init()
     cpShape* shape;
 
     // Vertexes for a triangle shape.
-    cpVect tris[3] = [
+    cpVect[3] tris = [
         cpv(-15, -15),
         cpv(0, 10),
         cpv(15, -15),
@@ -109,7 +109,7 @@ cpSpace* init()
     }
 
     // Create vertexes for a pentagon shape.
-    cpVect verts[NUM_VERTS];
+    cpVect[NUM_VERTS] verts;
 
     for (int i = 0; i < NUM_VERTS; i++)
     {

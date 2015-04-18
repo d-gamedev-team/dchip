@@ -79,7 +79,7 @@ void add_box(cpSpace* space, int index, cpFloat size)
 
 void add_hexagon(cpSpace* space, int index, cpFloat radius)
 {
-    cpVect hexagon[6] = {};
+    cpVect[6] hexagon = {};
 
     for (int i = 0; i < 6; i++)
     {
@@ -316,7 +316,7 @@ cpSpace* init_ComplexTerrainHexagons_1000()
     }
 
     cpFloat radius     = 5.0f;
-    cpVect  hexagon[6] = {};
+    cpVect[6]  hexagon = {};
 
     for (int i = 0; i < 6; i++)
     {
@@ -431,7 +431,7 @@ cpSpace* init_BouncyTerrainHexagons_500()
     }
 
     cpFloat radius     = 5.0f;
-    cpVect  hexagon[6] = {};
+    cpVect[6]  hexagon = {};
 
     for (int i = 0; i < 6; i++)
     {

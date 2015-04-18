@@ -41,7 +41,7 @@ static void update(cpSpace* space, double dt)
 enum FLUID_DENSITY = 0.00014;
 enum FLUID_DRAG = 2.0;
 
-char messageBuffer[1024] = 0;
+char[1024] messageBuffer = 0;
 
 static cpBool waterPreSolve(cpArbiter* arb, cpSpace* space, void* ptr)
 {

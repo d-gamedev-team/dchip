@@ -33,7 +33,7 @@ immutable int sdf_num_chars  = 95;
     [7] X Advance * scale_factor | advance the cursor by this.
  */
 immutable float scale_factor = 1000.000000;
-immutable int sdf_spacing[]  = [
+immutable int[] sdf_spacing  = [
     32, 109, 124, 4, 4, -1500, 1500, 9625,
     33, 122, 76, 6, 15, 2250, 13187, 9625,
     34, 0, 90, 10, 8, 312, 13250, 9625,

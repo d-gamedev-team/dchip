@@ -119,7 +119,7 @@ cpSpace* init()
     cpShapeSetFriction(shape, 0.5f);
     cpShapeSetLayers(shape, NOT_GRABABLE_MASK);
 
-    cpVect verts[] = [
+    cpVect[] verts = [
         cpv(-30, -80),
         cpv(-30, 80),
         cpv(30, 64),

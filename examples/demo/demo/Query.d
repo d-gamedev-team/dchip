@@ -116,7 +116,7 @@ cpSpace* init()
         cpFloat mass        = 1.0f;
         const int NUM_VERTS = 5;
 
-        cpVect verts[NUM_VERTS];
+        cpVect[NUM_VERTS] verts;
 
         for (int i = 0; i < NUM_VERTS; i++)
         {

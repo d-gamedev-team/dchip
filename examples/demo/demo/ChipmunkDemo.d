@@ -277,7 +277,7 @@ void DrawInfo()
     ChipmunkDemoTextDrawString(cpv(0, 220), buffer);
 }
 
-char  PrintStringBuffer[1024 * 8] = 0;
+char[1024 * 8]  PrintStringBuffer = 0;
 size_t PrintStringCursor;
 
 void ChipmunkDemoPrintString(Args...)(string fmt, Args args)
@@ -517,13 +517,13 @@ extern(C) void Keyboard(GLFWwindow* window, int key, int scancode, int state, in
 
 cpVect MouseToSpace(double x, double y)
 {
-    GLdouble model[16] = 0;
+    GLdouble[16] model = 0;
     glGetDoublev(GL_MODELVIEW_MATRIX, model.ptr);
 
-    GLdouble proj[16] = 0;
+    GLdouble[16] proj = 0;
     glGetDoublev(GL_PROJECTION_MATRIX, proj.ptr);
 
-    GLint view[4] = 0;
+    GLint[4] view = 0;
     glGetIntegerv(GL_VIEWPORT, view.ptr);
 
     int ww, wh;

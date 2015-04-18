@@ -347,7 +347,7 @@ ClosestPoints EPARecurse(const SupportContext* ctx, const int count, const Minko
 ClosestPoints EPA(const SupportContext* ctx, const MinkowskiPoint v0, const MinkowskiPoint v1, const MinkowskiPoint v2)
 {
     // TODO: allocate a NxM array here and do an in place convex hull reduction in EPARecurse
-    MinkowskiPoint hull[3];
+    MinkowskiPoint[3] hull;
     hull[0] = v0;
     hull[1] = v1;
     hull[2] = v2;

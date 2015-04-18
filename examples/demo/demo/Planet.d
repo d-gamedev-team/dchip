@@ -71,7 +71,7 @@ void add_box(cpSpace* space)
     const cpFloat size = 10.0f;
     const cpFloat mass = 1.0f;
 
-    cpVect verts[] = [
+    cpVect[] verts = [
         cpv(-size, -size),
         cpv(-size, size),
         cpv(size, size),

@@ -59,7 +59,7 @@ void PostStepDoNothing(cpSpace* space, void* obj, void* data)
 cpBool cpSpaceAddPostStepCallback(cpSpace* space, cpPostStepFunc func, void* key, void* data)
 {
     cpAssertWarn(space.locked,
-                 "Adding a post-step callback when the space is not locked is unnecessary. "
+                 "Adding a post-step callback when the space is not locked is unnecessary. "~
                  "Post-step callbacks will not called until the end of the next call to cpSpaceStep() or the next query.");
 
     if (!cpSpaceGetPostStepCallback(space, key))

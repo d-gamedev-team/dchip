@@ -500,7 +500,7 @@ int cpConvexHull(int count, cpVect* verts, cpVect* result, int* first, cpFloat t
         (*first) = start;
     int resultCount = QHullReduce(tol, result + 2, count - 2, a, b, a, result + 1) + 1;
     cpAssertSoft(cpPolyValidate(result, resultCount),
-                 "Internal error: cpConvexHull() and cpPolyValidate() did not agree."
+                 "Internal error: cpConvexHull() and cpPolyValidate() did not agree."~
                  "Please report this error with as much info as you can.");
     return resultCount;
 }

@@ -435,7 +435,7 @@ void cpSpaceFree(cpSpace* space)
 void cpAssertSpaceUnlocked(S)(S space)
 {
     cpAssertHard(!space.locked,
-                 "This operation cannot be done safely during a call to cpSpaceStep() or during a query. "
+                 "This operation cannot be done safely during a call to cpSpaceStep() or during a query. "~
                  "Put these calls into a post-step callback."
                  );
 }

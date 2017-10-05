@@ -890,7 +890,7 @@ Node* partitionNodes(cpBBTree* tree, Node** nodes, int count)
         }
     }
 
-    alias extern(C) int function(const void*, const void*) CompareFunc;
+    alias extern(C) int function(scope const void*, scope const void*) CompareFunc;
 
     qsort(bounds, count * 2, cpFloat.sizeof, safeCast!CompareFunc(&cpfcompare));
     cpFloat split = (bounds[count - 1] + bounds[count]) * 0.5f;   // use the medain as the split

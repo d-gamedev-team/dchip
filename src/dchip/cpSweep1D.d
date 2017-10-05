@@ -220,7 +220,7 @@ void cpSweep1DReindexQuery(cpSweep1D* sweep, cpSpatialIndexQueryFunc func, void*
     for (int i = 0; i < count; i++)
         table[i] = MakeTableCell(sweep, table[i].obj);
 
-    alias extern(C) int function(const void*, const void*) TableSortFunc;
+    alias extern(C) int function(scope const void*, scope const void*) TableSortFunc;
 
     qsort(table, count, TableCell.sizeof, safeCast!TableSortFunc(&TableSort));       // TODO use insertion sort instead
 
